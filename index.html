@@ -42,6 +42,7 @@
         .pay-btn { transition: all 0.3s; }
         .pay-btn:hover { transform: scale(1.05); }
         
+        /* Feed specific styles */
         .feed-image { max-height: 400px; width: 100%; object-fit: cover; }
     </style>
 </head>
@@ -151,14 +152,14 @@
             );
         };
 
-        // --- Sidebar ---
+        // --- Sidebar (With Feed) ---
         const Sidebar = ({ page, setPage, onLogout, role, isOpen, setIsOpen, userEmail }) => {
             const isAdmin = userEmail === ADMIN_EMAIL || role === 'super_admin';
             const canPost = role === 'hospital' || role === 'technologist' || isAdmin;
             
             const menus = [
                 { id: 'dash', name: 'Dashboard', icon: '📊' },
-                { id: 'feed', name: 'News Feed', icon: '📰' },
+                { id: 'feed', name: 'News Feed', icon: '📰' }, // NEW MENU
                 { id: 'jobs', name: 'Job Portal', icon: '💼' },
                 { id: 'reports', name: 'Report List', icon: '🚩' },
                 { id: 'about', name: 'About', icon: 'ℹ️' },
@@ -215,7 +216,7 @@
             );
         };
 
-        // --- News Feed Page ---
+        // --- News Feed Page (Facebook Like) ---
         const FeedPage = ({ user }) => {
             const [posts, setPosts] = React.useState([]);
             const [loading, setLoading] = React.useState(true);
@@ -236,7 +237,9 @@
                 const file = e.target.files[0];
                 if (file) {
                     const reader = new FileReader();
-                    reader.onloadend = () => { setImage(reader.result); };
+                    reader.onloadend = () => {
+                        setImage(reader.result); // Convert to Base64 string
+                    };
                     reader.readAsDataURL(file);
                 }
             };
@@ -246,7 +249,9 @@
                 if(!content && !image) { setMsg("Write something or add a photo"); return; }
                 
                 const { error } = await supabase.from('feed_posts').insert([{
-                    content: content, image_url: image, poster_email: user.email
+                    content: content,
+                    image_url: image,
+                    poster_email: user.email
                 }]);
 
                 if(error) {
@@ -254,7 +259,9 @@
                     setMsg("Error posting. Check SQL setup.");
                 } else {
                     setMsg("Posted!");
-                    setContent(''); setImage(null); fetchPosts();
+                    setContent('');
+                    setImage(null);
+                    fetchPosts();
                     setTimeout(() => setMsg(''), 2000);
                 }
             };
@@ -264,31 +271,38 @@
             return e('div', { className: "max-w-2xl mx-auto space-y-4" },
                 e('h2', { className: "text-xl font-bold text-surface-900 mb-4" }, "📰 News Feed"),
                 
+                // Admin Post Form
                 isAdmin && e('div', { className: "bg-white p-4 rounded-xl shadow-sm border mb-6" },
                     msg && e('div', { className: "bg-green-50 text-green-600 p-2 rounded mb-2 text-sm text-center" }, msg),
                     e('form', { onSubmit: handleSubmit },
                         e('textarea', { 
-                            placeholder: "What's on your mind, Admin?", value: content, 
+                            placeholder: "What's on your mind, Admin?", 
+                            value: content, 
                             onChange: (e) => setContent(e.target.value), 
-                            className: "w-full p-3 border-b border-slate-100 text-sm focus:outline-none resize-none mb-3", rows: 2 
+                            className: "w-full p-3 border-b border-slate-100 text-sm focus:outline-none resize-none mb-3", 
+                            rows: 2 
                         }),
                         image && e('div', { className: "mb-3 relative" },
                             e('img', { src: image, className: "max-h-40 rounded-lg mx-auto border" }),
                             e('button', { type: "button", onClick: () => setImage(null), className: "absolute top-0 right-0 bg-gray-800 text-white rounded-full p-1 text-xs m-1" }, "✕")
                         ),
                         e('div', { className: "flex justify-between items-center" },
-                            e('label', { className: "cursor-pointer flex items-center gap-2 text-slate-500 hover:text-brand-600 text-sm" },
-                                e('span', null, "🖼️ Photo"),
-                                e('input', { type: "file", accept: "image/*", onChange: handleImageChange, className: "hidden" })
+                            e('div', null, 
+                                e('label', { className: "cursor-pointer flex items-center gap-2 text-slate-500 hover:text-brand-600 text-sm" },
+                                    e('span', null, "🖼️ Photo"),
+                                    e('input', { type: "file", accept: "image/*", onChange: handleImageChange, className: "hidden" })
+                                )
                             ),
                             e('button', { className: "px-5 py-1.5 bg-brand-500 text-white rounded-lg text-sm font-semibold hover:bg-brand-600" }, "Post")
                         )
                     )
                 ),
 
+                // Feed List
                 posts.length === 0 && e('p', {className: "text-center text-slate-400 py-10 bg-white rounded-xl"}, "No posts yet."),
                 posts.map(post => 
                     e('div', { key: post.id, className: "bg-white rounded-xl shadow-sm border overflow-hidden card-pro" },
+                        // Header
                         e('div', { className: "p-4 flex items-center gap-3 border-b" },
                             e('div', { className: "w-10 h-10 bg-brand-100 rounded-full flex items-center justify-center text-brand-700 font-bold" }, 
                                 post.poster_email?.charAt(0).toUpperCase() || "A"
@@ -298,10 +312,13 @@
                                 e('p', { className: "text-xs text-slate-400" }, new Date(post.created_at).toLocaleString())
                             )
                         ),
+                        // Body
                         post.content && e('p', { className: "p-4 text-sm text-slate-700" }, post.content),
+                        // Image
                         post.image_url && e('div', { className: "bg-slate-100" },
                             e('img', { src: post.image_url, className: "w-full feed-image" })
                         ),
+                        // Footer (Optional: Like/Share placeholders)
                         e('div', { className: "px-4 py-3 flex justify-around border-t text-slate-500 text-xs font-medium" }, 
                             e('button', { className: "hover:bg-slate-50 p-2 rounded" }, "👍 Like"),
                             e('button', { className: "hover:bg-slate-50 p-2 rounded" }, "💬 Comment")
@@ -315,7 +332,13 @@
         const AboutPage = () => {
             const handlePayment = (type) => {
                 navigator.clipboard.writeText(DONATION_NUMBER);
-                alert(`Number Copied!\n\nSend Money to: ${DONATION_NUMBER}`);
+                if(type === 'bkash') {
+                    window.location.href = `bkash://payment?number=${DONATION_NUMBER}&amount=0`;
+                    alert(`Number Copied!\n\nbKash Number: ${DONATION_NUMBER}`);
+                } else {
+                    window.location.href = `nagad://payment?number=${DONATION_NUMBER}`;
+                    alert(`Number Copied!\n\nNagad Number: ${DONATION_NUMBER}`);
+                }
             };
 
             return e('div', { className: "space-y-8" },
@@ -326,15 +349,15 @@
                 e('div', { className: "bg-gradient-to-br from-brand-600 to-teal-600 p-8 rounded-2xl shadow-xl text-white" },
                     e('h2', { className: "text-2xl font-bold mb-2 text-center" }, e('span', null, "❤️ সাপোর্ট করুন")),
                     e('div', { className: "grid grid-cols-1 md:grid-cols-2 gap-8 mt-8" },
-                        e('div', { className: "bg-white p-6 rounded-xl flex flex-col items-center shadow-lg" },
+                        e('div', { className: "bg-white p-6 rounded-xl flex flex-col items-center shadow-lg transform hover:scale-105 transition-transform" },
                             e('img', { src: BKASH_LOGO, className: "h-12 mb-3 object-contain" }),
                             e('span', { className: "text-2xl font-bold text-gray-800 tracking-widest font-mono my-2" }, DONATION_NUMBER),
-                            e('button', { onClick: () => handlePayment('bkash'), className: "mt-3 w-full px-6 py-3 bg-pink-500 text-white text-sm font-bold rounded-lg shadow-lg hover:bg-pink-600" }, "Send Money ➡️")
+                            e('button', { onClick: () => handlePayment('bkash'), className: "mt-3 w-full px-6 py-3 bg-pink-500 text-white text-sm font-bold rounded-lg shadow-lg hover:bg-pink-600 flex items-center justify-center gap-2 pay-btn" }, "Send Money ➡️")
                         ),
-                        e('div', { className: "bg-white p-6 rounded-xl flex flex-col items-center shadow-lg" },
+                        e('div', { className: "bg-white p-6 rounded-xl flex flex-col items-center shadow-lg transform hover:scale-105 transition-transform" },
                             e('img', { src: NAGAD_LOGO, className: "h-12 mb-3 object-contain" }),
                             e('span', { className: "text-2xl font-bold text-gray-800 tracking-widest font-mono my-2" }, DONATION_NUMBER),
-                            e('button', { onClick: () => handlePayment('nagad'), className: "mt-3 w-full px-6 py-3 bg-orange-500 text-white text-sm font-bold rounded-lg shadow-lg hover:bg-orange-600" }, "Send Money ➡️")
+                            e('button', { onClick: () => handlePayment('nagad'), className: "mt-3 w-full px-6 py-3 bg-orange-500 text-white text-sm font-bold rounded-lg shadow-lg hover:bg-orange-600 flex items-center justify-center gap-2 pay-btn" }, "Send Money ➡️")
                         )
                     )
                 ),
@@ -344,7 +367,7 @@
             );
         };
 
-        // --- Report List (Fixed Delete) ---
+        // --- Report List ---
         const ReportList = ({ user }) => {
             const [reports, setReports] = React.useState([]);
             const [form, setForm] = React.useState({ hospital_name: '', category: 'Bad Behavior', details: '' });
@@ -364,14 +387,9 @@
             };
 
             const handleDeleteReport = async (id) => {
-                if(!confirm("Delete this report?")) return;
-                const { error } = await supabase.from('hospital_reports').delete().eq('id', id);
-                if(error) {
-                    console.error(error);
-                    alert("Error deleting! Check SQL Policy.");
-                } else {
-                    fetchReports();
-                }
+                if(!confirm("Delete?")) return;
+                await supabase.from('hospital_reports').delete().eq('id', id);
+                fetchReports();
             };
 
             const filteredReports = reports.filter(r => r.hospital_name.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -379,7 +397,7 @@
             return e('div', null,
                 e('div', { className: "flex justify-between items-center mb-4" },
                     e('h2', { className: "text-xl font-bold text-surface-900" }, "🚩 Report List"),
-                    e('input', { placeholder: "Search Hospital...", value: searchTerm, onChange: (e) => setSearchTerm(e.target.value), className: "input-style w-64 bg-white" })
+                    e('input', { placeholder: "Search...", value: searchTerm, onChange: (e) => setSearchTerm(e.target.value), className: "input-style w-64 bg-white" })
                 ),
                 e('div', { className: "bg-white p-6 rounded-2xl shadow-sm border mb-6" },
                     e('form', { onSubmit: handleSubmit, className: "space-y-3" },
@@ -398,7 +416,7 @@
                             e('div', { className: "flex items-center gap-2 mb-1" }, e('span', {className: "font-bold"}, r.hospital_name), e('span', {className: "bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded text-xs"}, r.category)),
                             e('p', { className: "text-slate-600 text-sm" }, r.details)
                         ),
-                        isAdmin && e('button', { onClick: () => handleDeleteReport(r.id), className: "ml-4 text-xs bg-red-50 text-red-500 px-3 py-1 rounded-full hover:bg-red-100 font-medium h-fit" }, "Remove")
+                        isAdmin && e('button', { onClick: () => handleDeleteReport(r.id), className: "ml-4 text-xs bg-red-50 text-red-500 px-2 py-1 rounded hover:bg-red-100" }, "Remove")
                     )
                 ))
             );
@@ -525,7 +543,7 @@
             const isAdmin = user?.email === ADMIN_EMAIL || user?.user_metadata?.role === 'super_admin';
             
             if (page === 'dash') return e(Dashboard, { user, setPage });
-            if (page === 'feed') return e(FeedPage, { user });
+            if (page === 'feed') return e(FeedPage, { user }); // NEW ROUTE
             if (page === 'jobs') return e(JobList, { title: "Job Portal", filter: 'approved', user });
             if (page === 'reports') return e(ReportList, { user });
             if (page === 'about') return e(AboutPage);
