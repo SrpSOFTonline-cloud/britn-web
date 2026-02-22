@@ -39,11 +39,20 @@
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
         
-        .pay-btn { transition: all 0.3s; }
-        .pay-btn:hover { transform: scale(1.05); }
-        
-        /* Feed specific styles */
-        .feed-image { max-height: 400px; width: 100%; object-fit: cover; }
+        /* Verified Badge Style */
+        .verified-badge {
+            background: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            margin-left: 4px;
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
@@ -58,8 +67,6 @@
 
         // --- CONFIGURATION ---
         const BRITN_LOGO_URL = 'https://z-cdn-media.chatglm.cn/files/947017d9-2ded-4447-ab50-1dfd8ce35fcd.jpg?auth_key=1871748799-320010bf4fcc40a98d5d6172607e7c73-0-134513578fae2800da62ba56df7d4c44';
-        const BKASH_LOGO = 'https://i.ibb.co/NmLF3TR/bkash-logo.png';
-        const NAGAD_LOGO = 'https://i.ibb.co/3pMymZv/nagad-logo.png';
         
         const DONATION_NUMBER = '01843860547';
         const SUPABASE_URL = 'https://hosiwwylofzjtweclycv.supabase.co';
@@ -152,14 +159,14 @@
             );
         };
 
-        // --- Sidebar (With Feed) ---
+        // --- Sidebar (With Verified Badge) ---
         const Sidebar = ({ page, setPage, onLogout, role, isOpen, setIsOpen, userEmail }) => {
             const isAdmin = userEmail === ADMIN_EMAIL || role === 'super_admin';
             const canPost = role === 'hospital' || role === 'technologist' || isAdmin;
             
             const menus = [
                 { id: 'dash', name: 'Dashboard', icon: '📊' },
-                { id: 'feed', name: 'News Feed', icon: '📰' }, // NEW MENU
+                { id: 'feed', name: 'News Feed', icon: '📰' }, 
                 { id: 'jobs', name: 'Job Portal', icon: '💼' },
                 { id: 'reports', name: 'Report List', icon: '🚩' },
                 { id: 'about', name: 'About', icon: 'ℹ️' },
@@ -178,7 +185,11 @@
                     e('div', { className: "flex items-center space-x-3" },
                         e('img', { src: BRITN_LOGO_URL, className: "w-10 h-10 object-contain rounded-lg bg-white p-1" }),
                         e('div', null, 
-                            e('span', { className: "font-bold text-xl tracking-wide block" }, "BRITN"),
+                            e('div', {className: "flex items-center"}, 
+                                e('span', { className: "font-bold text-xl tracking-wide block" }, "BRITN"),
+                                // Verified Badge
+                                e('span', { className: "verified-badge", title: "Official Account" }, "✓")
+                            ),
                             e('span', { className: "text-xs opacity-60 font-bangla" }, "Professional Network")
                         )
                     ),
@@ -216,7 +227,7 @@
             );
         };
 
-        // --- News Feed Page (Facebook Like) ---
+        // --- News Feed Page (Updated) ---
         const FeedPage = ({ user }) => {
             const [posts, setPosts] = React.useState([]);
             const [loading, setLoading] = React.useState(true);
@@ -237,9 +248,7 @@
                 const file = e.target.files[0];
                 if (file) {
                     const reader = new FileReader();
-                    reader.onloadend = () => {
-                        setImage(reader.result); // Convert to Base64 string
-                    };
+                    reader.onloadend = () => { setImage(reader.result); };
                     reader.readAsDataURL(file);
                 }
             };
@@ -276,7 +285,7 @@
                     msg && e('div', { className: "bg-green-50 text-green-600 p-2 rounded mb-2 text-sm text-center" }, msg),
                     e('form', { onSubmit: handleSubmit },
                         e('textarea', { 
-                            placeholder: "What's on your mind, Admin?", 
+                            placeholder: "What's on your mind?", 
                             value: content, 
                             onChange: (e) => setContent(e.target.value), 
                             className: "w-full p-3 border-b border-slate-100 text-sm focus:outline-none resize-none mb-3", 
@@ -304,43 +313,34 @@
                     e('div', { key: post.id, className: "bg-white rounded-xl shadow-sm border overflow-hidden card-pro" },
                         // Header
                         e('div', { className: "p-4 flex items-center gap-3 border-b" },
+                            // Profile Photo Logic: Use Logo for Admin
+                            post.poster_email === ADMIN_EMAIL ?
+                            e('img', { src: BRITN_LOGO_URL, className: "w-10 h-10 rounded-full object-cover border" }) :
                             e('div', { className: "w-10 h-10 bg-brand-100 rounded-full flex items-center justify-center text-brand-700 font-bold" }, 
-                                post.poster_email?.charAt(0).toUpperCase() || "A"
+                                post.poster_email?.charAt(0).toUpperCase() || "U"
                             ),
                             e('div', null,
-                                e('p', { className: "font-bold text-sm text-surface-800" }, post.poster_email === ADMIN_EMAIL ? "Admin BRITN" : post.poster_email),
+                                // Name Logic: Full Name for Admin
+                                e('p', { className: "font-bold text-sm text-surface-800" }, 
+                                    post.poster_email === ADMIN_EMAIL ? "Bangladesh Radiology & Imaging Technologist Network" : post.poster_email
+                                ),
                                 e('p', { className: "text-xs text-slate-400" }, new Date(post.created_at).toLocaleString())
                             )
                         ),
                         // Body
-                        post.content && e('p', { className: "p-4 text-sm text-slate-700" }, post.content),
+                        post.content && e('p', { className: "p-4 text-sm text-slate-700 whitespace-pre-wrap" }, post.content),
                         // Image
                         post.image_url && e('div', { className: "bg-slate-100" },
-                            e('img', { src: post.image_url, className: "w-full feed-image" })
-                        ),
-                        // Footer (Optional: Like/Share placeholders)
-                        e('div', { className: "px-4 py-3 flex justify-around border-t text-slate-500 text-xs font-medium" }, 
-                            e('button', { className: "hover:bg-slate-50 p-2 rounded" }, "👍 Like"),
-                            e('button', { className: "hover:bg-slate-50 p-2 rounded" }, "💬 Comment")
+                            e('img', { src: post.image_url, className: "w-full" })
                         )
+                        // Removed Like/Comment Footer
                     )
                 )
             );
         };
 
-        // --- About Page ---
+        // --- About Page (Text Only Payment) ---
         const AboutPage = () => {
-            const handlePayment = (type) => {
-                navigator.clipboard.writeText(DONATION_NUMBER);
-                if(type === 'bkash') {
-                    window.location.href = `bkash://payment?number=${DONATION_NUMBER}&amount=0`;
-                    alert(`Number Copied!\n\nbKash Number: ${DONATION_NUMBER}`);
-                } else {
-                    window.location.href = `nagad://payment?number=${DONATION_NUMBER}`;
-                    alert(`Number Copied!\n\nNagad Number: ${DONATION_NUMBER}`);
-                }
-            };
-
             return e('div', { className: "space-y-8" },
                 e('div', { className: "bg-white p-8 rounded-2xl shadow-sm border text-center" },
                     e('img', { src: BRITN_LOGO_URL, className: "w-24 h-24 mx-auto mb-4 object-contain rounded-xl" }),
@@ -349,15 +349,25 @@
                 e('div', { className: "bg-gradient-to-br from-brand-600 to-teal-600 p-8 rounded-2xl shadow-xl text-white" },
                     e('h2', { className: "text-2xl font-bold mb-2 text-center" }, e('span', null, "❤️ সাপোর্ট করুন")),
                     e('div', { className: "grid grid-cols-1 md:grid-cols-2 gap-8 mt-8" },
-                        e('div', { className: "bg-white p-6 rounded-xl flex flex-col items-center shadow-lg transform hover:scale-105 transition-transform" },
-                            e('img', { src: BKASH_LOGO, className: "h-12 mb-3 object-contain" }),
+                        // Bkash (Text Only)
+                        e('div', { className: "bg-white p-6 rounded-xl flex flex-col items-center justify-center shadow-lg transform hover:scale-105 transition-transform" },
+                            e('p', { className: "text-lg font-bold text-pink-600 mb-1 font-bangla" }, "বিকাশ (bKash)"),
+                            e('p', { className: "text-xs text-gray-400 mb-2 font-bangla" }, "Send Money"),
                             e('span', { className: "text-2xl font-bold text-gray-800 tracking-widest font-mono my-2" }, DONATION_NUMBER),
-                            e('button', { onClick: () => handlePayment('bkash'), className: "mt-3 w-full px-6 py-3 bg-pink-500 text-white text-sm font-bold rounded-lg shadow-lg hover:bg-pink-600 flex items-center justify-center gap-2 pay-btn" }, "Send Money ➡️")
+                            e('button', { 
+                                onClick: () => { navigator.clipboard.writeText(DONATION_NUMBER); alert('bKash Number Copied!'); }, 
+                                className: "mt-3 w-full px-6 py-2 bg-pink-500 text-white text-sm font-bold rounded-lg shadow hover:bg-pink-600"
+                            }, "Copy Number")
                         ),
-                        e('div', { className: "bg-white p-6 rounded-xl flex flex-col items-center shadow-lg transform hover:scale-105 transition-transform" },
-                            e('img', { src: NAGAD_LOGO, className: "h-12 mb-3 object-contain" }),
+                        // Nagad (Text Only)
+                        e('div', { className: "bg-white p-6 rounded-xl flex flex-col items-center justify-center shadow-lg transform hover:scale-105 transition-transform" },
+                            e('p', { className: "text-lg font-bold text-orange-500 mb-1 font-bangla" }, "নগদ (Nagad)"),
+                            e('p', { className: "text-xs text-gray-400 mb-2 font-bangla" }, "Send Money"),
                             e('span', { className: "text-2xl font-bold text-gray-800 tracking-widest font-mono my-2" }, DONATION_NUMBER),
-                            e('button', { onClick: () => handlePayment('nagad'), className: "mt-3 w-full px-6 py-3 bg-orange-500 text-white text-sm font-bold rounded-lg shadow-lg hover:bg-orange-600 flex items-center justify-center gap-2 pay-btn" }, "Send Money ➡️")
+                            e('button', { 
+                                onClick: () => { navigator.clipboard.writeText(DONATION_NUMBER); alert('Nagad Number Copied!'); }, 
+                                className: "mt-3 w-full px-6 py-2 bg-orange-500 text-white text-sm font-bold rounded-lg shadow hover:bg-orange-600"
+                            }, "Copy Number")
                         )
                     )
                 ),
@@ -543,7 +553,7 @@
             const isAdmin = user?.email === ADMIN_EMAIL || user?.user_metadata?.role === 'super_admin';
             
             if (page === 'dash') return e(Dashboard, { user, setPage });
-            if (page === 'feed') return e(FeedPage, { user }); // NEW ROUTE
+            if (page === 'feed') return e(FeedPage, { user });
             if (page === 'jobs') return e(JobList, { title: "Job Portal", filter: 'approved', user });
             if (page === 'reports') return e(ReportList, { user });
             if (page === 'about') return e(AboutPage);
