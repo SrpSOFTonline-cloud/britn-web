@@ -4,43 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BRITN - Professional Network</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        // Facebook-like color scheme
-                        fb: { blue: '#1877F2', hover: '#166FE5', light: '#E7F3FF' },
-                        gray: { bg: '#F0F2F5', card: '#FFFFFF' }
+                        // Premium & Smart Color Palette
+                        brand: { 500: '#4F46E5', 600: '#4338CA', 100: '#EEF2FF', 50: '#FAFAFA' },
+                        gold: { 500: '#D97706', 600: '#B45309', bg: '#FFFBEB', text: '#92400E' }
                     }
                 }
             }
         }
     </script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #F0F2F5; margin: 0; color: #050505; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; margin: 0; color: #0F172A; }
         .font-bangla { font-family: 'Hind Siliguri', sans-serif; }
         
-        .loader { border: 3px solid #e4e6eb; border-top: 3px solid #1877F2; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; }
+        .loader { border: 2px solid #E2E8F0; border-top: 2px solid #4F46E5; border-radius: 50%; width: 24px; height: 24px; animation: spin 0.6s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        /* Responsive Sidebar */
-        .sidebar-fb { background: #FFFFFF; border-right: 1px solid #dddfe2; }
-        .btn-fb { background: #1877F2; transition: 0.2s; }
-        .btn-fb:hover { background: #166FE5; }
+        /* Smart Card & Design */
+        .card-smart { background: #FFFFFF; border-radius: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1); border: 1px solid #F1F5F9; }
+        .input-smart { width: 100%; padding: 12px 14px; border: 1px solid #E2E8F0; border-radius: 10px; outline: none; font-size: 14px; background: #F8FAFC; transition: all 0.2s; }
+        .input-smart:focus { border-color: #4F46E5; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
         
-        .card-fb { background: #FFFFFF; border-radius: 8px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); border: 1px solid #dddfe2; }
+        /* Sidebar */
+        .sidebar-design { background: #FFFFFF; border-right: 1px solid #F1F5F9; }
+        .nav-item { transition: all 0.2s; border-left: 3px solid transparent; }
+        .nav-item.active { background: #F8FAFC; border-left-color: #4F46E5; color: #4F46E5; font-weight: 600; }
         
-        .input-style { width: 100%; padding: 0.875rem 1rem; border: 1px solid #dddfe2; border-radius: 6px; outline: none; font-size: 1rem; background: #f0f2f5; }
-        .input-style:focus { background: #fff; border-color: #1877F2; }
+        /* Verified Badge Style */
+        .verified-badge { 
+            background: linear-gradient(135deg, #FBBF24, #F59E0B); 
+            color: white; 
+            padding: 1px 6px; 
+            border-radius: 4px; 
+            font-size: 8px; 
+            font-weight: bold; 
+            vertical-align: middle; 
+            margin-left: 6px; 
+            letter-spacing: 0.5px;
+            display: inline-block;
+            text-transform: uppercase;
+        }
 
         .sidebar-transition { transition: transform 0.3s ease-in-out; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-thumb { background: #BCC0C4; border-radius: 4px; }
-        
-        /* Fix mobile button tap */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
         button { touch-action: manipulation; }
     </style>
 </head>
@@ -56,7 +69,6 @@
 
         // --- CONFIGURATION ---
         const BRITN_LOGO_URL = 'https://z-cdn-media.chatglm.cn/files/947017d9-2ded-4447-ab50-1dfd8ce35fcd.jpg?auth_key=1871748799-320010bf4fcc40a98d5d6172607e7c73-0-134513578fae2800da62ba56df7d4c44';
-        
         const DONATION_NUMBER = '01843860547';
         const SUPABASE_URL = 'https://hosiwwylofzjtweclycv.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhvc2l3d3lsb2Z6anR3ZWNseWN2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2NTc3ODgsImV4cCI6MjA4NzIzMzc4OH0.DkCioDXAQQYZm9NOhfsyuXvArR1TQjMMRf7OFv8FClA';
@@ -66,79 +78,93 @@
         const e = React.createElement;
 
         const safeFetch = async (query) => {
-            try {
-                const { data, error } = await query;
-                if (error) throw error;
-                return data || [];
-            } catch (err) { console.error("Fetch Error:", err); return []; }
+            try { const { data, error } = await query; if (error) throw error; return data || []; } 
+            catch (err) { console.error("Fetch Error:", err); return []; }
         };
 
-        // --- Auth Screen (Facebook Style) ---
+        // --- Smart Auth Screen (No "Welcome Back") ---
         const AuthScreen = ({ type, onSwitch, onSuccess }) => {
             const [form, setForm] = React.useState({ email: '', pass: '', name: '', role: 'student' });
             const [error, setError] = React.useState('');
             const [loading, setLoading] = React.useState(false);
             
             const handleAuth = async (ev) => {
-                ev.preventDefault(); setError('');
-                setLoading(true);
+                ev.preventDefault(); setError(''); setLoading(true);
                 try {
                     if (type === 'login') {
                         const { error } = await supabase.auth.signInWithPassword({ email: form.email, password: form.pass });
-                        if (error) throw error;
-                        onSuccess();
+                        if (error) throw error; onSuccess();
                     } else {
-                        if (form.email === ADMIN_EMAIL) throw new Error("Cannot register with Admin Email.");
+                        if (form.email === ADMIN_EMAIL) throw new Error("Admin email reserved.");
                         const { error } = await supabase.auth.signUp({
                             email: form.email, password: form.pass,
                             options: { data: { full_name: form.name, role: form.role } }
                         });
                         if (error) throw error;
-                        alert("Registered! Please login.");
-                        onSwitch('login');
+                        alert("Registered! Please login."); onSwitch('login');
                     }
-                } catch (err) { setError(err.message); }
-                finally { setLoading(false); }
+                } catch (err) { setError(err.message); } finally { setLoading(false); }
             };
 
-            return e('div', { className: "min-h-screen flex flex-col items-center justify-center bg-gray-bg p-4" },
-                e('div', { className: "w-full max-w-md flex-1 flex flex-col justify-center" },
-                    e('div', { className: "text-center mb-6" },
-                        e('h1', { className: "text-4xl font-bold text-fb-blue mb-2" }, "BRITN"),
-                        e('h2', { className: "text-gray-600 font-bangla text-sm" }, 
-                            "Bangladesh Radiology & Imaging", e('br'), "Technologist Network"
-                        )
-                    ),
-                    
-                    e('div', { className: "card-fb p-4 shadow-lg" },
-                        error && e('div', { className: "bg-red-100 text-red-700 p-2 rounded mb-3 text-sm text-center" }, error),
-                        e('form', { onSubmit: handleAuth, className: "space-y-3" },
-                            type === 'register' && e('input', { placeholder: "Full Name", onChange: (ev) => setForm({...form, name: ev.target.value}), className: "input-style", required: true }),
-                            e('input', { type: "email", placeholder: "Email address", value: form.email, onChange: (ev) => setForm({...form, email: ev.target.value}), className: "input-style", required: true }),
-                            e('input', { type: "password", placeholder: "Password", value: form.pass, onChange: (ev) => setForm({...form, pass: ev.target.value}), className: "input-style", required: true }),
-                            type === 'register' && e('select', { onChange: (ev) => setForm({...form, role: ev.target.value}), className: "input-style bg-white text-slate-600" },
-                                e('option', { value: "student" }, "Student"),
-                                e('option', { value: "technologist" }, "Technologist"),
-                                e('option', { value: "hospital" }, "Hospital")
-                            ),
-                            e('button', { type: "submit", disabled: loading, className: "w-full py-3 btn-fb text-white rounded-md font-bold text-lg disabled:opacity-50" }, 
-                                loading ? "Please wait..." : (type === 'login' ? "Log In" : "Sign Up")
-                            )
+            return e('div', { className: "min-h-screen flex flex-col md:flex-row" },
+                // Left: Branding
+                e('div', { className: "hidden md:flex w-1/2 bg-slate-900 items-center justify-center p-12 relative overflow-hidden" },
+                    e('div', { className: "absolute inset-0 opacity-10", style: {backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '20px 20px'} }),
+                    e('div', { className: "relative z-10 text-center max-w-sm" },
+                        e('div', { className: "w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6 backdrop-blur" },
+                            e('img', { src: BRITN_LOGO_URL, className: "w-10 h-10 object-contain" })
                         ),
-                        e('div', { className: "mt-4 text-center" },
-                            e('button', { onClick: () => onSwitch(type === 'login' ? 'register' : 'login'), className: "text-fb-blue text-sm font-medium hover:underline" }, 
-                                type === 'login' ? "Create new account" : "Already have an account?"
-                            )
+                        e('h1', { className: "text-4xl font-bold text-white mb-2" }, "BRITN"),
+                        e('p', { className: "text-slate-400 font-bangla text-sm leading-relaxed" }, 
+                            "Bangladesh Radiology & Imaging", e('br'), "Technologist Network"
                         )
                     )
                 ),
-                e('div', { className: "text-center py-4 text-xs text-gray-500" },
-                    "Developed by ", e('span', { className: "font-bold text-gray-700" }, "SRP SOFT LTD")
+                
+                // Right: Form
+                e('div', { className: "flex-1 flex items-center justify-center p-6 bg-slate-50" },
+                    e('div', { className: "w-full max-w-xs" },
+                        // Mobile Logo
+                        e('div', { className: "md:hidden text-center mb-6" },
+                            e('img', { src: BRITN_LOGO_URL, className: "w-12 h-12 mx-auto rounded-xl mb-2" }),
+                            e('h2', { className: "font-bold text-lg" }, "BRITN")
+                        ),
+                        
+                        e('div', { className: "card-smart p-6" },
+                            // Removed "Welcome Back"
+                            e('h2', { className: "text-lg font-bold mb-4 text-slate-800" }, type === 'login' ? "Sign In" : "Create Account"),
+                            
+                            error && e('div', { className: "bg-red-50 text-red-600 p-2 rounded-lg mb-3 text-xs text-center" }, error),
+                            
+                            e('form', { onSubmit: handleAuth, className: "space-y-3" },
+                                type === 'register' && e('input', { placeholder: "Full Name", onChange: (ev) => setForm({...form, name: ev.target.value}), className: "input-smart", required: true }),
+                                e('input', { type: "email", placeholder: "Email", value: form.email, onChange: (ev) => setForm({...form, email: ev.target.value}), className: "input-smart", required: true }),
+                                e('input', { type: "password", placeholder: "Password", value: form.pass, onChange: (ev) => setForm({...form, pass: ev.target.value}), className: "input-smart", required: true }),
+                                
+                                type === 'register' && e('div', { className: "grid grid-cols-3 gap-1 pt-1" }, 
+                                    ['student', 'technologist', 'hospital'].map(r => 
+                                        e('button', { type: "button", key: r, onClick: () => setForm({...form, role: r}), 
+                                            className: `py-1.5 rounded-md text-xs border transition ${form.role === r ? 'bg-brand-500 text-white border-brand-500' : 'bg-white border-slate-200 text-slate-600'}` 
+                                        }, r.charAt(0).toUpperCase() + r.slice(1))
+                                    )
+                                ),
+                                e('button', { type: "submit", disabled: loading, className: "w-full py-2.5 bg-brand-500 text-white rounded-lg font-semibold text-sm hover:bg-brand-600 transition mt-2" }, 
+                                    loading ? e('div', {className: "loader mx-auto border-white border-t-transparent"}, null) : "Continue"
+                                )
+                            ),
+                            
+                            e('div', { className: "mt-4 text-center text-xs text-slate-400" },
+                                type === 'login' ? "No account? " : "Have account? ",
+                                e('button', { onClick: () => onSwitch(type === 'login' ? 'register' : 'login'), className: "text-brand-500 font-semibold hover:underline" }, type === 'login' ? "Sign Up" : "Sign In")
+                            )
+                        ),
+                        e('p', { className: "text-center text-[10px] text-slate-300 mt-4" }, "SRP SOFT LTD")
+                    )
                 )
             );
         };
 
-        // --- Sidebar (Clean & Mobile Friendly) ---
+        // --- Sidebar ---
         const Sidebar = ({ page, setPage, onLogout, role, isOpen, setIsOpen, userEmail }) => {
             const isAdmin = userEmail === ADMIN_EMAIL || role === 'super_admin';
             const canPost = role === 'hospital' || role === 'technologist' || isAdmin;
@@ -153,265 +179,165 @@
             const posterMenus = [ { id: 'add_job', name: 'Post Job', icon: '➕' }, { id: 'my_jobs', name: 'My Jobs', icon: '📝' } ];
             const adminMenus = [ { id: 'approvals', name: 'Approvals', icon: '✅' }, { id: 'manage_all', name: 'Manage', icon: '⚙️' } ];
 
-            const handleNav = (id) => { setPage(id); setIsOpen(false); };
-
-            const sidebarClass = `fixed inset-y-0 left-0 z-40 w-64 sidebar-fb text-gray-800 transform sidebar-transition 
+            const sidebarClass = `fixed inset-y-0 left-0 z-40 w-60 sidebar-design text-slate-700 transform sidebar-transition 
                 ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
-                md:translate-x-0 md:static md:shadow-none border-r`;
+                md:translate-x-0 md:static`;
 
             return e('div', { className: sidebarClass },
-                e('div', { className: "p-4 border-b flex items-center justify-between" },
-                    e('div', { className: "flex items-center space-x-2" },
-                        e('img', { src: BRITN_LOGO_URL, className: "w-8 h-8 rounded-full" }),
-                        e('span', { className: "font-bold text-lg text-fb-blue" }, "BRITN")
+                e('div', { className: "p-3 flex items-center justify-between border-b border-slate-100" },
+                    e('div', { className: "flex items-center gap-2" },
+                        e('img', { src: BRITN_LOGO_URL, className: "w-8 h-8 rounded-lg" }),
+                        e('span', { className: "font-bold text-sm" }, "BRITN")
                     ),
-                    e('button', { onClick: () => setIsOpen(false), className: "md:hidden p-1 rounded-full hover:bg-gray-100" }, "✕")
+                    e('button', { onClick: () => setIsOpen(false), className: "md:hidden p-1 rounded hover:bg-slate-100" }, "✕")
                 ),
                 
-                e('nav', { className: "flex-1 p-2 space-y-1 overflow-y-auto" },
+                e('nav', { className: "flex-1 py-3 space-y-0.5 overflow-y-auto text-xs" },
                     menus.map(m => 
-                        e('button', { key: m.id, onClick: () => handleNav(m.id), className: `w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition ${page === m.id ? 'bg-fb-light text-fb-blue' : 'hover:bg-gray-100'}` },
-                            e('span', {className: "text-xl"}, m.icon), e('span', null, m.name)
+                        e('button', { key: m.id, onClick: () => setPage(m.id), className: `nav-item w-full flex items-center gap-2 px-3 py-2 ${page === m.id ? 'active' : 'hover:bg-slate-50 text-slate-500'}` },
+                            e('span', {className: "text-base"}, m.icon), e('span', null, m.name)
                         )
                     ),
-                    canPost && e('div', {className: "pt-2 mt-2 border-t"}, 
-                        e('p', {className: "px-3 text-xs text-gray-400 font-bold mb-1"}, "TOOLS"),
+                    canPost && e('div', {className: "pt-3 mt-3 border-t border-slate-100"}, 
                         posterMenus.map(m => 
-                            e('button', { key: m.id, onClick: () => handleNav(m.id), className: `w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm transition ${page === m.id ? 'bg-fb-light text-fb-blue' : 'hover:bg-gray-100'}` },
-                                e('span', {className: "text-xl"}, m.icon), e('span', null, m.name)
+                            e('button', { key: m.id, onClick: () => setPage(m.id), className: `nav-item w-full flex items-center gap-2 px-3 py-2 ${page === m.id ? 'active' : 'hover:bg-slate-50 text-slate-500'}` },
+                                e('span', {className: "text-base"}, m.icon), e('span', null, m.name)
                             )
                         )
                     ),
-                    isAdmin && e('div', {className: "pt-2 mt-2 border-t"}, 
-                        e('p', {className: "px-3 text-xs text-red-400 font-bold mb-1"}, "ADMIN"),
+                    isAdmin && e('div', {className: "pt-3 mt-3 border-t border-slate-100"}, 
                         adminMenus.map(m => 
-                            e('button', { key: m.id, onClick: () => handleNav(m.id), className: `w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm transition ${page === m.id ? 'bg-red-50 text-red-600' : 'hover:bg-gray-100'}` },
-                                e('span', {className: "text-xl"}, m.icon), e('span', null, m.name)
+                            e('button', { key: m.id, onClick: () => setPage(m.id), className: `nav-item w-full flex items-center gap-2 px-3 py-2 ${page === m.id ? 'bg-red-50 text-red-600 border-l-red-500' : 'hover:bg-slate-50 text-slate-500'}` },
+                                e('span', {className: "text-base"}, m.icon), e('span', null, m.name)
                             )
                         )
                     )
                 ),
-                e('div', { className: "p-2 border-t" },
-                    e('button', { onClick: onLogout, className: "w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-red-500 text-sm hover:bg-red-50 font-medium" }, 
-                        e('span', {className: "text-xl"}, '🚪'), e('span', null, "Logout")
+                e('div', { className: "p-2 border-t border-slate-100" },
+                    e('button', { onClick: onLogout, className: "w-full flex items-center gap-2 px-3 py-2 text-red-500 hover:bg-red-50 rounded-lg text-xs font-medium" }, 
+                        e('span', {className: "text-base"}, '🚪'), e('span', null, "Logout")
                     )
                 )
             );
         };
 
-        // --- News Feed (Admin Edit/Delete + Full Name) ---
+        // --- News Feed (Gold Badge) ---
         const FeedPage = ({ user }) => {
-            const [posts, setPosts] = React.useState([]);
-            const [loading, setLoading] = React.useState(true);
-            const [content, setContent] = React.useState('');
-            const [image, setImage] = React.useState(null);
-            const [msg, setMsg] = React.useState('');
-            const [editId, setEditId] = React.useState(null); // For editing
-            const [editContent, setEditContent] = React.useState('');
+            const [posts, setPosts] = React.useState([]); const [loading, setLoading] = React.useState(true);
+            const [content, setContent] = React.useState(''); const [image, setImage] = React.useState(null);
+            const [editId, setEditId] = React.useState(null); const [editContent, setEditContent] = React.useState('');
             const isAdmin = user?.email === ADMIN_EMAIL;
 
-            const fetchPosts = async () => {
-                const data = await safeFetch(supabase.from('feed_posts').select('*').order('created_at', { ascending: false }).limit(20));
-                setPosts(data);
-                setLoading(false);
-            };
-
+            const fetchPosts = async () => { setPosts(await safeFetch(supabase.from('feed_posts').select('*').order('created_at', { ascending: false }).limit(20))); setLoading(false); };
             React.useEffect(() => { fetchPosts(); }, []);
 
-            const handleImageChange = (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onloadend = () => { setImage(reader.result); };
-                    reader.readAsDataURL(file);
-                }
-            };
+            const handleSubmit = async (ev) => { ev.preventDefault(); if(!content && !image) return; await supabase.from('feed_posts').insert([{ content, image_url: image, poster_email: user.email }]); setContent(''); setImage(null); fetchPosts(); };
+            const handleDelete = async (id) => { if(confirm("Delete?")) await supabase.from('feed_posts').delete().eq('id', id); fetchPosts(); };
+            const handleEdit = (post) => { setEditId(post.id); setEditContent(post.content); };
+            const handleUpdate = async (id) => { await supabase.from('feed_posts').update({ content: editContent }).eq('id', id); setEditId(null); fetchPosts(); };
 
-            const handleSubmit = async (ev) => {
-                ev.preventDefault();
-                if(!content && !image) { setMsg("Write something"); return; }
-                
-                const { error } = await supabase.from('feed_posts').insert([{
-                    content: content, image_url: image, poster_email: user.email
-                }]);
+            const handleImage = (e) => { const file = e.target.files[0]; if(file){ const r = new FileReader(); r.onloadend = () => setImage(r.result); r.readAsDataURL(file); }};
 
-                if(error) setMsg("Error: Check SQL Policy.");
-                else { setMsg("Posted!"); setContent(''); setImage(null); fetchPosts(); setTimeout(() => setMsg(''), 2000); }
-            };
+            if (loading) return e('div', {className: "flex justify-center py-8"}, e('div', {className: "loader"}));
 
-            const handleDelete = async (id) => {
-                if(!confirm("Delete this post?")) return;
-                const { error } = await supabase.from('feed_posts').delete().eq('id', id);
-                if(error) alert("Error deleting. Check SQL Policy.");
-                else fetchPosts();
-            };
-
-            const handleEdit = (post) => {
-                setEditId(post.id);
-                setEditContent(post.content);
-            };
-
-            const handleUpdate = async (id) => {
-                const { error } = await supabase.from('feed_posts').update({ content: editContent }).eq('id', id);
-                if(error) alert("Update failed");
-                else { setEditId(null); fetchPosts(); }
-            };
-
-            if (loading) return e('div', {className: "flex justify-center py-10"}, e('div', {className: "loader"}));
-
-            return e('div', { className: "max-w-xl mx-auto space-y-3" }, // Narrower like FB
-                isAdmin && e('div', { className: "card-fb p-3" },
-                    msg && e('div', { className: "bg-green-100 text-green-700 p-2 rounded mb-2 text-sm text-center" }, msg),
+            return e('div', { className: "max-w-lg mx-auto space-y-3" },
+                isAdmin && e('div', { className: "card-smart p-3 mb-2" },
                     e('form', { onSubmit: handleSubmit },
-                        e('textarea', { placeholder: "What's on your mind?", value: content, onChange: (e) => setContent(e.target.value), className: "w-full p-2 border-b text-sm focus:outline-none resize-none bg-transparent", rows: 2 }),
-                        image && e('div', { className: "my-2 relative inline-block" },
-                            e('img', { src: image, className: "max-h-40 rounded-lg border" }),
-                            e('button', { type: "button", onClick: () => setImage(null), className: "absolute top-1 right-1 bg-gray-800 text-white rounded-full p-1 text-xs" }, "✕")
-                        ),
-                        e('div', { className: "flex justify-between items-center mt-2 border-t pt-2" },
-                            e('label', { className: "cursor-pointer flex items-center gap-1 text-green-600 hover:bg-gray-100 p-2 rounded-full" },
-                                e('span', {className: "text-xl"}, "🖼️"),
-                                e('input', { type: "file", accept: "image/*", onChange: handleImageChange, className: "hidden" })
-                            ),
-                            e('button', { className: "px-4 py-1.5 btn-fb text-white rounded-md text-sm font-semibold" }, "Post")
+                        e('textarea', { placeholder: "Write an announcement...", value: content, onChange: (e) => setContent(e.target.value), className: "w-full p-2 bg-transparent outline-none text-xs resize-none border-b border-slate-100", rows: 2 }),
+                        image && e('div', { className: "relative mt-1" }, e('img', { src: image, className: "max-h-24 rounded-md" }), e('button', { type: "button", onClick: () => setImage(null), className: "absolute top-0 right-0 bg-black/50 text-white rounded-full p-0.5 text-[10px]" }, "✕")),
+                        e('div', { className: "flex justify-between items-center pt-2" },
+                            e('label', { className: "text-slate-400 cursor-pointer hover:text-brand-500" }, "🖼️", e('input', { type: "file", onChange: handleImage, className: "hidden" })),
+                            e('button', { className: "px-3 py-1 bg-brand-500 text-white rounded-md text-[10px] font-bold" }, "POST")
                         )
                     )
                 ),
 
-                posts.length === 0 && e('p', {className: "text-center text-gray-400 py-10 card-fb"}, "No posts yet."),
                 posts.map(post => {
                     const isAdminPost = post.poster_email === ADMIN_EMAIL;
-                    // Full Organization Name as requested
+                    // Full Organization Name
                     const displayName = isAdminPost ? "Bangladesh Radiology & Imaging Technologist Network" : post.poster_email.split('@')[0];
-                    const avatar = isAdminPost ? e('img', { src: BRITN_LOGO_URL, className: "w-10 h-10 rounded-full object-cover" }) : 
-                                               e('div', { className: "w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 font-bold" }, displayName.charAt(0).toUpperCase());
+                    const avatar = isAdminPost ? e('img', { src: BRITN_LOGO_URL, className: "w-8 h-8 rounded-full object-cover" }) : 
+                                               e('div', { className: "w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center font-bold text-slate-400 text-[10px]" }, displayName.charAt(0));
 
-                    return e('div', { key: post.id, className: "card-fb overflow-hidden" },
+                    return e('div', { key: post.id, className: "card-smart overflow-hidden" },
                         e('div', { className: "p-3" },
-                            e('div', { className: "flex justify-between" },
-                                e('div', { className: "flex items-start gap-2" },
+                            e('div', { className: "flex justify-between items-start gap-2" },
+                                e('div', { className: "flex gap-2 items-center" },
                                     avatar,
                                     e('div', null,
-                                        e('p', { className: "font-semibold text-sm text-gray-900 leading-tight" }, 
+                                        e('h3', { className: "font-semibold text-[11px] text-slate-800 leading-tight flex items-center" }, 
                                             displayName, 
-                                            isAdminPost && e('span', { className: "text-fb-blue text-sm ml-1" }, "✔") // Verified Badge
+                                            // Gold Verified Badge
+                                            isAdminPost && e('span', { className: "verified-badge" }, "✓ VERIFIED")
                                         ),
-                                        e('p', { className: "text-xs text-gray-500" }, new Date(post.created_at).toLocaleDateString())
+                                        e('p', { className: "text-[10px] text-slate-400" }, new Date(post.created_at).toLocaleDateString())
                                     )
                                 ),
-                                // Admin Edit/Delete Controls
-                                isAdmin && e('div', {className: "flex gap-1"},
-                                    e('button', { onClick: () => handleEdit(post), className: "text-gray-400 hover:text-gray-600 p-1 text-xs" }, "✏️"),
-                                    e('button', { onClick: () => handleDelete(post.id), className: "text-gray-400 hover:text-red-600 p-1 text-xs" }, "🗑️")
+                                isAdmin && e('div', {className: "flex gap-0.5 opacity-60 hover:opacity-100"},
+                                    e('button', { onClick: () => handleEdit(post), className: "p-1 hover:bg-slate-100 rounded text-slate-500 text-[10px]" }, "✏️"),
+                                    e('button', { onClick: () => handleDelete(post.id), className: "p-1 hover:bg-red-50 rounded text-red-500 text-[10px]" }, "🗑️")
                                 )
                             ),
                             
-                            // Content Logic (Edit vs View)
                             editId === post.id ? 
-                                e('div', {className: "mt-2"},
-                                    e('textarea', { value: editContent, onChange: (e) => setEditContent(e.target.value), className: "w-full p-2 border rounded text-sm bg-gray-50" }),
-                                    e('div', {className: "flex gap-2 mt-1"},
-                                        e('button', { onClick: () => handleUpdate(post.id), className: "px-3 py-1 bg-fb-blue text-white text-xs rounded" }, "Save"),
-                                        e('button', { onClick: () => setEditId(null), className: "px-3 py-1 bg-gray-200 text-xs rounded" }, "Cancel")
+                                e('div', {className: "mt-2 bg-slate-50 p-2 rounded-lg"},
+                                    e('textarea', { value: editContent, onChange: (e) => setEditContent(e.target.value), className: "w-full bg-white p-1 border rounded text-xs outline-none" }),
+                                    e('div', {className: "flex gap-1 mt-1"},
+                                        e('button', { onClick: () => handleUpdate(post.id), className: "px-2 py-0.5 bg-brand-500 text-white text-[10px] rounded" }, "Save"),
+                                        e('button', { onClick: () => setEditId(null), className: "px-2 py-0.5 bg-slate-200 text-[10px] rounded" }, "Cancel")
                                     )
                                 )
                                 :
-                                post.content && e('p', { className: "text-sm text-gray-800 mt-2 whitespace-pre-wrap" }, post.content)
+                                e('p', { className: "text-xs text-slate-600 mt-2 leading-relaxed" }, post.content)
                         ),
-                        post.image_url && e('div', { className: "bg-black" }, e('img', { src: post.image_url, className: "w-full max-h-96 object-contain" })),
-                        
-                        e('div', { className: "px-3 py-2 flex justify-around border-t text-gray-600 text-xs font-semibold" }, 
-                            e('button', { className: "flex-1 py-1 hover:bg-gray-100 rounded" }, "👍 Like"),
-                            e('button', { className: "flex-1 py-1 hover:bg-gray-100 rounded" }, "💬 Comment")
-                        )
+                        post.image_url && e('img', { src: post.image_url, className: "w-full bg-slate-50 border-t" })
                     );
                 })
             );
         };
 
-        // --- About Page (Clean) ---
+        // --- About Page ---
         const AboutPage = () => {
-            const handleCopy = () => {
-                navigator.clipboard.writeText(DONATION_NUMBER);
-                alert('Number Copied!');
-            };
-
-            return e('div', { className: "max-w-xl mx-auto space-y-4" },
-                e('div', { className: "card-fb p-6 text-center" },
-                    e('img', { src: BRITN_LOGO_URL, className: "w-20 h-20 mx-auto mb-2 object-contain rounded-lg" }),
-                    e('h1', { className: "text-lg font-bold font-bangla" }, "Bangladesh Radiology & Imaging Technologist Network")
+            const handleCopy = () => { navigator.clipboard.writeText(DONATION_NUMBER); alert('Copied!'); };
+            return e('div', { className: "max-w-lg mx-auto space-y-3" },
+                e('div', { className: "card-smart p-4 text-center" },
+                    e('img', { src: BRITN_LOGO_URL, className: "w-12 h-12 mx-auto mb-1 rounded-lg" }),
+                    e('h1', { className: "font-bold text-sm font-bangla" }, "Bangladesh Radiology & Imaging Technologist Network")
                 ),
-                e('div', { className: "card-fb p-4" },
-                    e('h2', { className: "text-md font-bold mb-1 flex items-center gap-1" }, e('span', null, "❤️"), "Support Maintenance"),
-                    e('p', { className: "text-gray-500 text-xs mb-3 font-bangla" }, "সার্ভার ও ডোমেইন খরচ বহনে সহযোগিতা করুন।"),
+                e('div', { className: "card-smart p-3" },
+                    e('h2', { className: "font-bold text-sm mb-1" }, "❤️ Support Us"),
+                    e('p', { className: "text-slate-400 text-[10px] mb-2 font-bangla" }, "সার্ভার খরচ বহনে সহযোগিতা করুন।"),
                     e('div', { className: "grid grid-cols-2 gap-2" },
-                        e('div', { className: "bg-pink-600 text-white p-3 rounded-lg text-center" },
-                            e('h3', { className: "font-bold" }, "bKash"),
-                            e('p', { className: "text-xs opacity-80" }, "Send Money"),
-                            e('p', { className: "font-mono my-1 text-sm" }, DONATION_NUMBER),
-                            e('button', { onClick: handleCopy, className: "bg-white text-pink-600 text-xs px-2 py-0.5 rounded font-bold" }, "Copy")
-                        ),
-                        e('div', { className: "bg-orange-500 text-white p-3 rounded-lg text-center" },
-                            e('h3', { className: "font-bold" }, "Nagad"),
-                            e('p', { className: "text-xs opacity-80" }, "Send Money"),
-                            e('p', { className: "font-mono my-1 text-sm" }, DONATION_NUMBER),
-                            e('button', { onClick: handleCopy, className: "bg-white text-orange-500 text-xs px-2 py-0.5 rounded font-bold" }, "Copy")
-                        )
+                        e('div', { className: "bg-pink-600 text-white p-2 rounded-lg text-center" }, e('h3', {className: "font-bold text-xs"}, "bKash"), e('p', {className: "font-mono text-[10px] my-0.5"}, DONATION_NUMBER), e('button', { onClick: handleCopy, className: "bg-white/20 text-white px-1 py-0.5 rounded text-[8px]" }, "Copy")),
+                        e('div', { className: "bg-orange-500 text-white p-2 rounded-lg text-center" }, e('h3', {className: "font-bold text-xs"}, "Nagad"), e('p', {className: "font-mono text-[10px] my-0.5"}, DONATION_NUMBER), e('button', { onClick: handleCopy, className: "bg-white/20 text-white px-1 py-0.5 rounded text-[8px]" }, "Copy"))
                     )
                 ),
-                e('div', { className: "text-center pt-2 text-xs text-gray-400" }, "Developed by ", e('span', { className: "font-bold" }, "SRP SOFT LTD"))
+                e('p', { className: "text-center text-[10px] text-slate-300" }, "Developed by ", e('span', {className: "font-bold text-slate-400"}, "SRP SOFT LTD"))
             );
         };
 
         // --- Report List ---
         const ReportList = ({ user }) => {
-            const [reports, setReports] = React.useState([]);
-            const [form, setForm] = React.useState({ hospital_name: '', category: 'Bad Behavior', details: '' });
-            const [msg, setMsg] = React.useState('');
-            const [searchTerm, setSearchTerm] = React.useState('');
+            const [reports, setReports] = React.useState([]); const [form, setForm] = React.useState({ hospital_name: '', category: 'Bad Behavior', details: '' }); const [search, setSearch] = React.useState('');
             const isAdmin = user?.email === ADMIN_EMAIL;
-
-            const fetchReports = async () => { setReports(await safeFetch(supabase.from('hospital_reports').select('*').order('created_at', { ascending: false }).limit(50))); };
-            React.useEffect(() => { fetchReports(); }, []);
-
-            const handleSubmit = async (ev) => {
-                ev.preventDefault();
-                if(!form.hospital_name || !form.details) return;
-                const { error } = await supabase.from('hospital_reports').insert([{...form, reporter_email: user?.email || 'Anonymous'}]);
-                if(error) setMsg("Error"); else { setMsg("Submitted!"); setForm({ hospital_name: '', category: 'Bad Behavior', details: '' }); fetchReports(); }
-            };
-
-            const handleDeleteReport = async (id) => {
-                if(!confirm("Delete?")) return;
-                await supabase.from('hospital_reports').delete().eq('id', id);
-                fetchReports();
-            };
-
-            const filteredReports = reports.filter(r => r.hospital_name.toLowerCase().includes(searchTerm.toLowerCase()));
-
-            return e('div', {className: "max-w-xl mx-auto"}, 
-                e('div', { className: "flex justify-between items-center mb-3" },
-                    e('h2', { className: "text-lg font-bold" }, "🚩 Report List"),
-                    e('input', { placeholder: "Search...", value: searchTerm, onChange: (e) => setSearchTerm(e.target.value), className: "input-style w-40 text-sm py-2" })
-                ),
-                e('div', { className: "card-fb p-3 mb-3" },
-                    e('form', { onSubmit: handleSubmit, className: "space-y-2" },
-                        e('input', { placeholder: "Hospital Name", value: form.hospital_name, onChange: (e) => setForm({...form, hospital_name: e.target.value}), className: "input-style py-2" }),
-                        e('select', { value: form.category, onChange: (e) => setForm({...form, category: e.target.value}), className: "input-style py-2 bg-white" },
-                            e('option', { value: "Bad Behavior" }, "Bad Behavior"),
-                            e('option', { value: "Salary Issue" }, "Salary Issue")
-                        ),
-                        e('textarea', { placeholder: "Details...", value: form.details, onChange: (e) => setForm({...form, details: e.target.value}), className: "input-style py-2", rows: 2 }),
-                        e('button', { className: "w-full py-2 bg-red-500 text-white rounded-md font-semibold text-sm" }, "Submit")
+            const fetch = async () => setReports(await safeFetch(supabase.from('hospital_reports').select('*').order('created_at', { ascending: false }).limit(50)));
+            React.useEffect(() => { fetch(); }, []);
+            const handleSubmit = async (ev) => { ev.preventDefault(); await supabase.from('hospital_reports').insert([{...form, reporter_email: user?.email}]); setForm({}); fetch(); };
+            const handleDelete = async (id) => { await supabase.from('hospital_reports').delete().eq('id', id); fetch(); };
+            const filtered = reports.filter(r => r.hospital_name.toLowerCase().includes(search.toLowerCase()));
+            return e('div', {className: "max-w-lg mx-auto"}, 
+                e('div', { className: "flex justify-between items-center mb-2" }, e('h2', {className: "font-bold text-sm"}, "🚩 Reports"), e('input', {placeholder: "Search...", value: search, onChange: e => setSearch(e.target.value), className: "input-smart py-1 w-24 text-[10px]"})),
+                e('div', { className: "card-smart p-2 mb-2" },
+                    e('form', { onSubmit: handleSubmit, className: "space-y-1" },
+                        e('input', { placeholder: "Hospital", value: form.hospital_name, onChange: e => setForm({...form, hospital_name: e.target.value}), className: "input-smart py-1 text-[10px]" }),
+                        e('textarea', { placeholder: "Details", value: form.details, onChange: e => setForm({...form, details: e.target.value}), className: "input-smart py-1 text-[10px]", rows: 1 }),
+                        e('button', { className: "w-full py-1 bg-red-500 text-white rounded text-[10px] font-semibold" }, "Submit")
                     )
                 ),
-                e('div', { className: "space-y-2" }, filteredReports.map(r => 
-                    e('div', { key: r.id, className: "card-fb p-3 flex justify-between items-start" },
-                        e('div', { className: "flex-1" },
-                            e('div', { className: "flex items-center gap-2 mb-1" }, e('span', {className: "font-bold text-sm"}, r.hospital_name), e('span', {className: "bg-yellow-100 text-yellow-700 px-1.5 py-0.5 rounded text-xs"}, r.category)),
-                            e('p', { className: "text-gray-600 text-xs" }, r.details)
-                        ),
-                        isAdmin && e('button', { onClick: () => handleDeleteReport(r.id), className: "text-red-400 hover:text-red-600 text-xs ml-2" }, "Remove")
+                e('div', { className: "space-y-1" }, filtered.map(r => 
+                    e('div', { key: r.id, className: "card-smart p-2 flex justify-between items-center" },
+                        e('div', null, e('span', {className: "font-bold text-[11px]"}, r.hospital_name), e('br'), e('span', {className: "text-[9px] text-slate-400"}, r.details)),
+                        isAdmin && e('button', { onClick: () => handleDelete(r.id), className: "text-red-300 hover:text-red-600 text-[10px]" }, "✕")
                     )
                 ))
             );
@@ -419,45 +345,20 @@
 
         // --- Job List ---
         const JobList = ({ title, filter, isAdmin, user }) => {
-            const [jobs, setJobs] = React.useState([]);
-            const [loading, setLoading] = React.useState(true);
-            const [search, setSearch] = React.useState('');
-
-            const fetchJobs = async () => {
-                setLoading(true);
-                let query = supabase.from('jobs').select('*');
-                if (filter === 'pending') query = query.eq('is_approved', false);
-                else if (filter === 'approved') query = query.eq('is_approved', true);
-                else if (filter === 'my_posts') query = query.eq('poster_id', user.id);
-                const data = await safeFetch(query.order('created_at', { ascending: false }).limit(20));
-                setJobs(data); setLoading(false);
-            };
-            React.useEffect(() => { if(user) fetchJobs(); }, [filter, user]);
-
-            const handleAction = async (id, action) => {
-                if (!confirm("Sure?")) return;
-                if (action === 'delete') await supabase.from('jobs').delete().eq('id', id);
-                if (action === 'approve') await supabase.from('jobs').update({ is_approved: true }).eq('id', id);
-                fetchJobs();
-            };
-
-            if (loading) return e('div', {className: "flex justify-center py-10"}, e('div', {className: "loader"}));
-
-            return e('div', {className: "max-w-xl mx-auto"}, 
-                e('div', { className: "flex justify-between items-center mb-3" },
-                    e('h2', { className: "text-lg font-bold" }, title),
-                    e('input', { placeholder: "Search...", value: search, onChange: (e) => setSearch(e.target.value), className: "input-style w-40 text-sm py-2" })
-                ),
-                e('div', { className: "space-y-2" }, jobs.filter(j => j.title.toLowerCase().includes(search.toLowerCase())).map(job => 
-                    e('div', { key: job.id, className: "card-fb p-3" },
-                        e('div', { className: "flex justify-between items-start mb-1" },
-                            e('h3', { className: "font-bold text-sm" }, job.title),
-                            !job.is_approved && e('span', { className: "bg-yellow-100 text-yellow-700 px-1.5 py-0.5 rounded text-xs" }, "Pending")
-                        ),
-                        e('p', { className: "text-gray-500 text-xs mb-2" }, `📍 ${job.location} | 💰 ${job.salary || 'Negotiable'}`),
-                        e('div', { className: "flex gap-1 justify-end border-t pt-2 mt-2" },
-                            isAdmin && !job.is_approved && e('button', { onClick: () => handleAction(job.id, 'approve'), className: "px-3 py-1 btn-fb text-white rounded text-xs font-semibold" }, "Approve"),
-                            (isAdmin || job.poster_id === user.id) && e('button', { onClick: () => handleAction(job.id, 'delete'), className: "px-3 py-1 bg-gray-200 text-gray-700 rounded text-xs font-semibold" }, "Delete")
+            const [jobs, setJobs] = React.useState([]); const [loading, setLoading] = React.useState(true); const [search, setSearch] = React.useState('');
+            const fetch = async () => { setLoading(true); let q = supabase.from('jobs').select('*'); if (filter === 'pending') q = q.eq('is_approved', false); else if (filter === 'approved') q = q.eq('is_approved', true); else if (filter === 'my_posts') q = q.eq('poster_id', user.id); setJobs(await safeFetch(q.order('created_at', { ascending: false }).limit(20))); setLoading(false); };
+            React.useEffect(() => { fetch(); }, [filter]);
+            const action = async (id, a) => { if(a==='del') await supabase.from('jobs').delete().eq('id', id); if(a==='app') await supabase.from('jobs').update({ is_approved: true }).eq('id', id); fetch(); };
+            if(loading) return e('div', {className: "flex justify-center py-10"}, e('div', {className: "loader"}));
+            return e('div', {className: "max-w-lg mx-auto"},
+                e('div', { className: "flex justify-between items-center mb-2" }, e('h2', {className: "font-bold text-sm"}, title), e('input', {placeholder: "Search...", value: search, onChange: e => setSearch(e.target.value), className: "input-smart py-1 w-24 text-[10px]"})),
+                e('div', {className: "space-y-1"}, jobs.filter(j => j.title.toLowerCase().includes(search.toLowerCase())).map(j => 
+                    e('div', {key: j.id, className: "card-smart p-2"}, 
+                        e('div', {className: "flex justify-between items-center"}, e('h3', {className: "font-bold text-[11px]"}, j.title), !j.is_approved && e('span', {className: "text-[8px] bg-yellow-100 text-yellow-600 px-1 rounded"}, "Pending")),
+                        e('p', {className: "text-[9px] text-slate-400 mt-0.5"}, `📍 ${j.location}`),
+                        e('div', {className: "flex gap-1 mt-1 justify-end"}, 
+                            isAdmin && !j.is_approved && e('button', {onClick: () => action(j.id, 'app'), className: "text-[9px] px-2 py-0.5 bg-brand-500 text-white rounded font-medium"}, "Approve"),
+                            (isAdmin || j.poster_id === user.id) && e('button', {onClick: () => action(j.id, 'del'), className: "text-[9px] px-2 py-0.5 bg-slate-100 text-slate-500 rounded"}, "Delete")
                         )
                     )
                 ))
@@ -465,53 +366,39 @@
         };
 
         const AddJobForm = ({ user, isAdmin }) => {
-            const [form, setForm] = React.useState({ title: '', location: '', salary: '', description: '' });
-            const [msg, setMsg] = React.useState('');
-
-            const handleSubmit = async (ev) => {
-                ev.preventDefault();
-                if(!form.title || !form.location) return;
-                const { error } = await supabase.from('jobs').insert([{...form, poster_id: user.id, is_approved: isAdmin}]);
-                if (error) setMsg("Error"); else { setMsg("Success!"); setForm({}); }
-            };
-
-            return e('div', { className: "max-w-xl mx-auto card-fb p-4" },
-                e('h2', { className: "text-lg font-bold mb-3 font-bangla" }, "পোস্ট করুন"),
-                msg && e('div', { className: "p-2 rounded mb-2 text-sm bg-green-100 text-green-700 text-center" }, msg),
-                e('form', { onSubmit: handleSubmit, className: "space-y-2" },
-                    e('input', { placeholder: "Job Title *", value: form.title, onChange: (e) => setForm({...form, title: e.target.value}), className: "input-style py-2" }),
-                    e('input', { placeholder: "Location *", value: form.location, onChange: (e) => setForm({...form, location: e.target.value}), className: "input-style py-2" }),
-                    e('input', { placeholder: "Salary", value: form.salary, onChange: (e) => setForm({...form, salary: e.target.value}), className: "input-style py-2" }),
-                    e('textarea', { placeholder: "Description", value: form.description, onChange: (e) => setForm({...form, description: e.target.value}), className: "input-style py-2", rows: 3 }),
-                    e('button', { type: "submit", className: "w-full py-2 btn-fb text-white rounded-md font-semibold text-sm" }, "Submit Job")
+            const [form, setForm] = React.useState({ title: '', location: '', salary: '', description: '' }); const [msg, setMsg] = React.useState('');
+            const submit = async (ev) => { ev.preventDefault(); await supabase.from('jobs').insert([{...form, poster_id: user.id, is_approved: isAdmin}]); setMsg("Done!"); setForm({}); };
+            return e('div', { className: "max-w-lg mx-auto card-smart p-3" },
+                e('h2', { className: "font-bold text-sm mb-2 font-bangla" }, "পোস্ট করুন"),
+                msg && e('p', {className: "text-green-600 text-[10px] mb-1"}, msg),
+                e('form', { onSubmit: submit, className: "space-y-1" },
+                    e('input', { placeholder: "Title", value: form.title, onChange: e => setForm({...form, title: e.target.value}), className: "input-smart py-1 text-[10px]" }),
+                    e('input', { placeholder: "Location", value: form.location, onChange: e => setForm({...form, location: e.target.value}), className: "input-smart py-1 text-[10px]" }),
+                    e('input', { placeholder: "Salary", value: form.salary, onChange: e => setForm({...form, salary: e.target.value}), className: "input-smart py-1 text-[10px]" }),
+                    e('textarea', { placeholder: "Description", value: form.description, onChange: e => setForm({...form, description: e.target.value}), className: "input-smart py-1 text-[10px]", rows: 1 }),
+                    e('button', { className: "w-full py-1.5 bg-brand-500 text-white rounded font-semibold text-[10px]" }, "Submit")
                 )
             );
         };
 
-        // --- Dashboard ---
-        const Dashboard = ({ user, setPage }) => {
-            return e('div', { className: "max-w-xl mx-auto space-y-3" },
-                e('div', { className: "card-fb p-4" },
-                    e('h1', { className: "text-xl font-bold" }, "Welcome! 👋"),
-                    e('p', { className: "text-gray-500 text-xs mt-1" }, `Logged in as: ${user?.email}`),
-                    e('span', { className: "inline-block mt-2 px-2 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-fb-blue uppercase" }, user?.user_metadata?.role || "User")
+        const Dashboard = ({ user, setPage }) => 
+            e('div', { className: "max-w-lg mx-auto space-y-2" },
+                e('div', { className: "card-smart p-3" },
+                    e('h1', { className: "text-sm font-bold" }, "Dashboard"),
+                    e('p', { className: "text-slate-400 text-[10px] mt-0.5" }, `Role: ${user?.user_metadata?.role || "User"}`)
                 ),
-                e('div', { className: "card-fb p-4" },
-                    e('h3', { className: "font-bold text-sm mb-2" }, "Quick Actions"),
-                    e('div', { className: "grid grid-cols-2 gap-2" }, 
-                        e('button', { onClick: () => setPage('add_job'), className: "bg-gray-100 p-2 rounded-lg text-xs font-medium hover:bg-gray-200" }, "➕ Post Job"),
-                        e('button', { onClick: () => setPage('feed'), className: "bg-gray-100 p-2 rounded-lg text-xs font-medium hover:bg-gray-200" }, "📰 News Feed"),
-                        e('button', { onClick: () => setPage('jobs'), className: "bg-gray-100 p-2 rounded-lg text-xs font-medium hover:bg-gray-200" }, "💼 Find Jobs"),
-                        e('button', { onClick: () => setPage('reports'), className: "bg-gray-100 p-2 rounded-lg text-xs font-medium hover:bg-gray-200" }, "🚩 Reports")
+                e('div', { className: "card-smart p-2" },
+                    e('div', { className: "grid grid-cols-2 gap-1" }, 
+                        e('button', { onClick: () => setPage('add_job'), className: "bg-slate-50 p-2 rounded text-[10px] font-medium hover:bg-slate-100 text-center" }, "➕ Post Job"),
+                        e('button', { onClick: () => setPage('feed'), className: "bg-slate-50 p-2 rounded text-[10px] font-medium hover:bg-slate-100 text-center" }, "📰 News Feed"),
+                        e('button', { onClick: () => setPage('jobs'), className: "bg-slate-50 p-2 rounded text-[10px] font-medium hover:bg-slate-100 text-center" }, "💼 Find Jobs"),
+                        e('button', { onClick: () => setPage('reports'), className: "bg-slate-50 p-2 rounded text-[10px] font-medium hover:bg-slate-100 text-center" }, "🚩 Reports")
                     )
                 )
             );
-        };
 
-        // --- Content Area Router ---
         const ContentArea = ({ page, user, setPage }) => {
             const isAdmin = user?.email === ADMIN_EMAIL || user?.user_metadata?.role === 'super_admin';
-            
             if (page === 'dash') return e(Dashboard, { user, setPage });
             if (page === 'feed') return e(FeedPage, { user });
             if (page === 'jobs') return e(JobList, { title: "Jobs", filter: 'approved', user });
@@ -521,40 +408,23 @@
             if (page === 'my_jobs') return e(JobList, { title: "My Jobs", filter: 'my_posts', user });
             if (isAdmin && page === 'approvals') return e(JobList, { title: "Pending", filter: 'pending', isAdmin: true, user });
             if (isAdmin && page === 'manage_all') return e(JobList, { title: "Manage", filter: 'all', isAdmin: true, user });
-            return e('div', null, e('h1', null, "Page not found"));
+            return e('div', null, "Not found");
         };
 
-        // --- Main App ---
         const App = () => {
-            const [user, setUser] = React.useState(null);
-            const [view, setView] = React.useState('loading');
-            const [page, setPage] = React.useState('dash');
-            const [sidebarOpen, setSidebarOpen] = React.useState(false);
-
-            React.useEffect(() => {
-                supabase.auth.getSession().then(({ data: { session } }) => {
-                    setUser(session?.user ?? null); 
-                    setView(session?.user ? 'app' : 'login');
-                });
-                const { data: { subscription } } = supabase.auth.onAuthStateChange((e, s) => {
-                    setUser(s?.user ?? null);
-                    setView(s?.user ? 'app' : 'login');
-                });
-                return () => subscription.unsubscribe();
-            }, []);
-
+            const [user, setUser] = React.useState(null); const [view, setView] = React.useState('loading'); const [page, setPage] = React.useState('dash'); const [sidebarOpen, setSidebarOpen] = React.useState(false);
+            React.useEffect(() => { supabase.auth.getSession().then(({ data: { session } }) => { setUser(session?.user); setView(session ? 'app' : 'login'); }); supabase.auth.onAuthStateChange((e, s) => { setUser(s?.user); setView(s?.user ? 'app' : 'login'); }); }, []);
             if (view === 'loading') return e('div', { className: "flex h-screen items-center justify-center" }, e('div', { className: "loader" }));
             if (view === 'login') return e(AuthScreen, { type: 'login', onSwitch: setView, onSuccess: () => setView('app') });
             if (view === 'register') return e(AuthScreen, { type: 'register', onSwitch: setView });
-
-            return e('div', { className: "flex min-h-screen bg-gray-bg" },
-                sidebarOpen && e('div', { onClick: () => setSidebarOpen(false), className: "fixed inset-0 z-30 bg-black/30 md:hidden" }),
+            return e('div', { className: "flex h-screen bg-slate-50" },
+                sidebarOpen && e('div', { onClick: () => setSidebarOpen(false), className: "fixed inset-0 z-30 bg-black/10 backdrop-blur-[1px] md:hidden" }),
                 e(Sidebar, { page, setPage, onLogout: () => supabase.auth.signOut(), role: user?.user_metadata?.role, isOpen: sidebarOpen, setIsOpen: setSidebarOpen, userEmail: user.email }),
-                e('div', { className: "flex-1 flex flex-col w-full md:ml-0 min-h-screen" },
-                    e('div', { className: "md:hidden sticky top-0 z-20 bg-white border-b p-2 flex items-center justify-between shadow-sm" },
-                        e('button', { onClick: () => setSidebarOpen(true), className: "p-2 rounded-full hover:bg-gray-100" }, "☰"),
-                        e('span', { className: "font-bold text-fb-blue" }, "BRITN"),
-                        e('div', { className: "w-8" })
+                e('div', { className: "flex-1 flex flex-col w-full min-h-screen overflow-auto" },
+                    e('div', { className: "md:hidden sticky top-0 z-20 bg-white/80 backdrop-blur border-b border-slate-100 p-2 flex items-center justify-between" },
+                        e('button', { onClick: () => setSidebarOpen(true), className: "p-1 rounded hover:bg-slate-100" }, "☰"),
+                        e('span', { className: "font-bold text-sm text-slate-800" }, "BRITN"),
+                        e('div', { className: "w-6" })
                     ),
                     e('div', { className: "flex-1 p-2 md:p-4 overflow-auto" }, e(ContentArea, { page, user, setPage }))
                 )
