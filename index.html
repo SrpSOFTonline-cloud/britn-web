@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BRITN - Professional Platform</title>
+    <title>BRITN - Admin Controlled Platform</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -20,7 +20,7 @@
     </script>
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #F1F5F9; margin: 0; }
-        .sidebar { width: 250px; }
+        .sidebar { width: 260px; }
         .loader { border: 3px solid #f3f3f3; border-top: 3px solid #0066CC; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
@@ -35,17 +35,19 @@
         import ReactDOM from 'https://esm.sh/react-dom@18.2.0/client';
         import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-        // --- Supabase Config ---
+        // --- Config ---
         const SUPABASE_URL = 'https://hosiwwylofzjtweclycv.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhvc2l3d3lsb2Z6anR3ZWNseWN2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2NTc3ODgsImV4cCI6MjA4NzIzMzc4OH0.DkCioDXAQQYZm9NOhfsyuXvArR1TQjMMRf7OFv8FClA';
         const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        // Admin Credentials for logic check
+        const ADMIN_EMAIL = 'admin@britn.com';
 
-        // Helper for creating elements
         const e = React.createElement;
 
         // --- Auth Components ---
 
-        const LoginScreen = ({ onSwitch, onLogin }) => {
+        const LoginScreen = ({ onSwitch }) => {
             const [email, setEmail] = React.useState('');
             const [pass, setPass] = React.useState('');
             const [error, setError] = React.useState('');
@@ -54,30 +56,40 @@
             const handleLogin = async (ev) => {
                 ev.preventDefault();
                 setLoading(true); setError('');
-                const { error } = await supabase.auth.signInWithPassword({ email, password: pass });
-                if (error) { setError(error.message); setLoading(false); }
-                else { onLogin(); }
+                
+                const { data, error } = await supabase.auth.signInWithPassword({ email, password: pass });
+                
+                if (error) {
+                    setError(error.message);
+                    setLoading(false);
+                    return;
+                }
+                
+                // Check if user exists in users table and has role
+                // Logic handled in App.jsx effect
             };
 
             return e('div', { className: "min-h-screen flex items-center justify-center bg-slate-100 p-4" },
                 e('div', { className: "bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-slate-200" },
                     e('div', { className: "text-center mb-6" },
                         e('div', { className: "w-16 h-16 bg-primary-500 rounded-2xl flex items-center justify-center text-white text-3xl font-bold mx-auto mb-3" }, "B"),
-                        e('h2', { className: "text-2xl font-bold text-gray-800" }, "Welcome Back"),
-                        e('p', { className: "text-gray-500 text-sm" }, "Login to BRITN")
+                        e('h2', { className: "text-2xl font-bold text-gray-800" }, "Login to BRITN"),
+                        e('p', { className: "text-gray-500 text-xs mt-1" }, "User, Hospital & Admin Portal")
                     ),
                     error && e('div', { className: "bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm" }, error),
                     e('form', { onSubmit: handleLogin, className: "space-y-4" },
                         e('input', { type: "email", placeholder: "Email", value: email, onChange: (ev) => setEmail(ev.target.value), className: "w-full px-4 py-3 rounded-lg border border-slate-300 outline-none focus:ring-2 focus:ring-primary-500", required: true }),
                         e('input', { type: "password", placeholder: "Password", value: pass, onChange: (ev) => setPass(ev.target.value), className: "w-full px-4 py-3 rounded-lg border border-slate-300 outline-none focus:ring-2 focus:ring-primary-500", required: true }),
-                        e('button', { type: "submit", disabled: loading, className: "w-full py-3 bg-primary-500 text-white rounded-lg font-semibold hover:bg-primary-600 disabled:opacity-50" }, loading ? "Logging..." : "Login"),
+                        e('button', { type: "submit", disabled: loading, className: "w-full py-3 bg-primary-500 text-white rounded-lg font-semibold hover:bg-primary-600 disabled:opacity-50" }, 
+                            loading ? "Checking..." : "Login"
+                        ),
                         e('p', { className: "text-center text-sm mt-4" },
-                            e('button', { type: "button", onClick: () => onSwitch('forgot'), className: "text-primary-500 hover:underline" }, "Forgot Password?")
+                            e('button', { type: "button", onClick: () => onSwitch('forgot'), className: "text-gray-500 hover:underline" }, "Forgot Password?")
                         )
                     ),
-                    e('p', { className: "mt-6 text-center text-gray-600 text-sm" },
-                        "Don't have an account? ",
-                        e('button', { onClick: () => onSwitch('register'), className: "text-primary-500 font-semibold hover:underline" }, "Register")
+                    e('div', { className: "mt-6 pt-4 border-t text-center" },
+                        e('p', { className: "text-gray-600 text-sm" }, "New User or Hospital?"),
+                        e('button', { onClick: () => onSwitch('register'), className: "mt-2 text-primary-500 font-semibold hover:underline" }, "Register Here")
                     )
                 )
             );
@@ -91,6 +103,11 @@
 
             const handleRegister = async (ev) => {
                 ev.preventDefault();
+                if(form.email === ADMIN_EMAIL) {
+                    setMsg({ type: 'error', text: 'Cannot register with this Admin email.' });
+                    return;
+                }
+
                 const { error } = await supabase.auth.signUp({
                     email: form.email,
                     password: form.password,
@@ -103,15 +120,16 @@
             return e('div', { className: "min-h-screen flex items-center justify-center bg-slate-100 p-4" },
                 e('div', { className: "bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-slate-200" },
                     e('h2', { className: "text-2xl font-bold text-gray-800 mb-4" }, "Create Account"),
+                    e('p', { className: "text-sm text-gray-500 mb-4" }, "User & Hospital Registration"),
                     msg.text && e('div', { className: `p-3 rounded-lg mb-4 text-sm ${msg.type === 'error' ? 'bg-red-50 text-red-600' : 'bg-green-50 text-green-600'}` }, msg.text),
                     e('form', { onSubmit: handleRegister, className: "space-y-3" },
-                        e('input', { name: "fullName", placeholder: "Full Name", onChange: handleChange, className: "w-full px-4 py-3 rounded-lg border outline-none", required: true }),
+                        e('input', { name: "fullName", placeholder: "Full Name / Hospital Name", onChange: handleChange, className: "w-full px-4 py-3 rounded-lg border outline-none", required: true }),
                         e('input', { name: "email", type: "email", placeholder: "Email", onChange: handleChange, className: "w-full px-4 py-3 rounded-lg border outline-none", required: true }),
                         e('input', { name: "password", type: "password", placeholder: "Password", onChange: handleChange, className: "w-full px-4 py-3 rounded-lg border outline-none", required: true }),
-                        e('select', { name: "role", onChange: handleChange, className: "w-full px-4 py-3 rounded-lg border outline-none bg-white" },
-                            e('option', { value: "student" }, "Student"),
-                            e('option', { value: "technologist" }, "Technologist"),
-                            e('option', { value: "hospital" }, "Hospital")
+                        e('select', { name: "role", onChange: handleChange, className: "w-full px-4 py-3 rounded-lg border outline-none bg-white font-medium" },
+                            e('option', { value: "student" }, "Student (User)"),
+                            e('option', { value: "technologist" }, "Technologist (User)"),
+                            e('option', { value: "hospital" }, "Hospital (Can Post Jobs)")
                         ),
                         e('button', { type: "submit", className: "w-full py-3 bg-accent-500 text-white rounded-lg font-semibold" }, "Register")
                     ),
@@ -149,8 +167,11 @@
 
         // --- Dashboard Components ---
 
-        const Sidebar = ({ page, setPage, onLogout }) => {
-            const menus = [
+        const Sidebar = ({ page, setPage, onLogout, role }) => {
+            const isAdmin = role === 'super_admin';
+            const isHospital = role === 'hospital';
+
+            const userMenus = [
                 { id: 'dash', name: 'Dashboard', icon: '🏠' },
                 { id: 'hosp', name: 'Hospitals', icon: '🏥' },
                 { id: 'proc', name: 'Procedures', icon: '📖' },
@@ -158,23 +179,63 @@
                 { id: 'prof', name: 'Profile', icon: '👤' },
             ];
 
-            return e('div', { className: "sidebar bg-white h-screen fixed left-0 top-0 border-r flex flex-col shadow-sm" },
-                e('div', { className: "p-5 border-b" },
+            const hospitalMenus = [ 
+                { id: 'my_posts', name: 'My Posts', icon: '📝' },
+                { id: 'add_job', name: 'Post New Job', icon: '➕' }
+            ];
+
+            const adminMenus = [
+                { id: 'approvals', name: 'Approvals', icon: '✅' },
+                { id: 'add_hosp', name: 'Add Hospital', icon: '➕' },
+                { id: 'add_proc', name: 'Add Procedure', icon: '➕' },
+                { id: 'add_job', name: 'Post Job (Admin)', icon: '➕' },
+            ];
+
+            return e('div', { className: "sidebar bg-white h-screen fixed left-0 top-0 border-r flex flex-col shadow-sm overflow-y-auto" },
+                e('div', { className: "p-5 border-b sticky top-0 bg-white z-10" },
                     e('div', { className: "flex items-center space-x-2" },
                         e('div', { className: "w-10 h-10 bg-primary-500 rounded-xl flex items-center justify-center text-white font-bold" }, "B"),
-                        e('span', { className: "font-bold text-xl text-gray-800" }, "BRITN")
+                        e('div', null, 
+                            e('span', { className: "font-bold text-lg text-gray-800" }, "BRITN"),
+                            isAdmin && e('span', { className: "ml-2 text-xs bg-red-500 text-white px-1 rounded" }, "ADMIN")
+                        )
                     )
                 ),
                 e('nav', { className: "flex-1 p-3 space-y-1" },
-                    menus.map(m => 
+                    // Common Menus
+                    userMenus.map(m => 
                         e('button', { 
                             key: m.id, 
                             onClick: () => setPage(m.id), 
                             className: `w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition ${page === m.id ? 'bg-primary-100 text-primary-600 font-semibold' : 'text-gray-500 hover:bg-slate-50'}`
                         }, e('span', null, m.icon), e('span', null, m.name))
+                    ),
+                    
+                    // Hospital Menu
+                    isHospital && e('div', { className: "mt-4 pt-4 border-t" },
+                        e('p', { className: "px-4 text-xs font-semibold text-gray-400 mb-2" }, "HOSPITAL TOOLS"),
+                        hospitalMenus.map(m => 
+                            e('button', { 
+                                key: m.id, 
+                                onClick: () => setPage(m.id), 
+                                className: `w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition ${page === m.id ? 'bg-blue-100 text-blue-600 font-semibold' : 'text-gray-500 hover:bg-slate-50'}`
+                            }, e('span', null, m.icon), e('span', null, m.name))
+                        )
+                    ),
+
+                    // Admin Menu
+                    isAdmin && e('div', { className: "mt-4 pt-4 border-t" },
+                        e('p', { className: "px-4 text-xs font-semibold text-gray-400 mb-2" }, "ADMIN PANEL"),
+                        adminMenus.map(m => 
+                            e('button', { 
+                                key: m.id, 
+                                onClick: () => setPage(m.id), 
+                                className: `w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition ${page === m.id ? 'bg-green-100 text-green-600 font-semibold' : 'text-gray-500 hover:bg-slate-50'}`
+                            }, e('span', null, m.icon), e('span', null, m.name))
+                        )
                     )
                 ),
-                e('div', { className: "p-3 border-t" },
+                e('div', { className: "p-3 border-t sticky bottom-0 bg-white" },
                     e('button', { onClick: onLogout, className: "w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-red-500 hover:bg-red-50" }, 
                         e('span', null, '🚪'), e('span', null, "Logout")
                     )
@@ -182,25 +243,185 @@
             );
         };
 
-        const ContentArea = ({ page, user }) => {
-            if (page === 'hosp') return e('div', null, e('h2', {className: "text-2xl font-bold mb-4"}, "Hospital Directory"), e('p', {className: "text-gray-500"}, "Loading hospital list from database..."));
-            if (page === 'proc') return e('div', null, e('h2', {className: "text-2xl font-bold mb-4"}, "Procedures"), e('p', {className: "text-gray-500"}, "Radiographic positioning library..."));
-            if (page === 'jobs') return e('div', null, e('h2', {className: "text-2xl font-bold mb-4"}, "Jobs"), e('p', {className: "text-gray-500"}, "Available radiology jobs..."));
-            if (page === 'prof') return e('div', { className: "bg-white p-6 rounded-xl shadow-sm border" }, 
-                e('h2', {className: "text-xl font-bold mb-4"}, "My Profile"),
-                e('p', {}, `Name: ${user?.user_metadata?.full_name || 'N/A'}`),
-                e('p', {}, `Email: ${user?.email}`),
-                e('p', {}, `Role: ${user?.user_metadata?.role || 'N/A'}`)
+        // --- Content Pages ---
+
+        const ListPage = ({ title, table, columns, isAdmin }) => {
+            const [items, setItems] = React.useState([]);
+            const [loading, setLoading] = React.useState(true);
+
+            React.useEffect(() => {
+                // User sees only approved. Admin sees all.
+                let query = supabase.from(table).select(columns.map(c => c.key).join(',')).limit(20);
+                if (!isAdmin) query = query.eq('is_approved', true);
+                
+                query.then(({ data }) => {
+                    setItems(data || []);
+                    setLoading(false);
+                });
+            }, [isAdmin]);
+
+            return e('div', null,
+                e('h2', { className: "text-2xl font-bold mb-4" }, title),
+                loading ? e('p', { className: "text-gray-500" }, "Loading...") :
+                e('div', { className: "bg-white rounded-xl shadow-sm border overflow-hidden" },
+                    e('table', { className: "w-full" },
+                        e('thead', { className: "bg-slate-50 border-b" },
+                            e('tr', null, 
+                                columns.map(c => e('th', { key: c.key, className: "text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase" }, c.label))
+                            )
+                        ),
+                        e('tbody', { className: "divide-y" },
+                            items.length === 0 ? 
+                            e('tr', null, e('td', { colSpan: columns.length, className: "text-center py-8 text-gray-400" }, "No data available")) :
+                            items.map(item => 
+                                e('tr', { key: item.id, className: "hover:bg-slate-50" },
+                                    columns.map(c => e('td', { key: c.key, className: "px-6 py-4 text-sm text-gray-700" }, 
+                                        c.key === 'is_approved' ? 
+                                            (item[c.key] ? e('span', {className: "text-green-600"}, "✅ Approved") : e('span', {className: "text-yellow-600"}, "⏳ Pending")) 
+                                            : item[c.key]
+                                    ))
+                                )
+                            )
+                        )
+                    )
+                )
             );
+        };
+
+        const ApprovalPage = () => {
+            const [pending, setPending] = React.useState({ jobs: [], hospitals: [], procedures: [] });
+            const [loading, setLoading] = React.useState(true);
+
+            React.useEffect(() => {
+                const fetchPending = async () => {
+                    const [j, h, p] = await Promise.all([
+                        supabase.from('jobs').select('id, title').eq('is_approved', false),
+                        supabase.from('hospitals').select('id, name').eq('is_approved', false),
+                        supabase.from('procedures').select('id, name').eq('is_approved', false)
+                    ]);
+                    setPending({ jobs: j.data || [], hospitals: h.data || [], procedures: p.data || [] });
+                    setLoading(false);
+                };
+                fetchPending();
+            }, [loading]);
+
+            const approveItem = async (table, id) => {
+                await supabase.from(table).update({ is_approved: true }).eq('id', id);
+                setLoading(true); // Reload
+            };
+
+            if (loading) return e('p', null, "Loading approvals...");
+
+            const hasPending = pending.jobs.length + pending.hospitals.length + pending.procedures.length === 0;
+
+            return e('div', null,
+                e('h2', { className: "text-2xl font-bold mb-4" }, "Pending Approvals"),
+                hasPending && e('div', { className: "bg-green-50 p-4 rounded-lg text-green-600" }, "All caught up! No pending items."),
+                
+                // Pending Jobs
+                pending.jobs.length > 0 && e('div', { className: "mb-4" },
+                    e('h3', {className: "font-bold text-lg mb-2"}, "Jobs"),
+                    pending.jobs.map(item => 
+                        e('div', { key: item.id, className: "bg-white p-3 border rounded mb-2 flex justify-between items-center" },
+                            e('span', null, item.title),
+                            e('button', { onClick: () => approveItem('jobs', item.id), className: "px-3 py-1 bg-green-500 text-white rounded text-sm" }, "Approve")
+                        )
+                    )
+                ),
+                // Pending Hospitals
+                pending.hospitals.length > 0 && e('div', { className: "mb-4" },
+                    e('h3', {className: "font-bold text-lg mb-2"}, "Hospitals"),
+                    pending.hospitals.map(item => 
+                        e('div', { key: item.id, className: "bg-white p-3 border rounded mb-2 flex justify-between items-center" },
+                            e('span', null, item.name),
+                            e('button', { onClick: () => approveItem('hospitals', item.id), className: "px-3 py-1 bg-green-500 text-white rounded text-sm" }, "Approve")
+                        )
+                    )
+                )
+            );
+        };
+
+        const AddFormPage = ({ title, fields, table, isAdmin }) => {
+            const [form, setForm] = React.useState({});
+            const [msg, setMsg] = React.useState('');
+
+            const handleChange = (ev) => setForm({ ...form, [ev.target.name]: ev.target.value });
+
+            const handleSubmit = async (ev) => {
+                ev.preventDefault();
+                // If Admin adds, it's auto approved. If Hospital adds, it's pending.
+                const payload = { ...form, is_approved: isAdmin ? true : false };
+                
+                const { error } = await supabase.from(table).insert([payload]);
+                if (error) setMsg(`Error: ${error.message}`);
+                else { 
+                    setMsg(isAdmin ? "Added & Approved!" : "Submitted! Waiting for Admin approval."); 
+                    setForm({}); 
+                }
+            };
+
+            return e('div', null,
+                e('h2', { className: "text-2xl font-bold mb-4" }, title),
+                !isAdmin && e('p', { className: "text-yellow-600 text-sm mb-4" }, "Note: Your post will be visible after Admin approval."),
+                e('div', { className: "bg-white p-6 rounded-xl shadow-sm border max-w-lg" },
+                    msg && e('div', { className: `p-3 rounded mb-4 ${msg.includes('Error') ? 'bg-red-50 text-red-600' : 'bg-green-50 text-green-600'}` }, msg),
+                    e('form', { onSubmit: handleSubmit, className: "space-y-4" },
+                        fields.map(f => 
+                            f.type === 'select' ?
+                            e('select', { key: f.name, name: f.name, onChange: handleChange, className: "w-full px-4 py-2 border rounded-lg bg-white", required: true },
+                                e('option', { value: "" }, `Select ${f.label}`),
+                                f.options.map(opt => e('option', { key: opt, value: opt }, opt))
+                            ) :
+                            e('input', { key: f.name, name: f.name, placeholder: f.label, type: f.type || 'text', onChange: handleChange, className: "w-full px-4 py-2 border rounded-lg", required: true })
+                        ),
+                        e('button', { className: "px-6 py-2 bg-accent-500 text-white rounded-lg font-semibold" }, "Submit")
+                    )
+                )
+            );
+        };
+
+        const ContentArea = ({ page, user }) => {
+            const isAdmin = user?.user_metadata?.role === 'super_admin';
+            const isHospital = user?.user_metadata?.role === 'hospital';
+
+            // User & Admin Common Views
+            if (page === 'hosp') return e(ListPage, { title: "Hospital Directory", table: "hospitals", columns: [{ key: 'name', label: 'Name' }, { key: 'address', label: 'Address' }], isAdmin });
+            if (page === 'proc') return e(ListPage, { title: "Procedures Library", table: "procedures", columns: [{ key: 'name', label: 'Name' }, { key: 'body_part', label: 'Body Part' }], isAdmin });
+            if (page === 'jobs') return e(ListPage, { title: "Job Portal", table: "jobs", columns: [{ key: 'title', label: 'Title' }, { key: 'location', label: 'Location' }, { key: 'is_approved', label: 'Status' }], isAdmin });
             
+            // Admin Views
+            if (isAdmin) {
+                if (page === 'approvals') return e(ApprovalPage);
+                if (page === 'add_hosp') return e(AddFormPage, { title: "Add Hospital", table: "hospitals", isAdmin: true, fields: [{ name: 'name', label: 'Hospital Name' }, { name: 'address', label: 'Address' }] });
+                if (page === 'add_proc') return e(AddFormPage, { title: "Add Procedure", table: "procedures", isAdmin: true, fields: [{ name: 'name', label: 'Name' }, { name: 'body_part', label: 'Body Part' }] });
+                if (page === 'add_job') return e(AddFormPage, { title: "Post Job (Admin)", table: "jobs", isAdmin: true, fields: [{ name: 'title', label: 'Job Title' }, { name: 'location', label: 'Location' }] });
+            }
+
+            // Hospital Views
+            if (isHospital) {
+                if (page === 'my_posts') return e(ListPage, { title: "My Posted Jobs", table: "jobs", columns: [{ key: 'title', label: 'Title' }, { key: 'is_approved', label: 'Status' }], isAdmin: false }); // Show their own pending posts logic simplified
+                if (page === 'add_job') return e(AddFormPage, { title: "Post New Job", table: "jobs", isAdmin: false, fields: [{ name: 'title', label: 'Job Title' }, { name: 'location', label: 'Location' }] });
+            }
+
+            // Profile
+            if (page === 'prof') return e('div', { className: "bg-white p-6 rounded-xl shadow-sm border max-w-lg" },
+                e('h2', { className: "text-xl font-bold mb-4" }, "My Profile"),
+                e('div', { className: "space-y-2" },
+                    e('p', {}, e('strong', null, "Name: "), user?.user_metadata?.full_name),
+                    e('p', {}, e('strong', null, "Email: "), user?.email),
+                    e('p', {}, e('strong', null, "Role: "), e('span', { className: "px-2 py-1 bg-blue-100 text-blue-600 rounded text-xs uppercase" }, user?.user_metadata?.role))
+                )
+            );
+
             // Dashboard Default
             return e('div', null,
                 e('h1', { className: "text-2xl font-bold text-gray-800 mb-6" }, `Welcome, ${user?.user_metadata?.full_name || 'User'}!`),
-                e('div', { className: "grid grid-cols-1 md:grid-cols-4 gap-4 mb-8" },
-                    e('div', { className: "bg-white p-4 rounded-xl shadow-sm border" }, e('p', {className: "text-gray-500 text-sm"}, "Hospitals"), e('p', {className: "text-2xl font-bold"}, "500+")),
-                    e('div', { className: "bg-white p-4 rounded-xl shadow-sm border" }, e('p', {className: "text-gray-500 text-sm"}, "Procedures"), e('p', {className: "text-2xl font-bold"}, "150+")),
-                    e('div', { className: "bg-white p-4 rounded-xl shadow-sm border" }, e('p', {className: "text-gray-500 text-sm"}, "Jobs"), e('p', {className: "text-2xl font-bold"}, "25")),
-                    e('div', { className: "bg-white p-4 rounded-xl shadow-sm border" }, e('p', {className: "text-gray-500 text-sm"}, "Members"), e('p', {className: "text-2xl font-bold"}, "2000+"))
+                e('div', { className: "bg-white p-6 rounded-xl shadow-sm border" },
+                    e('p', { className: "text-gray-600" }, 
+                        isAdmin ? "You are logged in as Admin. You can approve posts and add new content." :
+                        isHospital ? "You are logged in as a Hospital. You can post jobs, subject to admin approval." :
+                        "You are logged in as a User. You can browse approved hospitals, procedures, and jobs."
+                    )
                 )
             );
         };
@@ -208,7 +429,7 @@
         // --- Main App ---
         const App = () => {
             const [user, setUser] = React.useState(null);
-            const [view, setView] = React.useState('loading'); // loading, login, register, forgot, app
+            const [view, setView] = React.useState('loading');
             const [page, setPage] = React.useState('dash');
 
             React.useEffect(() => {
@@ -226,12 +447,14 @@
             const handleLogout = async () => { await supabase.auth.signOut(); };
 
             if (view === 'loading') return e('div', { className: "h-screen flex items-center justify-center" }, e('div', { className: "loader" }));
-            if (view === 'login') return e(LoginScreen, { onSwitch: setView, onLogin: () => setView('app') });
+            if (view === 'login') return e(LoginScreen, { onSwitch: setView });
             if (view === 'register') return e(RegisterScreen, { onSwitch: setView });
             if (view === 'forgot') return e(ForgotScreen, { onSwitch: setView });
 
+            const role = user?.user_metadata?.role;
+
             return e('div', { className: "flex bg-slate-100 min-h-screen" },
-                e(Sidebar, { page, setPage, onLogout: handleLogout }),
+                e(Sidebar, { page, setPage, onLogout: handleLogout, role }),
                 e('div', { className: "ml-64 flex-1 p-8" },
                     e(ContentArea, { page, user })
                 )
