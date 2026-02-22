@@ -3,19 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BRITN - Login & Register</title>
+    <title>BRITN - Complete Platform</title>
     
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
+    <!-- Fonts & Tailwind -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: { 500: '#0066CC', 600: '#0052A3' },
+                        primary: { 500: '#0066CC', 600: '#0052A3', 100: '#DBEAFE', 900: '#001429' },
                         accent: { 500: '#00B894' }
                     }
                 }
@@ -23,13 +21,18 @@
         }
     </script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; margin: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: #F1F5F9; margin: 0; }
+        .sidebar { width: 260px; transition: width 0.3s; }
+        .sidebar-collapsed { width: 80px; }
+        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
     </style>
 </head>
 <body>
-    <div id="root" style="min-height: 100vh;"></div>
+    <div id="root"></div>
 
-    <!-- React & Supabase CDN -->
     <script type="module">
         import React from 'https://esm.sh/react@18.2.0';
         import ReactDOM from 'https://esm.sh/react-dom@18.2.0/client';
@@ -38,13 +41,23 @@
         // --- Configuration ---
         const SUPABASE_URL = 'https://hosiwwylofzjtweclycv.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhvc2l3d3lsb2Z6anR3ZWNseWN2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2NTc3ODgsImV4cCI6MjA4NzIzMzc4OH0.DkCioDXAQQYZm9NOhfsyuXvArR1TQjMMRf7OFv8FClA';
-        
         const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // --- Components ---
+        // --- Icons (SVG Components) ---
+        const Icons = {
+            Home: () => <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>,
+            Hospital: () => <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>,
+            Book: () => <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>,
+            Briefcase: () => <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>,
+            User: () => <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>,
+            Logout: () => <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>,
+            Menu: () => <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>,
+            Back: () => <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+        };
 
-        // 1. Login Component
-        const LoginPage = ({ onSwitch, onLogin }) => {
+        // --- Auth Components ---
+
+        const Login = ({ onSwitch, onLogin }) => {
             const [email, setEmail] = React.useState('');
             const [password, setPassword] = React.useState('');
             const [loading, setLoading] = React.useState(false);
@@ -52,171 +65,360 @@
 
             const handleLogin = async (e) => {
                 e.preventDefault();
-                setLoading(true);
-                setError(null);
-                
+                setLoading(true); setError(null);
                 const { error } = await supabase.auth.signInWithPassword({ email, password });
-                
-                if (error) {
-                    setError(error.message);
-                    setLoading(false);
-                } else {
-                    onLogin(); // Switch to Dashboard
-                }
+                if (error) { setError(error.message); setLoading(false); } 
+                else { onLogin(); }
             };
 
-            return React.createElement('div', { className: "min-h-screen flex items-center justify-center bg-slate-50 p-4" },
-                React.createElement('div', { className: "bg-white p-8 rounded-2xl shadow-lg w-full max-w-md" },
-                    React.createElement('h2', { className: "text-2xl font-bold text-gray-800 mb-6 text-center" }, "Login to BRITN"),
-                    
-                    error && React.createElement('div', { className: "bg-red-100 text-red-600 p-3 rounded-lg mb-4 text-sm" }, error),
+            return (
+                <div className="min-h-screen flex items-center justify-center bg-slate-100 p-4">
+                    <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-slate-200">
+                        <div className="text-center mb-6">
+                            <div className="w-16 h-16 bg-primary-500 rounded-2xl flex items-center justify-center text-white text-3xl font-bold mx-auto mb-3">B</div>
+                            <h2 className="text-2xl font-bold text-gray-800">Welcome Back</h2>
+                            <p className="text-gray-500 text-sm">Login to BRITN Platform</p>
+                        </div>
 
-                    React.createElement('form', { onSubmit: handleLogin, className: "space-y-4" },
-                        React.createElement('input', { 
-                            type: "email", placeholder: "Email", required: true, value: email,
-                            onChange: (e) => setEmail(e.target.value),
-                            className: "w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
-                        }),
-                        React.createElement('input', { 
-                            type: "password", placeholder: "Password", required: true, value: password,
-                            onChange: (e) => setPassword(e.target.value),
-                            className: "w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
-                        }),
-                        React.createElement('button', { 
-                            type: "submit", disabled: loading,
-                            className: "w-full py-3 bg-primary-500 text-white rounded-lg font-semibold hover:bg-primary-600 disabled:opacity-50"
-                        }, loading ? "Logging in..." : "Login")
-                    ),
+                        {error && <div className="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm border border-red-100">{error}</div>}
 
-                    React.createElement('p', { className: "mt-4 text-center text-gray-500 text-sm" },
-                        "Don't have an account? ",
-                        React.createElement('button', { onClick: onSwitch, className: "text-primary-500 font-semibold hover:underline" }, "Register")
-                    )
-                )
+                        <form onSubmit={handleLogin} className="space-y-4">
+                            <input type="email" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary-500 outline-none transition" required />
+                            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary-500 outline-none transition" required />
+                            
+                            <div className="text-right">
+                                <button type="button" onClick={() => onSwitch('forgot')} className="text-sm text-primary-500 hover:underline">Forgot Password?</button>
+                            </div>
+
+                            <button type="submit" disabled={loading} className="w-full py-3 bg-primary-500 text-white rounded-lg font-semibold hover:bg-primary-600 transition disabled:opacity-50 shadow-md">
+                                {loading ? 'Logging in...' : 'Login'}
+                            </button>
+                        </form>
+
+                        <p className="mt-6 text-center text-gray-600 text-sm">
+                            Don't have an account? <button onClick={() => onSwitch('register')} className="text-primary-500 font-semibold hover:underline">Register</button>
+                        </p>
+                    </div>
+                </div>
             );
         };
 
-        // 2. Register Component
-        const RegisterPage = ({ onSwitch, onLogin }) => {
-            const [formData, setFormData] = React.useState({ fullName: '', email: '', password: '', role: 'student' });
+        const Register = ({ onSwitch, onLogin }) => {
+            const [form, setForm] = React.useState({ fullName: '', email: '', password: '', role: 'student' });
             const [loading, setLoading] = React.useState(false);
-            const [message, setMessage] = React.useState(null);
+            const [msg, setMsg] = React.useState({ type: '', text: '' });
 
-            const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+            const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
             const handleRegister = async (e) => {
                 e.preventDefault();
-                setLoading(true);
+                setLoading(true); setMsg({ type: '', text: '' });
                 
-                const { data, error } = await supabase.auth.signUp({
-                    email: formData.email,
-                    password: formData.password,
-                    options: {
-                        data: { full_name: formData.fullName, role: formData.role }
-                    }
+                const { error } = await supabase.auth.signUp({
+                    email: form.email,
+                    password: form.password,
+                    options: { data: { full_name: form.fullName, role: form.role } }
                 });
 
                 setLoading(false);
-                if (error) {
-                    setMessage(error.message);
-                } else {
-                    setMessage("Registration successful! Redirecting...");
-                    setTimeout(() => onLogin(), 1500);
-                }
+                if (error) setMsg({ type: 'error', text: error.message });
+                else setMsg({ type: 'success', text: 'Registration successful! Please check email or login.' });
             };
 
-            return React.createElement('div', { className: "min-h-screen flex items-center justify-center bg-slate-50 p-4" },
-                React.createElement('div', { className: "bg-white p-8 rounded-2xl shadow-lg w-full max-w-md" },
-                    React.createElement('h2', { className: "text-2xl font-bold text-gray-800 mb-6 text-center" }, "Create Account"),
+            return (
+                <div className="min-h-screen flex items-center justify-center bg-slate-100 p-4">
+                    <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-slate-200">
+                        <h2 className="text-2xl font-bold text-gray-800 mb-1">Create Account</h2>
+                        <p className="text-gray-500 text-sm mb-5">Join the Radiology Network</p>
 
-                    message && React.createElement('div', { className: "bg-green-100 text-green-600 p-3 rounded-lg mb-4 text-sm" }, message),
+                        {msg.text && <div className={`p-3 rounded-lg mb-4 text-sm ${msg.type === 'error' ? 'bg-red-50 text-red-600' : 'bg-green-50 text-green-600'}`}>{msg.text}</div>}
 
-                    React.createElement('form', { onSubmit: handleRegister, className: "space-y-4" },
-                        React.createElement('input', { name: "fullName", placeholder: "Full Name", required: true, onChange: handleChange, className: "w-full px-4 py-3 border rounded-lg" }),
-                        React.createElement('input', { name: "email", type: "email", placeholder: "Email", required: true, onChange: handleChange, className: "w-full px-4 py-3 border rounded-lg" }),
-                        React.createElement('input', { name: "password", type: "password", placeholder: "Password", required: true, onChange: handleChange, className: "w-full px-4 py-3 border rounded-lg" }),
-                        React.createElement('select', { name: "role", onChange: handleChange, className: "w-full px-4 py-3 border rounded-lg bg-white" },
-                            React.createElement('option', { value: "student" }, "Student"),
-                            React.createElement('option', { value: "technologist" }, "Technologist"),
-                            React.createElement('option', { value: "hospital" }, "Hospital")
-                        ),
-                        React.createElement('button', { type: "submit", disabled: loading, className: "w-full py-3 bg-accent-500 text-white rounded-lg font-semibold hover:bg-green-600" }, loading ? "Registering..." : "Register")
-                    ),
+                        <form onSubmit={handleRegister} className="space-y-3">
+                            <input name="fullName" placeholder="Full Name" required onChange={handleChange} className="w-full px-4 py-3 rounded-lg border border-slate-300 outline-none focus:ring-2 focus:ring-primary-500" />
+                            <input name="email" type="email" placeholder="Email" required onChange={handleChange} className="w-full px-4 py-3 rounded-lg border border-slate-300 outline-none focus:ring-2 focus:ring-primary-500" />
+                            <input name="password" type="password" placeholder="Password (min 6 chars)" required onChange={handleChange} className="w-full px-4 py-3 rounded-lg border border-slate-300 outline-none focus:ring-2 focus:ring-primary-500" />
+                            <select name="role" onChange={handleChange} className="w-full px-4 py-3 rounded-lg border border-slate-300 outline-none focus:ring-2 focus:ring-primary-500 bg-white">
+                                <option value="student">Student</option>
+                                <option value="technologist">Technologist</option>
+                                <option value="hospital">Hospital/Diagnostic</option>
+                            </select>
+                            <button type="submit" disabled={loading} className="w-full py-3 bg-accent-500 text-white rounded-lg font-semibold hover:bg-teal-600 transition shadow-md">
+                                {loading ? 'Creating...' : 'Register'}
+                            </button>
+                        </form>
 
-                    React.createElement('p', { className: "mt-4 text-center text-gray-500 text-sm" },
-                        "Already have an account? ",
-                        React.createElement('button', { onClick: onSwitch, className: "text-primary-500 font-semibold hover:underline" }, "Login")
-                    )
-                )
+                        <p className="mt-4 text-center text-gray-600 text-sm">
+                            Already have an account? <button onClick={() => onSwitch('login')} className="text-primary-500 font-semibold hover:underline">Login</button>
+                        </p>
+                    </div>
+                </div>
             );
         };
 
-        // 3. Dashboard Component (After Login)
-        const Dashboard = ({ user, onLogout }) => {
-            return React.createElement('div', { className: "min-h-screen bg-slate-50 p-8" },
-                React.createElement('div', { className: "max-w-4xl mx-auto bg-white p-8 rounded-xl shadow" },
-                    React.createElement('h1', { className: "text-2xl font-bold text-gray-800 mb-4" }, "Dashboard"),
-                    React.createElement('p', { className: "text-gray-600 mb-2" }, `Welcome, ${user?.email || 'User'}!`),
-                    React.createElement('div', { className: "bg-green-100 text-green-700 p-4 rounded-lg mb-6" }, "✅ Successfully Logged In & Database Connected!"),
-                    React.createElement('button', { onClick: onLogout, className: "px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600" }, "Logout")
-                )
+        const ForgotPassword = ({ onSwitch }) => {
+            const [email, setEmail] = React.useState('');
+            const [loading, setLoading] = React.useState(false);
+            const [msg, setMsg] = React.useState('');
+
+            const handleReset = async (e) => {
+                e.preventDefault();
+                setLoading(true);
+                const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin });
+                setLoading(false);
+                if (error) setMsg(error.message);
+                else setMsg('Password reset email sent! Check your inbox.');
+            };
+
+            return (
+                <div className="min-h-screen flex items-center justify-center bg-slate-100 p-4">
+                    <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-slate-200">
+                        <button onClick={() => onSwitch('login')} className="flex items-center text-primary-500 mb-4 hover:underline text-sm"><Icons.Back /> <span className="ml-1">Back to Login</span></button>
+                        <h2 className="text-2xl font-bold text-gray-800 mb-2">Reset Password</h2>
+                        <p className="text-gray-500 text-sm mb-5">Enter your email to receive reset instructions.</p>
+                        
+                        {msg && <div className="bg-blue-50 text-blue-600 p-3 rounded-lg mb-4 text-sm">{msg}</div>}
+
+                        <form onSubmit={handleReset} className="space-y-4">
+                            <input type="email" placeholder="Your Email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-4 py-3 rounded-lg border border-slate-300 outline-none" required />
+                            <button type="submit" disabled={loading} className="w-full py-3 bg-primary-500 text-white rounded-lg font-semibold">{loading ? 'Sending...' : 'Send Reset Link'}</button>
+                        </form>
+                    </div>
+                </div>
             );
         };
 
-        // 4. Main App Controller
+        // --- Dashboard Components ---
+
+        const Sidebar = ({ currentPage, setPage }) => {
+            const menuItems = [
+                { id: 'dashboard', name: 'Dashboard', icon: <Icons.Home /> },
+                { id: 'hospitals', name: 'Hospital Directory', icon: <Icons.Hospital /> },
+                { id: 'procedures', name: 'Procedures', icon: <Icons.Book /> },
+                { id: 'jobs', name: 'Job Portal', icon: <Icons.Briefcase /> },
+                { id: 'profile', name: 'My Profile', icon: <Icons.User /> },
+            ];
+
+            return (
+                <div className="w-64 bg-white h-screen fixed left-0 top-0 border-r border-slate-200 flex flex-col shadow-sm">
+                    <div className="p-6 border-b border-slate-100">
+                        <div className="flex items-center space-x-3">
+                            <div className="w-10 h-10 bg-primary-500 rounded-xl flex items-center justify-center text-white font-bold text-xl">B</div>
+                            <span className="font-bold text-xl text-gray-800">BRITN</span>
+                        </div>
+                    </div>
+                    <nav className="flex-1 p-4 space-y-1">
+                        {menuItems.map(item => (
+                            <button key={item.id} onClick={() => setPage(item.id)} className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${currentPage === item.id ? 'bg-primary-50 text-primary-600 font-semibold' : 'text-gray-500 hover:bg-slate-50'}`}>
+                                {item.icon}
+                                <span>{item.name}</span>
+                            </button>
+                        ))}
+                    </nav>
+                </div>
+            );
+        };
+
+        const DashboardContent = ({ user, setPage }) => {
+            const stats = [
+                { label: 'Total Hospitals', value: '500+', color: 'bg-blue-500' },
+                { label: 'Procedures', value: '150+', color: 'bg-green-500' },
+                { label: 'Active Jobs', value: '45', color: 'bg-yellow-500' },
+                { label: 'Members', value: '2,000+', color: 'bg-purple-500' }
+            ];
+
+            return (
+                <div>
+                    <h1 className="text-2xl font-bold text-gray-800 mb-6">Welcome back, {user.user_metadata?.full_name || 'User'}!</h1>
+                    
+                    {/* Stats Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        {stats.map((stat, i) => (
+                            <div key={i} className="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                                <div className={`w-10 h-10 ${stat.color} rounded-lg mb-3 opacity-80`}></div>
+                                <p className="text-gray-500 text-sm">{stat.label}</p>
+                                <p className="text-2xl font-bold text-gray-800">{stat.value}</p>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Quick Links */}
+                    <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                        <h3 className="font-semibold text-gray-700 mb-4">Quick Actions</h3>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            <button onClick={() => setPage('hospitals')} className="p-4 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 text-sm font-medium">Find Hospital</button>
+                            <button onClick={() => setPage('procedures')} className="p-4 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 text-sm font-medium">View Procedures</button>
+                            <button onClick={() => setPage('jobs')} className="p-4 bg-yellow-50 text-yellow-600 rounded-lg hover:bg-yellow-100 text-sm font-medium">Browse Jobs</button>
+                            <button onClick={() => setPage('profile')} className="p-4 bg-purple-50 text-purple-600 rounded-lg hover:bg-purple-100 text-sm font-medium">Edit Profile</button>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const HospitalsContent = () => {
+            const [hospitals, setHospitals] = React.useState([]);
+            const [loading, setLoading] = React.useState(true);
+
+            React.useEffect(() => {
+                supabase.from('hospitals').select('id, name, district_id, address').limit(10).then(({ data }) => {
+                    setHospitals(data || []);
+                    setLoading(false);
+                });
+            }, []);
+
+            return (
+                <div>
+                    <h2 className="text-2xl font-bold text-gray-800 mb-6">Hospital Directory</h2>
+                    <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+                        {loading ? <p className="p-6 text-gray-500">Loading...</p> : 
+                         <table className="w-full">
+                             <thead className="bg-slate-50 border-b">
+                                 <tr>
+                                     <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase">Name</th>
+                                     <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase">Address</th>
+                                 </tr>
+                             </thead>
+                             <tbody className="divide-y">
+                                 {hospitals.map(h => (
+                                     <tr key={h.id} className="hover:bg-slate-50">
+                                         <td className="px-6 py-4 font-medium text-gray-800">{h.name}</td>
+                                         <td className="px-6 py-4 text-gray-500">{h.address}</td>
+                                     </tr>
+                                 ))}
+                             </tbody>
+                         </table>}
+                    </div>
+                </div>
+            );
+        };
+
+        const ProceduresContent = () => {
+            const [items, setItems] = React.useState([]);
+            
+            React.useEffect(() => {
+                supabase.from('procedures').select('id, name, body_part, category').limit(20).then(({ data }) => setItems(data || []));
+            }, []);
+
+            return (
+                <div>
+                    <h2 className="text-2xl font-bold text-gray-800 mb-6">Positioning Library</h2>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {items.map(p => (
+                            <div key={p.id} className="bg-white p-4 rounded-xl shadow-sm border border-slate-100 card-hover cursor-pointer">
+                                <h3 className="font-semibold text-gray-800">{p.name}</h3>
+                                <p className="text-sm text-gray-500">{p.body_part} - {p.category}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const JobsContent = () => {
+            const [jobs, setJobs] = React.useState([]);
+
+            React.useEffect(() => {
+                supabase.from('jobs').select('id, title, location, status').eq('status', 'open').then(({ data }) => setJobs(data || []));
+            }, []);
+
+            return (
+                <div>
+                    <h2 className="text-2xl font-bold text-gray-800 mb-6">Open Jobs</h2>
+                    <div className="space-y-4">
+                        {jobs.map(job => (
+                            <div key={job.id} className="bg-white p-5 rounded-xl shadow-sm border border-slate-100 flex justify-between items-center">
+                                <div>
+                                    <h3 className="font-semibold text-gray-800">{job.title}</h3>
+                                    <p className="text-sm text-gray-500">{job.location}</p>
+                                </div>
+                                <span className="px-3 py-1 bg-green-100 text-green-600 rounded-full text-xs font-semibold">{job.status}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const ProfileContent = ({ user }) => {
+            return (
+                <div>
+                    <h2 className="text-2xl font-bold text-gray-800 mb-6">My Profile</h2>
+                    <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 max-w-2xl">
+                        <div className="space-y-4">
+                            <div>
+                                <label className="text-sm text-gray-500">Full Name</label>
+                                <input type="text" defaultValue={user.user_metadata?.full_name} className="w-full mt-1 px-4 py-2 border rounded-lg bg-slate-50" />
+                            </div>
+                            <div>
+                                <label className="text-sm text-gray-500">Email</label>
+                                <input type="email" defaultValue={user.email} className="w-full mt-1 px-4 py-2 border rounded-lg bg-slate-50" disabled />
+                            </div>
+                            <div>
+                                <label className="text-sm text-gray-500">Role</label>
+                                <input type="text" defaultValue={user.user_metadata?.role} className="w-full mt-1 px-4 py-2 border rounded-lg bg-slate-50 capitalize" disabled />
+                            </div>
+                            <button className="px-6 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600">Update Profile</button>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // --- Main App Controller ---
         const App = () => {
-            const [view, setView] = React.useState('home'); // home, login, register, dashboard
             const [user, setUser] = React.useState(null);
+            const [view, setView] = React.useState('login'); // login, register, forgot, app
+            const [page, setPage] = React.useState('dashboard'); // dashboard pages
 
-            // Check session on load
             React.useEffect(() => {
                 supabase.auth.getSession().then(({ data: { session } }) => {
-                    if (session) {
-                        setUser(session.user);
-                        setView('dashboard');
-                    }
+                    if (session) { setUser(session.user); setView('app'); }
                 });
-                
-                // Listen for auth changes
                 const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-                    if (session) {
-                        setUser(session.user);
-                        setView('dashboard');
-                    } else {
-                        setUser(null);
-                        setView('home');
-                    }
+                    if (session) { setUser(session.user); setView('app'); } 
+                    else { setUser(null); setView('login'); }
                 });
-
                 return () => subscription.unsubscribe();
             }, []);
 
             const handleLogout = async () => {
                 await supabase.auth.signOut();
-                setUser(null);
-                setView('home');
             };
 
-            // Simple Routing Logic
-            if (view === 'dashboard' && user) return React.createElement(Dashboard, { user, onLogout: handleLogout });
-            if (view === 'login') return React.createElement(LoginPage, { onSwitch: () => setView('register'), onLogin: () => setView('dashboard') });
-            if (view === 'register') return React.createElement(RegisterPage, { onSwitch: () => setView('login'), onLogin: () => setView('dashboard') });
+            if (view === 'login') return <Login onSwitch={setView} onLogin={() => setView('app')} />;
+            if (view === 'register') return <Register onSwitch={setView} />;
+            if (view === 'forgot') return <ForgotPassword onSwitch={setView} />;
 
-            // Home View
-            return React.createElement('div', { className: "min-h-screen bg-slate-50 flex flex-col items-center justify-center p-8 text-center" },
-                React.createElement('div', { className: "w-20 h-20 bg-primary-500 rounded-2xl flex items-center justify-center text-white text-4xl font-bold mb-6 shadow-lg" }, "B"),
-                React.createElement('h1', { className: "text-4xl font-bold text-gray-800 mb-2" }, "Welcome to BRITN"),
-                React.createElement('p', { className: "text-gray-500 mb-8" }, "Bangladesh Radiology & Imaging Techanologist Network"),
-                React.createElement('div', { className: "flex space-x-4" },
-                    React.createElement('button', { onClick: () => setView('login'), className: "px-6 py-3 bg-primary-500 text-white rounded-lg font-semibold hover:bg-primary-600" }, "Login"),
-                    React.createElement('button', { onClick: () => setView('register'), className: "px-6 py-3 bg-white border text-gray-700 rounded-lg font-semibold hover:bg-gray-50" }, "Register")
-                )
+            // Main App Layout
+            return (
+                <div className="flex bg-slate-100 min-h-screen">
+                    <Sidebar currentPage={page} setPage={setPage} />
+                    
+                    <div className="ml-64 flex-1 p-8">
+                        {/* Header Bar */}
+                        <div className="flex justify-end mb-8">
+                            <button onClick={handleLogout} className="flex items-center space-x-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-gray-600 hover:bg-red-50 hover:text-red-600 hover:border-red-100 transition">
+                                <Icons.Logout />
+                                <span>Logout</span>
+                            </button>
+                        </div>
+
+                        {/* Page Content */}
+                        <div className="fade-in">
+                            {page === 'dashboard' && <DashboardContent user={user} setPage={setPage} />}
+                            {page === 'hospitals' && <HospitalsContent />}
+                            {page === 'procedures' && <ProceduresContent />}
+                            {page === 'jobs' && <JobsContent />}
+                            {page === 'profile' && <ProfileContent user={user} />}
+                        </div>
+                    </div>
+                </div>
             );
         };
 
         // Render
         const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(React.createElement(App));
+        root.render(<App />);
     </script>
 </body>
 </html>
