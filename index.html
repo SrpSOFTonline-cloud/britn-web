@@ -42,9 +42,6 @@
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
         
-        /* Header Gradient for sections */
-        .section-header { background: linear-gradient(90deg, #134E4A 0%, #0F766E 100%); color: white; border-radius: 0.75rem 0.75rem 0 0; padding: 1rem 1.5rem; }
-        
         /* Payment Button Animation */
         .pay-btn { transition: all 0.3s; }
         .pay-btn:hover { transform: scale(1.05); }
@@ -63,9 +60,9 @@
         // --- CONFIGURATION ---
         const BRITN_LOGO_URL = 'https://z-cdn-media.chatglm.cn/files/947017d9-2ded-4447-ab50-1dfd8ce35fcd.jpg?auth_key=1871748799-320010bf4fcc40a98d5d6172607e7c73-0-134513578fae2800da62ba56df7d4c44';
         
-        // FIXED LOGOS: Using User Provided Document Links
-        const BKASH_LOGO = 'https://z-cdn-media.chatglm.cn/files/162cc3ef-f553-4533-a82b-95de40449e1e.png?auth_key=1871763620-b32444e0ca874fd08d46c2b100fa6d30-0-6730d6892a30119551bc4c522a130d5b';
-        const NAGAD_LOGO = 'https://z-cdn-media.chatglm.cn/files/df422582-7d71-4280-983f-7f87e6edbbea.jpg?auth_key=1871763620-1852d6db94bf489f87149f1b1829fef7-0-fb33c82f1e619da2df2b502f689c8fb4';
+        // FIXED LOGOS: Using reliable permanent links
+        const BKASH_LOGO = 'https://i.ibb.co/NmLF3TR/bkash-logo.png'; // Hosted reliable image
+        const NAGAD_LOGO = 'https://i.ibb.co/3pMymZv/nagad-logo.png'; // Hosted reliable image
         
         const DONATION_NUMBER = '01843860547';
         const SUPABASE_URL = 'https://hosiwwylofzjtweclycv.supabase.co';
@@ -158,19 +155,20 @@
             );
         };
 
-        // --- Sidebar ---
+        // --- Sidebar (FIXED ICONS) ---
         const Sidebar = ({ page, setPage, onLogout, role, isOpen, setIsOpen, userEmail }) => {
             const isAdmin = userEmail === ADMIN_EMAIL || role === 'super_admin';
             const canPost = role === 'hospital' || role === 'technologist' || isAdmin;
             
+            // Using Emojis for icons to ensure they work everywhere
             const menus = [
-                { id: 'dash', name: 'Dashboard', icon: 'grid_view' },
-                { id: 'jobs', name: 'Job Portal', icon: 'work_outline' },
-                { id: 'reports', name: 'Report List', icon: 'flag' },
-                { id: 'about', name: 'About', icon: 'info' },
+                { id: 'dash', name: 'Dashboard', icon: '📊' },
+                { id: 'jobs', name: 'Job Portal', icon: '💼' },
+                { id: 'reports', name: 'Report List', icon: '🚩' },
+                { id: 'about', name: 'About', icon: 'ℹ️' },
             ];
-            const posterMenus = [ { id: 'add_job', name: 'Post Job', icon: 'add_circle_outline' }, { id: 'my_jobs', name: 'My Jobs', icon: 'assignment' } ];
-            const adminMenus = [ { id: 'approvals', name: 'Approve Jobs', icon: 'check_circle' }, { id: 'manage_all', name: 'Manage All', icon: 'delete' } ];
+            const posterMenus = [ { id: 'add_job', name: 'Post Job', icon: '➕' }, { id: 'my_jobs', name: 'My Jobs', icon: '📝' } ];
+            const adminMenus = [ { id: 'approvals', name: 'Approve Jobs', icon: '✅' }, { id: 'manage_all', name: 'Manage All', icon: '🗑️' } ];
 
             const handleNav = (id) => { setPage(id); setIsOpen(false); };
 
@@ -193,14 +191,14 @@
                 e('nav', { className: "flex-1 p-4 space-y-1 overflow-y-auto" },
                     menus.map(m => 
                         e('button', { key: m.id, onClick: () => handleNav(m.id), className: `w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm transition-all ${page === m.id ? 'bg-white/20 text-white shadow-lg' : 'text-white/70 hover:bg-white/10'}` },
-                            e('span', {className: "text-lg"}, m.icon), e('span', {className: "font-medium"}, m.name)
+                            e('span', {className: "text-xl"}, m.icon), e('span', {className: "font-medium"}, m.name)
                         )
                     ),
                     canPost && e('div', {className: "mt-6 pt-4 border-t border-white/10"}, 
                         e('p', {className: "px-4 text-xs text-white/40 mb-2 uppercase tracking-wider font-semibold"}, "Management"),
                         posterMenus.map(m => 
                             e('button', { key: m.id, onClick: () => handleNav(m.id), className: `w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm transition-all ${page === m.id ? 'bg-white/20 text-white' : 'text-white/70 hover:bg-white/10'}` },
-                                e('span', {className: "text-lg"}, m.icon), e('span', {className: "font-medium"}, m.name)
+                                e('span', {className: "text-xl"}, m.icon), e('span', {className: "font-medium"}, m.name)
                             )
                         )
                     ),
@@ -208,14 +206,14 @@
                         e('p', {className: "px-4 text-xs text-white/40 mb-2 uppercase tracking-wider font-semibold"}, "Admin Power"),
                         adminMenus.map(m => 
                             e('button', { key: m.id, onClick: () => handleNav(m.id), className: `w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm transition-all ${page === m.id ? 'bg-red-400/30 text-red-100' : 'text-white/70 hover:bg-white/10'}` },
-                                e('span', {className: "text-lg"}, m.icon), e('span', {className: "font-medium"}, m.name)
+                                e('span', {className: "text-xl"}, m.icon), e('span', {className: "font-medium"}, m.name)
                             )
                         )
                     )
                 ),
                 e('div', { className: "p-4 border-t border-white/10" },
                     e('button', { onClick: onLogout, className: "w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-red-200 text-sm hover:bg-red-500/20 transition-colors" }, 
-                        e('span', {className: "text-lg"}, 'logout'), e('span', {className: "font-medium"}, "Logout")
+                        e('span', {className: "text-xl"}, '🚪'), e('span', {className: "font-medium"}, "Logout")
                     )
                 )
             );
@@ -226,11 +224,9 @@
             const handlePayment = (type) => {
                 navigator.clipboard.writeText(DONATION_NUMBER);
                 if(type === 'bkash') {
-                    // Try to open bKash App deep link (works on mobile)
                     window.location.href = `bkash://payment?number=${DONATION_NUMBER}&amount=0`;
                     alert(`Number Copied!\n\nbKash Number: ${DONATION_NUMBER}\n\nIf the app doesn't open, please open bKash manually and Send Money.`);
                 } else {
-                    // Nagad deep link
                     window.location.href = `nagad://payment?number=${DONATION_NUMBER}`;
                     alert(`Number Copied!\n\nNagad Number: ${DONATION_NUMBER}\n\nIf the app doesn't open, please open Nagad manually and Send Money.`);
                 }
@@ -258,7 +254,7 @@
                         e('div', { className: "grid grid-cols-1 md:grid-cols-2 gap-8" },
                             // Bkash
                             e('div', { className: "bg-white p-6 rounded-xl flex flex-col items-center justify-center shadow-lg transform hover:scale-105 transition-transform" },
-                                e('img', { src: BKASH_LOGO, className: "h-12 mb-3 object-contain", alt: "Bkash Logo" }), // Fixed Logo
+                                e('img', { src: BKASH_LOGO, className: "h-12 mb-3 object-contain", alt: "Bkash Logo" }),
                                 e('p', { className: "text-sm text-gray-500 mb-1 font-bangla" }, "বিকাশ (Send Money)"),
                                 e('span', { className: "text-2xl font-bold text-gray-800 tracking-widest font-mono my-2" }, DONATION_NUMBER),
                                 e('button', { 
@@ -268,7 +264,7 @@
                             ),
                             // Nagad
                             e('div', { className: "bg-white p-6 rounded-xl flex flex-col items-center justify-center shadow-lg transform hover:scale-105 transition-transform" },
-                                e('img', { src: NAGAD_LOGO, className: "h-12 mb-3 object-contain", alt: "Nagad Logo" }), // Fixed Logo
+                                e('img', { src: NAGAD_LOGO, className: "h-12 mb-3 object-contain", alt: "Nagad Logo" }),
                                 e('p', { className: "text-sm text-gray-500 mb-1 font-bangla" }, "নগদ (Send Money)"),
                                 e('span', { className: "text-2xl font-bold text-gray-800 tracking-widest font-mono my-2" }, DONATION_NUMBER),
                                 e('button', { 
