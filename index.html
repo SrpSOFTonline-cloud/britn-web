@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BRITN - Bangladesh Radiology Network</title>
+    <title>BRITN - Login & Register</title>
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -15,137 +15,208 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: { 500: '#0066CC', 600: '#0052A3', 100: '#DBEAFE', 900: '#001429' },
+                        primary: { 500: '#0066CC', 600: '#0052A3' },
                         accent: { 500: '#00B894' }
                     }
                 }
             }
         }
     </script>
-    
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; margin: 0; }
-        .dark body { background-color: #0F172A; }
-        /* Spinner for loading */
-        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #0066CC; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
-    <!-- React App Mount Point -->
-    <div id="root">
-        <div style="display:flex; height:100vh; align-items:center; justify-content:center; flex-direction:column;">
-            <div class="loader"></div>
-            <p style="margin-top:15px; color:#64748B;">Loading BRITN Platform...</p>
-        </div>
-    </div>
+    <div id="root" style="min-height: 100vh;"></div>
 
-    <!-- React, ReactDOM & Supabase from CDN -->
+    <!-- React & Supabase CDN -->
     <script type="module">
         import React from 'https://esm.sh/react@18.2.0';
         import ReactDOM from 'https://esm.sh/react-dom@18.2.0/client';
         import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-        // --- 1. Configuration (Directly embedded for easy fix) ---
+        // --- Configuration ---
         const SUPABASE_URL = 'https://hosiwwylofzjtweclycv.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhvc2l3d3lsb2Z6anR3ZWNseWN2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2NTc3ODgsImV4cCI6MjA4NzIzMzc4OH0.DkCioDXAQQYZm9NOhfsyuXvArR1TQjMMRf7OFv8FClA';
         
         const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // --- 2. React Components ---
-        
-        // Icon Component (Simple SVGs)
-        const Icons = {
-            Home: () => React.createElement('svg', { className:"w-6 h-6", fill:"none", viewBox:"0 0 24 24", stroke:"currentColor", strokeWidth:2 }, 
-                React.createElement('path', { strokeLinecap:"round", strokeLinejoin:"round", d:"M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" })
-            ),
-            Search: () => React.createElement('svg', { className:"w-5 h-5", fill:"none", viewBox:"0 0 24 24", stroke:"currentColor", strokeWidth:2 }, 
-                React.createElement('path', { strokeLinecap:"round", strokeLinejoin:"round", d:"M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" })
-            )
-        };
+        // --- Components ---
 
-        // Header Component
-        const Header = () => {
-            return React.createElement('nav', { className: "bg-white shadow-sm fixed top-0 left-0 right-0 z-50" },
-                React.createElement('div', { className: "max-w-7xl mx-auto px-4 h-16 flex items-center justify-between" },
-                    // Logo
-                    React.createElement('div', { className: "flex items-center space-x-2" },
-                        React.createElement('div', { className: "w-10 h-10 bg-primary-500 rounded-xl flex items-center justify-center text-white font-bold text-xl" }, "B"),
-                        React.createElement('span', { className: "font-bold text-xl text-gray-800" }, "BRITN")
+        // 1. Login Component
+        const LoginPage = ({ onSwitch, onLogin }) => {
+            const [email, setEmail] = React.useState('');
+            const [password, setPassword] = React.useState('');
+            const [loading, setLoading] = React.useState(false);
+            const [error, setError] = React.useState(null);
+
+            const handleLogin = async (e) => {
+                e.preventDefault();
+                setLoading(true);
+                setError(null);
+                
+                const { error } = await supabase.auth.signInWithPassword({ email, password });
+                
+                if (error) {
+                    setError(error.message);
+                    setLoading(false);
+                } else {
+                    onLogin(); // Switch to Dashboard
+                }
+            };
+
+            return React.createElement('div', { className: "min-h-screen flex items-center justify-center bg-slate-50 p-4" },
+                React.createElement('div', { className: "bg-white p-8 rounded-2xl shadow-lg w-full max-w-md" },
+                    React.createElement('h2', { className: "text-2xl font-bold text-gray-800 mb-6 text-center" }, "Login to BRITN"),
+                    
+                    error && React.createElement('div', { className: "bg-red-100 text-red-600 p-3 rounded-lg mb-4 text-sm" }, error),
+
+                    React.createElement('form', { onSubmit: handleLogin, className: "space-y-4" },
+                        React.createElement('input', { 
+                            type: "email", placeholder: "Email", required: true, value: email,
+                            onChange: (e) => setEmail(e.target.value),
+                            className: "w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
+                        }),
+                        React.createElement('input', { 
+                            type: "password", placeholder: "Password", required: true, value: password,
+                            onChange: (e) => setPassword(e.target.value),
+                            className: "w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
+                        }),
+                        React.createElement('button', { 
+                            type: "submit", disabled: loading,
+                            className: "w-full py-3 bg-primary-500 text-white rounded-lg font-semibold hover:bg-primary-600 disabled:opacity-50"
+                        }, loading ? "Logging in..." : "Login")
                     ),
-                    // Nav Links
-                    React.createElement('div', { className: "flex items-center space-x-4" },
-                        React.createElement('button', { className: "px-4 py-2 text-gray-600 hover:text-primary-500" }, "Login"),
-                        React.createElement('button', { className: "px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600" }, "Register")
+
+                    React.createElement('p', { className: "mt-4 text-center text-gray-500 text-sm" },
+                        "Don't have an account? ",
+                        React.createElement('button', { onClick: onSwitch, className: "text-primary-500 font-semibold hover:underline" }, "Register")
                     )
                 )
             );
         };
 
-        // Hero Section
-        const Hero = () => {
-            return React.createElement('div', { className: "pt-32 pb-16 px-4 text-center" },
-                React.createElement('h1', { className: "text-4xl md:text-5xl font-bold text-gray-900 mb-4" }, 
-                    "Bangladesh Radiology Network"
-                ),
-                React.createElement('p', { className: "text-lg text-gray-500 mb-8 max-w-xl mx-auto" }, 
-                    "The comprehensive platform for radiology professionals, diagnostic centers, and students."
-                ),
-                // Search Bar
-                React.createElement('div', { className: "max-w-xl mx-auto relative" },
-                    React.createElement('div', { className: "absolute left-4 top-3 text-gray-400" }, React.createElement(Icons.Search)),
-                    React.createElement('input', { 
-                        type: "text", 
-                        placeholder: "Search hospitals, procedures, jobs...", 
-                        className: "w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-500 outline-none"
-                    })
-                )
-            );
-        };
+        // 2. Register Component
+        const RegisterPage = ({ onSwitch, onLogin }) => {
+            const [formData, setFormData] = React.useState({ fullName: '', email: '', password: '', role: 'student' });
+            const [loading, setLoading] = React.useState(false);
+            const [message, setMessage] = React.useState(null);
 
-        // Features Grid
-        const Features = () => {
-            const items = [
-                { title: "Hospital Directory", desc: "Find centers across Bangladesh", color: "bg-blue-100 text-blue-600" },
-                { title: "Positioning Library", desc: "150+ radiographic procedures", color: "bg-green-100 text-green-600" },
-                { title: "Job Portal", desc: "Career opportunities", color: "bg-yellow-100 text-yellow-600" },
-                { title: "Safety Tools", desc: "Dose calculators", color: "bg-red-100 text-red-600" }
-            ];
+            const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-            return React.createElement('div', { className: "max-w-7xl mx-auto px-4 py-12 grid md:grid-cols-2 lg:grid-cols-4 gap-6" },
-                items.map((item, i) => 
-                    React.createElement('div', { key: i, className: "bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition cursor-pointer border border-gray-100" },
-                        React.createElement('div', { className: `w-12 h-12 ${item.color} rounded-xl mb-4 flex items-center justify-center font-bold` }, item.title[0]),
-                        React.createElement('h3', { className: "font-semibold text-gray-800 mb-1" }, item.title),
-                        React.createElement('p', { className: "text-gray-500 text-sm" }, item.desc)
+            const handleRegister = async (e) => {
+                e.preventDefault();
+                setLoading(true);
+                
+                const { data, error } = await supabase.auth.signUp({
+                    email: formData.email,
+                    password: formData.password,
+                    options: {
+                        data: { full_name: formData.fullName, role: formData.role }
+                    }
+                });
+
+                setLoading(false);
+                if (error) {
+                    setMessage(error.message);
+                } else {
+                    setMessage("Registration successful! Redirecting...");
+                    setTimeout(() => onLogin(), 1500);
+                }
+            };
+
+            return React.createElement('div', { className: "min-h-screen flex items-center justify-center bg-slate-50 p-4" },
+                React.createElement('div', { className: "bg-white p-8 rounded-2xl shadow-lg w-full max-w-md" },
+                    React.createElement('h2', { className: "text-2xl font-bold text-gray-800 mb-6 text-center" }, "Create Account"),
+
+                    message && React.createElement('div', { className: "bg-green-100 text-green-600 p-3 rounded-lg mb-4 text-sm" }, message),
+
+                    React.createElement('form', { onSubmit: handleRegister, className: "space-y-4" },
+                        React.createElement('input', { name: "fullName", placeholder: "Full Name", required: true, onChange: handleChange, className: "w-full px-4 py-3 border rounded-lg" }),
+                        React.createElement('input', { name: "email", type: "email", placeholder: "Email", required: true, onChange: handleChange, className: "w-full px-4 py-3 border rounded-lg" }),
+                        React.createElement('input', { name: "password", type: "password", placeholder: "Password", required: true, onChange: handleChange, className: "w-full px-4 py-3 border rounded-lg" }),
+                        React.createElement('select', { name: "role", onChange: handleChange, className: "w-full px-4 py-3 border rounded-lg bg-white" },
+                            React.createElement('option', { value: "student" }, "Student"),
+                            React.createElement('option', { value: "technologist" }, "Technologist"),
+                            React.createElement('option', { value: "hospital" }, "Hospital")
+                        ),
+                        React.createElement('button', { type: "submit", disabled: loading, className: "w-full py-3 bg-accent-500 text-white rounded-lg font-semibold hover:bg-green-600" }, loading ? "Registering..." : "Register")
+                    ),
+
+                    React.createElement('p', { className: "mt-4 text-center text-gray-500 text-sm" },
+                        "Already have an account? ",
+                        React.createElement('button', { onClick: onSwitch, className: "text-primary-500 font-semibold hover:underline" }, "Login")
                     )
                 )
             );
         };
 
-        // Footer
-        const Footer = () => {
-            return React.createElement('footer', { className: "bg-gray-900 text-gray-400 py-8 mt-12 text-center text-sm" },
-                "© 2024 BRITN. All rights reserved."
+        // 3. Dashboard Component (After Login)
+        const Dashboard = ({ user, onLogout }) => {
+            return React.createElement('div', { className: "min-h-screen bg-slate-50 p-8" },
+                React.createElement('div', { className: "max-w-4xl mx-auto bg-white p-8 rounded-xl shadow" },
+                    React.createElement('h1', { className: "text-2xl font-bold text-gray-800 mb-4" }, "Dashboard"),
+                    React.createElement('p', { className: "text-gray-600 mb-2" }, `Welcome, ${user?.email || 'User'}!`),
+                    React.createElement('div', { className: "bg-green-100 text-green-700 p-4 rounded-lg mb-6" }, "✅ Successfully Logged In & Database Connected!"),
+                    React.createElement('button', { onClick: onLogout, className: "px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600" }, "Logout")
+                )
             );
         };
 
-        // Main App Component
+        // 4. Main App Controller
         const App = () => {
-            return React.createElement('div', null,
-                React.createElement(Header),
-                React.createElement('main', null,
-                    React.createElement(Hero),
-                    React.createElement(Features)
-                ),
-                React.createElement(Footer)
+            const [view, setView] = React.useState('home'); // home, login, register, dashboard
+            const [user, setUser] = React.useState(null);
+
+            // Check session on load
+            React.useEffect(() => {
+                supabase.auth.getSession().then(({ data: { session } }) => {
+                    if (session) {
+                        setUser(session.user);
+                        setView('dashboard');
+                    }
+                });
+                
+                // Listen for auth changes
+                const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+                    if (session) {
+                        setUser(session.user);
+                        setView('dashboard');
+                    } else {
+                        setUser(null);
+                        setView('home');
+                    }
+                });
+
+                return () => subscription.unsubscribe();
+            }, []);
+
+            const handleLogout = async () => {
+                await supabase.auth.signOut();
+                setUser(null);
+                setView('home');
+            };
+
+            // Simple Routing Logic
+            if (view === 'dashboard' && user) return React.createElement(Dashboard, { user, onLogout: handleLogout });
+            if (view === 'login') return React.createElement(LoginPage, { onSwitch: () => setView('register'), onLogin: () => setView('dashboard') });
+            if (view === 'register') return React.createElement(RegisterPage, { onSwitch: () => setView('login'), onLogin: () => setView('dashboard') });
+
+            // Home View
+            return React.createElement('div', { className: "min-h-screen bg-slate-50 flex flex-col items-center justify-center p-8 text-center" },
+                React.createElement('div', { className: "w-20 h-20 bg-primary-500 rounded-2xl flex items-center justify-center text-white text-4xl font-bold mb-6 shadow-lg" }, "B"),
+                React.createElement('h1', { className: "text-4xl font-bold text-gray-800 mb-2" }, "Welcome to BRITN"),
+                React.createElement('p', { className: "text-gray-500 mb-8" }, "Bangladesh Radiology & Imaging Techanologist Network"),
+                React.createElement('div', { className: "flex space-x-4" },
+                    React.createElement('button', { onClick: () => setView('login'), className: "px-6 py-3 bg-primary-500 text-white rounded-lg font-semibold hover:bg-primary-600" }, "Login"),
+                    React.createElement('button', { onClick: () => setView('register'), className: "px-6 py-3 bg-white border text-gray-700 rounded-lg font-semibold hover:bg-gray-50" }, "Register")
+                )
             );
         };
 
-        // --- 3. Render to DOM ---
+        // Render
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(React.createElement(App));
-
     </script>
 </body>
 </html>
