@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BRITN - Admin Controlled Platform</title>
+    <title>BRITN - Professional Platform</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -12,7 +12,8 @@
                 extend: {
                     colors: {
                         primary: { 500: '#0066CC', 600: '#0052A3', 100: '#DBEAFE' },
-                        accent: { 500: '#00B894' }
+                        accent: { 500: '#00B894' },
+                        danger: { 500: '#EF4444' }
                     }
                 }
             }
@@ -20,9 +21,12 @@
     </script>
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #F1F5F9; margin: 0; }
-        .sidebar { width: 260px; }
         .loader { border: 3px solid #f3f3f3; border-top: 3px solid #0066CC; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .star { cursor: pointer; font-size: 1.5rem; color: #cbd5e1; }
+        .star.active { color: #fbbf24; }
+        /* Sidebar Transition */
+        .sidebar-transition { transition: transform 0.3s ease-in-out; }
     </style>
 </head>
 <body>
@@ -35,394 +39,300 @@
         import ReactDOM from 'https://esm.sh/react-dom@18.2.0/client';
         import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-        // --- Config ---
+        // --- CONFIGURATION ---
+        const BRITN_LOGO_URL = 'https://z-cdn-media.chatglm.cn/files/947017d9-2ded-4447-ab50-1dfd8ce35fcd.jpg?auth_key=1871748799-320010bf4fcc40a98d5d6172607e7c73-0-134513578fae2800da62ba56df7d4c44';
+        
+        // পেমেন্ট লোগোর লিংক (বিকাশ ও নগদ)
+        const BKASH_LOGO = 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/BKash_Logo_icon.svg/1200px-BKash_Logo_icon.svg.png';
+        const NAGAD_LOGO = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Nagad-Logo.wine.svg/1200px-Nagad-Logo.wine.svg.png';
+        
+        const DONATION_NUMBER = '01843860547';
         const SUPABASE_URL = 'https://hosiwwylofzjtweclycv.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhvc2l3d3lsb2Z6anR3ZWNseWN2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2NTc3ODgsImV4cCI6MjA4NzIzMzc4OH0.DkCioDXAQQYZm9NOhfsyuXvArR1TQjMMRf7OFv8FClA';
         const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
         
-        // Admin Credentials for logic check
         const ADMIN_EMAIL = 'admin@britn.com';
-
         const e = React.createElement;
 
-        // --- Auth Components ---
+        const safeFetch = async (query) => {
+            try {
+                const { data, error } = await query;
+                if (error) throw error;
+                return data || [];
+            } catch (err) { console.error("Fetch Error:", err); return []; }
+        };
 
-        const LoginScreen = ({ onSwitch }) => {
-            const [email, setEmail] = React.useState('');
-            const [pass, setPass] = React.useState('');
+        // --- Auth Screen ---
+        const AuthScreen = ({ type, onSwitch, onSuccess }) => {
+            const [form, setForm] = React.useState({ email: '', pass: '', name: '', role: 'student' });
             const [error, setError] = React.useState('');
-            const [loading, setLoading] = React.useState(false);
-
-            const handleLogin = async (ev) => {
-                ev.preventDefault();
-                setLoading(true); setError('');
-                
-                const { data, error } = await supabase.auth.signInWithPassword({ email, password: pass });
-                
-                if (error) {
-                    setError(error.message);
-                    setLoading(false);
-                    return;
-                }
-                
-                // Check if user exists in users table and has role
-                // Logic handled in App.jsx effect
+            
+            const handleAuth = async (ev) => {
+                ev.preventDefault(); setError('');
+                try {
+                    if (type === 'login') {
+                        const { error } = await supabase.auth.signInWithPassword({ email: form.email, password: form.pass });
+                        if (error) throw error;
+                        onSuccess();
+                    } else {
+                        if (form.email === ADMIN_EMAIL) throw new Error("Cannot register with Admin Email.");
+                        const { error } = await supabase.auth.signUp({
+                            email: form.email, password: form.pass,
+                            options: { data: { full_name: form.name, role: form.role } }
+                        });
+                        if (error) throw error;
+                        alert("Registered! Please login.");
+                    }
+                } catch (err) { setError(err.message); }
             };
 
             return e('div', { className: "min-h-screen flex items-center justify-center bg-slate-100 p-4" },
-                e('div', { className: "bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-slate-200" },
+                e('div', { className: "bg-white p-6 md:p-8 rounded-2xl shadow-xl w-full max-w-md border" },
                     e('div', { className: "text-center mb-6" },
-                        e('div', { className: "w-16 h-16 bg-primary-500 rounded-2xl flex items-center justify-center text-white text-3xl font-bold mx-auto mb-3" }, "B"),
-                        e('h2', { className: "text-2xl font-bold text-gray-800" }, "Login to BRITN"),
-                        e('p', { className: "text-gray-500 text-xs mt-1" }, "User, Hospital & Admin Portal")
+                        e('img', { src: BRITN_LOGO_URL, alt: "Logo", className: "w-20 h-20 object-contain mx-auto mb-3 rounded-xl" }),
+                        e('h2', { className: "text-xl md:text-2xl font-bold" }, type === 'login' ? "Login" : "Register")
                     ),
-                    error && e('div', { className: "bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm" }, error),
-                    e('form', { onSubmit: handleLogin, className: "space-y-4" },
-                        e('input', { type: "email", placeholder: "Email", value: email, onChange: (ev) => setEmail(ev.target.value), className: "w-full px-4 py-3 rounded-lg border border-slate-300 outline-none focus:ring-2 focus:ring-primary-500", required: true }),
-                        e('input', { type: "password", placeholder: "Password", value: pass, onChange: (ev) => setPass(ev.target.value), className: "w-full px-4 py-3 rounded-lg border border-slate-300 outline-none focus:ring-2 focus:ring-primary-500", required: true }),
-                        e('button', { type: "submit", disabled: loading, className: "w-full py-3 bg-primary-500 text-white rounded-lg font-semibold hover:bg-primary-600 disabled:opacity-50" }, 
-                            loading ? "Checking..." : "Login"
+                    error && e('div', { className: "bg-red-100 text-red-600 p-2 rounded mb-3 text-sm" }, error),
+                    e('form', { onSubmit: handleAuth, className: "space-y-3" },
+                        type === 'register' && e('input', { placeholder: "Full Name", onChange: (ev) => setForm({...form, name: ev.target.value}), className: "w-full px-3 py-2 border rounded-lg text-sm", required: true }),
+                        e('input', { type: "email", placeholder: "Email", value: form.email, onChange: (ev) => setForm({...form, email: ev.target.value}), className: "w-full px-3 py-2 border rounded-lg text-sm", required: true }),
+                        e('input', { type: "password", placeholder: "Password", value: form.pass, onChange: (ev) => setForm({...form, pass: ev.target.value}), className: "w-full px-3 py-2 border rounded-lg text-sm", required: true }),
+                        type === 'register' && e('select', { onChange: (ev) => setForm({...form, role: ev.target.value}), className: "w-full px-3 py-2 border rounded-lg bg-white text-sm" },
+                            e('option', { value: "student" }, "Student"),
+                            e('option', { value: "technologist" }, "Technologist"),
+                            e('option', { value: "hospital" }, "Hospital")
                         ),
-                        e('p', { className: "text-center text-sm mt-4" },
-                            e('button', { type: "button", onClick: () => onSwitch('forgot'), className: "text-gray-500 hover:underline" }, "Forgot Password?")
-                        )
+                        e('button', { type: "submit", className: "w-full py-2 bg-primary-500 text-white rounded-lg font-semibold text-sm" }, type === 'login' ? "Login" : "Register")
                     ),
-                    e('div', { className: "mt-6 pt-4 border-t text-center" },
-                        e('p', { className: "text-gray-600 text-sm" }, "New User or Hospital?"),
-                        e('button', { onClick: () => onSwitch('register'), className: "mt-2 text-primary-500 font-semibold hover:underline" }, "Register Here")
+                    e('p', { className: "mt-4 text-center text-xs md:text-sm text-gray-500" },
+                        type === 'login' ? "No account? " : "Have account? ",
+                        e('button', { type: "button", onClick: () => onSwitch(type === 'login' ? 'register' : 'login'), className: "text-primary-500 font-semibold" }, type === 'login' ? "Register" : "Login")
                     )
                 )
             );
         };
 
-        const RegisterScreen = ({ onSwitch }) => {
-            const [form, setForm] = React.useState({ fullName: '', email: '', password: '', role: 'student' });
-            const [msg, setMsg] = React.useState({ type: '', text: '' });
-
-            const handleChange = (ev) => setForm({ ...form, [ev.target.name]: ev.target.value });
-
-            const handleRegister = async (ev) => {
-                ev.preventDefault();
-                if(form.email === ADMIN_EMAIL) {
-                    setMsg({ type: 'error', text: 'Cannot register with this Admin email.' });
-                    return;
-                }
-
-                const { error } = await supabase.auth.signUp({
-                    email: form.email,
-                    password: form.password,
-                    options: { data: { full_name: form.fullName, role: form.role } }
-                });
-                if (error) setMsg({ type: 'error', text: error.message });
-                else setMsg({ type: 'success', text: 'Success! Check email or try login.' });
-            };
-
-            return e('div', { className: "min-h-screen flex items-center justify-center bg-slate-100 p-4" },
-                e('div', { className: "bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-slate-200" },
-                    e('h2', { className: "text-2xl font-bold text-gray-800 mb-4" }, "Create Account"),
-                    e('p', { className: "text-sm text-gray-500 mb-4" }, "User & Hospital Registration"),
-                    msg.text && e('div', { className: `p-3 rounded-lg mb-4 text-sm ${msg.type === 'error' ? 'bg-red-50 text-red-600' : 'bg-green-50 text-green-600'}` }, msg.text),
-                    e('form', { onSubmit: handleRegister, className: "space-y-3" },
-                        e('input', { name: "fullName", placeholder: "Full Name / Hospital Name", onChange: handleChange, className: "w-full px-4 py-3 rounded-lg border outline-none", required: true }),
-                        e('input', { name: "email", type: "email", placeholder: "Email", onChange: handleChange, className: "w-full px-4 py-3 rounded-lg border outline-none", required: true }),
-                        e('input', { name: "password", type: "password", placeholder: "Password", onChange: handleChange, className: "w-full px-4 py-3 rounded-lg border outline-none", required: true }),
-                        e('select', { name: "role", onChange: handleChange, className: "w-full px-4 py-3 rounded-lg border outline-none bg-white font-medium" },
-                            e('option', { value: "student" }, "Student (User)"),
-                            e('option', { value: "technologist" }, "Technologist (User)"),
-                            e('option', { value: "hospital" }, "Hospital (Can Post Jobs)")
-                        ),
-                        e('button', { type: "submit", className: "w-full py-3 bg-accent-500 text-white rounded-lg font-semibold" }, "Register")
-                    ),
-                    e('p', { className: "mt-4 text-center text-sm" },
-                        "Have an account? ",
-                        e('button', { onClick: () => onSwitch('login'), className: "text-primary-500 font-semibold" }, "Login")
-                    )
-                )
-            );
-        };
-
-        const ForgotScreen = ({ onSwitch }) => {
-            const [email, setEmail] = React.useState('');
-            const [msg, setMsg] = React.useState('');
-
-            const handleReset = async (ev) => {
-                ev.preventDefault();
-                const { error } = await supabase.auth.resetPasswordForEmail(email);
-                if (error) setMsg(error.message);
-                else setMsg("Reset link sent! Check inbox.");
-            };
-
-            return e('div', { className: "min-h-screen flex items-center justify-center bg-slate-100 p-4" },
-                e('div', { className: "bg-white p-8 rounded-2xl shadow-xl w-full max-w-md" },
-                    e('h2', { className: "text-2xl font-bold mb-4" }, "Reset Password"),
-                    msg && e('div', { className: "bg-blue-50 text-blue-600 p-3 rounded mb-4 text-sm" }, msg),
-                    e('form', { onSubmit: handleReset, className: "space-y-4" },
-                        e('input', { type: "email", placeholder: "Your Email", value: email, onChange: (ev) => setEmail(ev.target.value), className: "w-full px-4 py-3 rounded-lg border outline-none", required: true }),
-                        e('button', { type: "submit", className: "w-full py-3 bg-primary-500 text-white rounded-lg" }, "Send Link"),
-                        e('button', { type: "button", onClick: () => onSwitch('login'), className: "w-full py-3 text-gray-600" }, "Back to Login")
-                    )
-                )
-            );
-        };
-
-        // --- Dashboard Components ---
-
-        const Sidebar = ({ page, setPage, onLogout, role }) => {
+        // --- Sidebar (Mobile Ready) ---
+        const Sidebar = ({ page, setPage, onLogout, role, isOpen, setIsOpen }) => {
             const isAdmin = role === 'super_admin';
-            const isHospital = role === 'hospital';
-
-            const userMenus = [
+            const canPost = role === 'hospital' || role === 'technologist';
+            
+            const menus = [
                 { id: 'dash', name: 'Dashboard', icon: '🏠' },
-                { id: 'hosp', name: 'Hospitals', icon: '🏥' },
-                { id: 'proc', name: 'Procedures', icon: '📖' },
-                { id: 'jobs', name: 'Jobs', icon: '💼' },
-                { id: 'prof', name: 'Profile', icon: '👤' },
+                { id: 'jobs', name: 'Job Portal', icon: '💼' },
+                { id: 'reports', name: 'Report List', icon: '🚩' },
+                { id: 'about', name: 'About', icon: 'ℹ️' },
             ];
+            const posterMenus = [ { id: 'add_job', name: 'Post Job', icon: '➕' }, { id: 'my_jobs', name: 'My Jobs', icon: '📝' } ];
+            const adminMenus = [ { id: 'approvals', name: 'Approve', icon: '✅' }, { id: 'manage_all', name: 'Manage', icon: '🗑️' } ];
 
-            const hospitalMenus = [ 
-                { id: 'my_posts', name: 'My Posts', icon: '📝' },
-                { id: 'add_job', name: 'Post New Job', icon: '➕' }
-            ];
+            const handleNav = (id) => { setPage(id); setIsOpen(false); };
 
-            const adminMenus = [
-                { id: 'approvals', name: 'Approvals', icon: '✅' },
-                { id: 'add_hosp', name: 'Add Hospital', icon: '➕' },
-                { id: 'add_proc', name: 'Add Procedure', icon: '➕' },
-                { id: 'add_job', name: 'Post Job (Admin)', icon: '➕' },
-            ];
+            // Sidebar Classes for Mobile/Desktop
+            const sidebarClass = `fixed inset-y-0 left-0 z-40 w-64 bg-white border-r shadow-sm transform sidebar-transition 
+                ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
+                md:translate-x-0 md:static md:shadow-none`; // Translate off-screen on mobile, static on desktop
 
-            return e('div', { className: "sidebar bg-white h-screen fixed left-0 top-0 border-r flex flex-col shadow-sm overflow-y-auto" },
-                e('div', { className: "p-5 border-b sticky top-0 bg-white z-10" },
+            return e('div', { className: sidebarClass },
+                // Logo Section
+                e('div', { className: "p-4 border-b flex items-center justify-between" },
                     e('div', { className: "flex items-center space-x-2" },
-                        e('div', { className: "w-10 h-10 bg-primary-500 rounded-xl flex items-center justify-center text-white font-bold" }, "B"),
-                        e('div', null, 
-                            e('span', { className: "font-bold text-lg text-gray-800" }, "BRITN"),
-                            isAdmin && e('span', { className: "ml-2 text-xs bg-red-500 text-white px-1 rounded" }, "ADMIN")
-                        )
-                    )
+                        e('img', { src: BRITN_LOGO_URL, className: "w-8 h-8 object-contain rounded" }),
+                        e('span', { className: "font-bold text-lg hidden md:block" }, "BRITN")
+                    ),
+                    // Close button for mobile
+                    e('button', { onClick: () => setIsOpen(false), className: "md:hidden text-gray-500" }, "✕")
                 ),
-                e('nav', { className: "flex-1 p-3 space-y-1" },
-                    // Common Menus
-                    userMenus.map(m => 
-                        e('button', { 
-                            key: m.id, 
-                            onClick: () => setPage(m.id), 
-                            className: `w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition ${page === m.id ? 'bg-primary-100 text-primary-600 font-semibold' : 'text-gray-500 hover:bg-slate-50'}`
-                        }, e('span', null, m.icon), e('span', null, m.name))
-                    ),
-                    
-                    // Hospital Menu
-                    isHospital && e('div', { className: "mt-4 pt-4 border-t" },
-                        e('p', { className: "px-4 text-xs font-semibold text-gray-400 mb-2" }, "HOSPITAL TOOLS"),
-                        hospitalMenus.map(m => 
-                            e('button', { 
-                                key: m.id, 
-                                onClick: () => setPage(m.id), 
-                                className: `w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition ${page === m.id ? 'bg-blue-100 text-blue-600 font-semibold' : 'text-gray-500 hover:bg-slate-50'}`
-                            }, e('span', null, m.icon), e('span', null, m.name))
+                
+                // Navigation
+                e('nav', { className: "flex-1 p-2 space-y-1 overflow-y-auto" },
+                    menus.map(m => 
+                        e('button', { key: m.id, onClick: () => handleNav(m.id), className: `w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-sm ${page === m.id ? 'bg-primary-100 text-primary-600' : 'text-gray-500 hover:bg-slate-50'}` },
+                            e('span', null, m.icon), e('span', null, m.name)
                         )
                     ),
-
-                    // Admin Menu
-                    isAdmin && e('div', { className: "mt-4 pt-4 border-t" },
-                        e('p', { className: "px-4 text-xs font-semibold text-gray-400 mb-2" }, "ADMIN PANEL"),
+                    canPost && e('div', {className: "mt-2 pt-2 border-t"}, 
+                        e('p', {className: "px-3 text-xs text-gray-400 mb-1"}, "TOOLS"),
+                        posterMenus.map(m => 
+                            e('button', { key: m.id, onClick: () => handleNav(m.id), className: `w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-sm ${page === m.id ? 'bg-blue-100 text-blue-600' : 'text-gray-500'}` },
+                                e('span', null, m.icon), e('span', null, m.name)
+                            )
+                        )
+                    ),
+                    isAdmin && e('div', {className: "mt-2 pt-2 border-t"}, 
+                        e('p', {className: "px-3 text-xs text-gray-400 mb-1"}, "ADMIN"),
                         adminMenus.map(m => 
-                            e('button', { 
-                                key: m.id, 
-                                onClick: () => setPage(m.id), 
-                                className: `w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition ${page === m.id ? 'bg-green-100 text-green-600 font-semibold' : 'text-gray-500 hover:bg-slate-50'}`
-                            }, e('span', null, m.icon), e('span', null, m.name))
+                            e('button', { key: m.id, onClick: () => handleNav(m.id), className: `w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-sm ${page === m.id ? 'bg-red-100 text-red-600' : 'text-gray-500'}` },
+                                e('span', null, m.icon), e('span', null, m.name)
+                            )
                         )
                     )
                 ),
-                e('div', { className: "p-3 border-t sticky bottom-0 bg-white" },
-                    e('button', { onClick: onLogout, className: "w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-red-500 hover:bg-red-50" }, 
+                e('div', { className: "p-2 border-t" },
+                    e('button', { onClick: onLogout, className: "w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-red-500 text-sm" }, 
                         e('span', null, '🚪'), e('span', null, "Logout")
                     )
                 )
             );
         };
 
-        // --- Content Pages ---
+        // --- About Page with Logos ---
+        const AboutPage = () => {
+            return e('div', { className: "space-y-4" },
+                e('div', { className: "bg-white p-4 rounded-xl shadow-sm border text-center" },
+                    e('img', { src: BRITN_LOGO_URL, className: "w-20 h-20 mx-auto mb-2 object-contain" }),
+                    e('h1', { className: "text-lg font-bold text-gray-800" }, "Bangladesh Radiology Network"),
+                    e('p', { className: "text-gray-500 text-xs" }, "Connecting Professionals")
+                ),
 
-        const ListPage = ({ title, table, columns, isAdmin }) => {
-            const [items, setItems] = React.useState([]);
-            const [loading, setLoading] = React.useState(true);
-
-            React.useEffect(() => {
-                // User sees only approved. Admin sees all.
-                let query = supabase.from(table).select(columns.map(c => c.key).join(',')).limit(20);
-                if (!isAdmin) query = query.eq('is_approved', true);
-                
-                query.then(({ data }) => {
-                    setItems(data || []);
-                    setLoading(false);
-                });
-            }, [isAdmin]);
-
-            return e('div', null,
-                e('h2', { className: "text-2xl font-bold mb-4" }, title),
-                loading ? e('p', { className: "text-gray-500" }, "Loading...") :
-                e('div', { className: "bg-white rounded-xl shadow-sm border overflow-hidden" },
-                    e('table', { className: "w-full" },
-                        e('thead', { className: "bg-slate-50 border-b" },
-                            e('tr', null, 
-                                columns.map(c => e('th', { key: c.key, className: "text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase" }, c.label))
-                            )
+                // Donation Section
+                e('div', { className: "bg-gradient-to-r from-blue-50 to-green-50 p-4 rounded-xl border border-blue-100" },
+                    e('h2', { className: "text-lg font-bold text-gray-800 mb-2 flex items-center" }, "❤️ Support Maintenance"),
+                    e('p', { className: "text-gray-600 text-xs mb-3" }, "Help us keep the platform running."),
+                    e('div', { className: "grid grid-cols-2 gap-3" },
+                        // Bkash Card
+                        e('div', { className: "bg-white p-3 rounded-lg border flex flex-col items-center justify-center" },
+                            e('img', { src: BKASH_LOGO, className: "h-8 object-contain mb-1", alt: "Bkash Logo" }),
+                            e('span', { className: "text-lg font-bold text-gray-800 tracking-wider" }, DONATION_NUMBER),
+                            e('button', { onClick: () => navigator.clipboard.writeText(DONATION_NUMBER), className: "mt-1 px-2 py-0.5 bg-pink-500 text-white text-xs rounded" }, "Copy")
                         ),
-                        e('tbody', { className: "divide-y" },
-                            items.length === 0 ? 
-                            e('tr', null, e('td', { colSpan: columns.length, className: "text-center py-8 text-gray-400" }, "No data available")) :
-                            items.map(item => 
-                                e('tr', { key: item.id, className: "hover:bg-slate-50" },
-                                    columns.map(c => e('td', { key: c.key, className: "px-6 py-4 text-sm text-gray-700" }, 
-                                        c.key === 'is_approved' ? 
-                                            (item[c.key] ? e('span', {className: "text-green-600"}, "✅ Approved") : e('span', {className: "text-yellow-600"}, "⏳ Pending")) 
-                                            : item[c.key]
-                                    ))
-                                )
-                            )
-                        )
-                    )
-                )
-            );
-        };
-
-        const ApprovalPage = () => {
-            const [pending, setPending] = React.useState({ jobs: [], hospitals: [], procedures: [] });
-            const [loading, setLoading] = React.useState(true);
-
-            React.useEffect(() => {
-                const fetchPending = async () => {
-                    const [j, h, p] = await Promise.all([
-                        supabase.from('jobs').select('id, title').eq('is_approved', false),
-                        supabase.from('hospitals').select('id, name').eq('is_approved', false),
-                        supabase.from('procedures').select('id, name').eq('is_approved', false)
-                    ]);
-                    setPending({ jobs: j.data || [], hospitals: h.data || [], procedures: p.data || [] });
-                    setLoading(false);
-                };
-                fetchPending();
-            }, [loading]);
-
-            const approveItem = async (table, id) => {
-                await supabase.from(table).update({ is_approved: true }).eq('id', id);
-                setLoading(true); // Reload
-            };
-
-            if (loading) return e('p', null, "Loading approvals...");
-
-            const hasPending = pending.jobs.length + pending.hospitals.length + pending.procedures.length === 0;
-
-            return e('div', null,
-                e('h2', { className: "text-2xl font-bold mb-4" }, "Pending Approvals"),
-                hasPending && e('div', { className: "bg-green-50 p-4 rounded-lg text-green-600" }, "All caught up! No pending items."),
-                
-                // Pending Jobs
-                pending.jobs.length > 0 && e('div', { className: "mb-4" },
-                    e('h3', {className: "font-bold text-lg mb-2"}, "Jobs"),
-                    pending.jobs.map(item => 
-                        e('div', { key: item.id, className: "bg-white p-3 border rounded mb-2 flex justify-between items-center" },
-                            e('span', null, item.title),
-                            e('button', { onClick: () => approveItem('jobs', item.id), className: "px-3 py-1 bg-green-500 text-white rounded text-sm" }, "Approve")
+                        // Nagad Card
+                        e('div', { className: "bg-white p-3 rounded-lg border flex flex-col items-center justify-center" },
+                            e('img', { src: NAGAD_LOGO, className: "h-8 object-contain mb-1", alt: "Nagad Logo" }),
+                            e('span', { className: "text-lg font-bold text-gray-800 tracking-wider" }, DONATION_NUMBER),
+                            e('button', { onClick: () => navigator.clipboard.writeText(DONATION_NUMBER), className: "mt-1 px-2 py-0.5 bg-orange-500 text-white text-xs rounded" }, "Copy")
                         )
                     )
                 ),
-                // Pending Hospitals
-                pending.hospitals.length > 0 && e('div', { className: "mb-4" },
-                    e('h3', {className: "font-bold text-lg mb-2"}, "Hospitals"),
-                    pending.hospitals.map(item => 
-                        e('div', { key: item.id, className: "bg-white p-3 border rounded mb-2 flex justify-between items-center" },
-                            e('span', null, item.name),
-                            e('button', { onClick: () => approveItem('hospitals', item.id), className: "px-3 py-1 bg-green-500 text-white rounded text-sm" }, "Approve")
-                        )
-                    )
+                e('div', { className: "bg-white p-4 rounded-xl shadow-sm border text-xs text-gray-600" },
+                    e('h2', { className: "font-bold text-gray-800 mb-2 text-sm" }, "📜 Privacy Policy"),
+                    e('p', null, "We collect data to verify identity. We do not sell data. Secured via SSL.")
                 )
             );
         };
 
-        const AddFormPage = ({ title, fields, table, isAdmin }) => {
-            const [form, setForm] = React.useState({});
+        // --- Report List ---
+        const ReportList = ({ user }) => {
+            const [reports, setReports] = React.useState([]);
+            const [form, setForm] = React.useState({ hospital_name: '', category: 'Bad Behavior', details: '' });
             const [msg, setMsg] = React.useState('');
 
-            const handleChange = (ev) => setForm({ ...form, [ev.target.name]: ev.target.value });
+            const fetchReports = async () => {
+                const data = await safeFetch(supabase.from('hospital_reports').select('*').order('created_at', { ascending: false }).limit(20));
+                setReports(data);
+            };
+            React.useEffect(() => { fetchReports(); }, []);
 
             const handleSubmit = async (ev) => {
                 ev.preventDefault();
-                // If Admin adds, it's auto approved. If Hospital adds, it's pending.
-                const payload = { ...form, is_approved: isAdmin ? true : false };
-                
-                const { error } = await supabase.from(table).insert([payload]);
-                if (error) setMsg(`Error: ${error.message}`);
-                else { 
-                    setMsg(isAdmin ? "Added & Approved!" : "Submitted! Waiting for Admin approval."); 
-                    setForm({}); 
-                }
+                if(!form.hospital_name || !form.details) { setMsg("Fill all fields"); return; }
+                const { error } = await supabase.from('hospital_reports').insert([{...form, reporter_email: user?.email || 'Anonymous'}]);
+                if(error) setMsg("Error: " + error.message);
+                else { setMsg("Submitted!"); setForm({ hospital_name: '', category: 'Bad Behavior', details: '' }); fetchReports(); }
             };
 
             return e('div', null,
-                e('h2', { className: "text-2xl font-bold mb-4" }, title),
-                !isAdmin && e('p', { className: "text-yellow-600 text-sm mb-4" }, "Note: Your post will be visible after Admin approval."),
-                e('div', { className: "bg-white p-6 rounded-xl shadow-sm border max-w-lg" },
-                    msg && e('div', { className: `p-3 rounded mb-4 ${msg.includes('Error') ? 'bg-red-50 text-red-600' : 'bg-green-50 text-green-600'}` }, msg),
-                    e('form', { onSubmit: handleSubmit, className: "space-y-4" },
-                        fields.map(f => 
-                            f.type === 'select' ?
-                            e('select', { key: f.name, name: f.name, onChange: handleChange, className: "w-full px-4 py-2 border rounded-lg bg-white", required: true },
-                                e('option', { value: "" }, `Select ${f.label}`),
-                                f.options.map(opt => e('option', { key: opt, value: opt }, opt))
-                            ) :
-                            e('input', { key: f.name, name: f.name, placeholder: f.label, type: f.type || 'text', onChange: handleChange, className: "w-full px-4 py-2 border rounded-lg", required: true })
+                e('h2', { className: "text-lg font-bold mb-3" }, "🚩 Report List"),
+                e('div', { className: "bg-white p-3 rounded-xl shadow-sm border mb-4" },
+                    e('form', { onSubmit: handleSubmit, className: "space-y-2" },
+                        e('input', { placeholder: "Hospital Name", value: form.hospital_name, onChange: (e) => setForm({...form, hospital_name: e.target.value}), className: "w-full px-2 py-1.5 border rounded text-xs" }),
+                        e('select', { value: form.category, onChange: (e) => setForm({...form, category: e.target.value}), className: "w-full px-2 py-1.5 border rounded text-xs bg-white" },
+                            e('option', { value: "Bad Behavior" }, "Bad Behavior"),
+                            e('option', { value: "Salary Issue" }, "Salary Issue")
                         ),
-                        e('button', { className: "px-6 py-2 bg-accent-500 text-white rounded-lg font-semibold" }, "Submit")
+                        e('textarea', { placeholder: "Details...", value: form.details, onChange: (e) => setForm({...form, details: e.target.value}), className: "w-full px-2 py-1.5 border rounded text-xs", rows: 2 }),
+                        e('button', { className: "px-3 py-1 bg-red-500 text-white rounded text-xs" }, "Submit")
                     )
+                ),
+                e('div', { className: "space-y-2" }, reports.map(r => 
+                    e('div', { key: r.id, className: "bg-white p-2 rounded-lg border text-xs" },
+                        e('div', { className: "flex justify-between" }, e('span', {className: "font-bold"}, r.hospital_name), e('span', {className: "text-yellow-600"}, r.category)),
+                        e('p', { className: "text-gray-500 mt-1" }, r.details)
+                    )
+                ))
+            );
+        };
+
+        // --- Job List ---
+        const JobList = ({ title, filter, isAdmin, user }) => {
+            const [jobs, setJobs] = React.useState([]);
+            const [loading, setLoading] = React.useState(true);
+
+            const fetchJobs = async () => {
+                setLoading(true);
+                let query = supabase.from('jobs').select('*');
+                if (filter === 'pending') query = query.eq('is_approved', false);
+                else if (filter === 'approved') query = query.eq('is_approved', true);
+                const data = await safeFetch(query.order('created_at', { ascending: false }).limit(20));
+                setJobs(data); setLoading(false);
+            };
+            React.useEffect(() => { fetchJobs(); }, []);
+
+            const handleAction = async (id, action) => {
+                if (!confirm("Sure?")) return;
+                if (action === 'delete') await supabase.from('jobs').delete().eq('id', id);
+                if (action === 'approve') await supabase.from('jobs').update({ is_approved: true }).eq('id', id);
+                fetchJobs();
+            };
+
+            if (loading) return e('p', {className: "text-xs text-gray-400"}, "Loading...");
+
+            return e('div', null,
+                e('h2', { className: "text-lg font-bold mb-3" }, title),
+                e('div', { className: "space-y-2" }, jobs.map(job => 
+                    e('div', { key: job.id, className: "bg-white p-3 rounded-lg border shadow-sm" },
+                        e('div', { className: "flex justify-between items-start" },
+                            e('div', null,
+                                e('h3', { className: "font-bold text-sm text-gray-800" }, job.title),
+                                e('p', { className: "text-xs text-gray-500 mt-0.5" }, `📍 ${job.location} | 💰 ${job.salary || 'N/A'}`),
+                                !job.is_approved && e('span', { className: "text-xs text-yellow-600" }, "(Pending)")
+                            ),
+                            e('div', { className: "flex space-x-1" },
+                                isAdmin && !job.is_approved && e('button', { onClick: () => handleAction(job.id, 'approve'), className: "px-2 py-0.5 bg-green-500 text-white text-xs rounded" }, "Approve"),
+                                isAdmin && e('button', { onClick: () => handleAction(job.id, 'delete'), className: "px-2 py-0.5 bg-red-500 text-white text-xs rounded" }, "Del")
+                            )
+                        )
+                    )
+                ))
+            );
+        };
+
+        const AddJobForm = ({ isAdmin }) => {
+            const [form, setForm] = React.useState({ title: '', location: '', salary: '', description: '' });
+            const [msg, setMsg] = React.useState('');
+
+            const handleSubmit = async (ev) => {
+                ev.preventDefault();
+                const { error } = await supabase.from('jobs').insert([{...form, is_approved: isAdmin ? true : false}]);
+                if (error) setMsg("Error"); else { setMsg("Success!"); setForm({}); }
+            };
+
+            return e('div', { className: "bg-white p-4 rounded-xl shadow-sm border" },
+                e('h2', { className: "text-lg font-bold mb-3" }, "Post Job"),
+                msg && e('div', { className: "p-2 rounded mb-2 text-xs bg-green-100 text-green-600" }, msg),
+                e('form', { onSubmit: handleSubmit, className: "space-y-2" },
+                    e('input', { placeholder: "Title *", value: form.title, onChange: (e) => setForm({...form, title: e.target.value}), className: "w-full px-2 py-1.5 border rounded text-xs", required: true }),
+                    e('input', { placeholder: "Location *", value: form.location, onChange: (e) => setForm({...form, location: e.target.value}), className: "w-full px-2 py-1.5 border rounded text-xs", required: true }),
+                    e('input', { placeholder: "Salary", value: form.salary, onChange: (e) => setForm({...form, salary: e.target.value}), className: "w-full px-2 py-1.5 border rounded text-xs" }),
+                    e('textarea', { placeholder: "Desc", value: form.description, onChange: (e) => setForm({...form, description: e.target.value}), className: "w-full px-2 py-1.5 border rounded text-xs", rows: 2 }),
+                    e('button', { type: "submit", className: "w-full py-1.5 bg-primary-500 text-white rounded text-xs font-semibold" }, "Submit")
                 )
             );
         };
 
+        // --- Content Area ---
         const ContentArea = ({ page, user }) => {
             const isAdmin = user?.user_metadata?.role === 'super_admin';
-            const isHospital = user?.user_metadata?.role === 'hospital';
-
-            // User & Admin Common Views
-            if (page === 'hosp') return e(ListPage, { title: "Hospital Directory", table: "hospitals", columns: [{ key: 'name', label: 'Name' }, { key: 'address', label: 'Address' }], isAdmin });
-            if (page === 'proc') return e(ListPage, { title: "Procedures Library", table: "procedures", columns: [{ key: 'name', label: 'Name' }, { key: 'body_part', label: 'Body Part' }], isAdmin });
-            if (page === 'jobs') return e(ListPage, { title: "Job Portal", table: "jobs", columns: [{ key: 'title', label: 'Title' }, { key: 'location', label: 'Location' }, { key: 'is_approved', label: 'Status' }], isAdmin });
-            
-            // Admin Views
-            if (isAdmin) {
-                if (page === 'approvals') return e(ApprovalPage);
-                if (page === 'add_hosp') return e(AddFormPage, { title: "Add Hospital", table: "hospitals", isAdmin: true, fields: [{ name: 'name', label: 'Hospital Name' }, { name: 'address', label: 'Address' }] });
-                if (page === 'add_proc') return e(AddFormPage, { title: "Add Procedure", table: "procedures", isAdmin: true, fields: [{ name: 'name', label: 'Name' }, { name: 'body_part', label: 'Body Part' }] });
-                if (page === 'add_job') return e(AddFormPage, { title: "Post Job (Admin)", table: "jobs", isAdmin: true, fields: [{ name: 'title', label: 'Job Title' }, { name: 'location', label: 'Location' }] });
-            }
-
-            // Hospital Views
-            if (isHospital) {
-                if (page === 'my_posts') return e(ListPage, { title: "My Posted Jobs", table: "jobs", columns: [{ key: 'title', label: 'Title' }, { key: 'is_approved', label: 'Status' }], isAdmin: false }); // Show their own pending posts logic simplified
-                if (page === 'add_job') return e(AddFormPage, { title: "Post New Job", table: "jobs", isAdmin: false, fields: [{ name: 'title', label: 'Job Title' }, { name: 'location', label: 'Location' }] });
-            }
-
-            // Profile
-            if (page === 'prof') return e('div', { className: "bg-white p-6 rounded-xl shadow-sm border max-w-lg" },
-                e('h2', { className: "text-xl font-bold mb-4" }, "My Profile"),
-                e('div', { className: "space-y-2" },
-                    e('p', {}, e('strong', null, "Name: "), user?.user_metadata?.full_name),
-                    e('p', {}, e('strong', null, "Email: "), user?.email),
-                    e('p', {}, e('strong', null, "Role: "), e('span', { className: "px-2 py-1 bg-blue-100 text-blue-600 rounded text-xs uppercase" }, user?.user_metadata?.role))
-                )
-            );
-
-            // Dashboard Default
-            return e('div', null,
-                e('h1', { className: "text-2xl font-bold text-gray-800 mb-6" }, `Welcome, ${user?.user_metadata?.full_name || 'User'}!`),
-                e('div', { className: "bg-white p-6 rounded-xl shadow-sm border" },
-                    e('p', { className: "text-gray-600" }, 
-                        isAdmin ? "You are logged in as Admin. You can approve posts and add new content." :
-                        isHospital ? "You are logged in as a Hospital. You can post jobs, subject to admin approval." :
-                        "You are logged in as a User. You can browse approved hospitals, procedures, and jobs."
-                    )
-                )
+            if (page === 'jobs') return e(JobList, { title: "Jobs", filter: 'approved', user });
+            if (page === 'reports') return e(ReportList, { user });
+            if (page === 'about') return e(AboutPage);
+            if (page === 'add_job') return e(AddJobForm, { isAdmin });
+            if (page === 'my_jobs') return e(JobList, { title: "My Jobs", filter: 'all' });
+            if (isAdmin && page === 'approvals') return e(JobList, { title: "Approvals", filter: 'pending', isAdmin: true });
+            if (isAdmin && page === 'manage_all') return e(JobList, { title: "Manage", filter: 'all', isAdmin: true });
+            return e('div', null, 
+                e('h1', { className: "text-lg font-bold" }, "Dashboard"),
+                e('p', { className: "text-gray-500 text-xs mt-1" }, `Role: ${user?.user_metadata?.role}`)
             );
         };
 
@@ -431,39 +341,49 @@
             const [user, setUser] = React.useState(null);
             const [view, setView] = React.useState('loading');
             const [page, setPage] = React.useState('dash');
+            const [sidebarOpen, setSidebarOpen] = React.useState(false); // For mobile toggle
 
             React.useEffect(() => {
                 supabase.auth.getSession().then(({ data: { session } }) => {
-                    if (session) { setUser(session.user); setView('app'); } 
-                    else { setView('login'); }
+                    setUser(session?.user ?? null); 
+                    setView(session?.user ? 'app' : 'login');
                 });
                 const { data: { subscription } } = supabase.auth.onAuthStateChange((e, s) => {
-                    if (s) { setUser(s.user); setView('app'); }
-                    else { setUser(null); setView('login'); }
+                    setUser(s?.user ?? null);
+                    setView(s?.user ? 'app' : 'login');
                 });
                 return () => subscription.unsubscribe();
             }, []);
 
-            const handleLogout = async () => { await supabase.auth.signOut(); };
+            if (view === 'loading') return e('div', { className: "flex h-screen items-center justify-center" }, e('div', { className: "loader" }));
+            if (view === 'login') return e(AuthScreen, { type: 'login', onSwitch: setView, onSuccess: () => setView('app') });
+            if (view === 'register') return e(AuthScreen, { type: 'register', onSwitch: setView });
 
-            if (view === 'loading') return e('div', { className: "h-screen flex items-center justify-center" }, e('div', { className: "loader" }));
-            if (view === 'login') return e(LoginScreen, { onSwitch: setView });
-            if (view === 'register') return e(RegisterScreen, { onSwitch: setView });
-            if (view === 'forgot') return e(ForgotScreen, { onSwitch: setView });
-
-            const role = user?.user_metadata?.role;
-
-            return e('div', { className: "flex bg-slate-100 min-h-screen" },
-                e(Sidebar, { page, setPage, onLogout: handleLogout, role }),
-                e('div', { className: "ml-64 flex-1 p-8" },
-                    e(ContentArea, { page, user })
+            return e('div', { className: "flex min-h-screen bg-slate-100" },
+                // Overlay for mobile
+                sidebarOpen && e('div', { onClick: () => setSidebarOpen(false), className: "fixed inset-0 z-30 bg-black opacity-50 md:hidden" }),
+                
+                // Sidebar
+                e(Sidebar, { page, setPage, onLogout: () => supabase.auth.signOut(), role: user?.user_metadata?.role, isOpen: sidebarOpen, setIsOpen: setSidebarOpen }),
+                
+                // Main Content Area
+                e('div', { className: "flex-1 flex flex-col w-full md:ml-0" }, // No margin left on mobile, sidebar is overlay
+                    // Mobile Top Bar
+                    e('div', { className: "md:hidden sticky top-0 z-20 bg-white border-b p-2 flex items-center justify-between" },
+                        e('button', { onClick: () => setSidebarOpen(true), className: "p-2 rounded hover:bg-slate-100" }, "☰"),
+                        e('span', { className: "font-bold text-primary-500" }, "BRITN"),
+                        e('div', { className: "w-8" }) // Spacer
+                    ),
+                    
+                    // Content
+                    e('div', { className: "flex-1 p-4 md:p-6 overflow-auto" },
+                        e(ContentArea, { page, user })
+                    )
                 )
             );
         };
 
-        // Render
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(e(App));
+        ReactDOM.createRoot(document.getElementById('root')).render(e(App));
     </script>
 </body>
 </html>
