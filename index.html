@@ -13,7 +13,6 @@
                     colors: {
                         brand: { 500: '#0D9488', 600: '#0F766E', 100: '#CCFBF1', 900: '#134E4A', 50: '#F0FDFA' },
                         primary: { 500: '#0F172A', 600: '#020617', 100: '#F1F5F9', 900: '#ffffff' },
-                        accent: { 500: '#F59E0B' },
                         surface: { 50: '#f8fafc', 100: '#f1f5f9', 800: '#1e293b', 900: '#0f172a' }
                     }
                 }
@@ -21,7 +20,7 @@
         }
     </script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; margin: 0; color: #334155; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F1F5F9; margin: 0; color: #334155; }
         .font-bangla { font-family: 'Hind Siliguri', sans-serif; }
         
         .loader { border: 3px solid #e2e8f0; border-top: 3px solid #0D9488; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; }
@@ -110,7 +109,6 @@
                             e('img', { src: BRITN_LOGO_URL, alt: "Logo", className: "w-24 h-24 object-contain" })
                         ),
                         e('h1', { className: "text-3xl font-bold text-slate-800 tracking-tight" }, "BRITN"),
-                        // Updated Text as per request
                         e('h2', { className: "text-md text-brand-600 mt-2 font-semibold font-bangla" }, 
                             "Bangladesh Radiology & Imaging Technologist Network"
                         )
@@ -153,32 +151,21 @@
             const isAdmin = userEmail === ADMIN_EMAIL || role === 'super_admin';
             const canPost = role === 'hospital' || role === 'technologist' || isAdmin;
             
+            // Using Emojis for icons to fix display issues
             const menus = [
-                { id: 'dash', name: 'Dashboard', icon: 'dashboard' },
-                { id: 'jobs', name: 'Job Portal', icon: 'work' },
-                { id: 'reports', name: 'Report List', icon: 'flag' },
-                { id: 'about', name: 'About', icon: 'info' },
+                { id: 'dash', name: 'Dashboard', icon: '📊' },
+                { id: 'jobs', name: 'Job Portal', icon: '💼' },
+                { id: 'reports', name: 'Report List', icon: '🚩' },
+                { id: 'about', name: 'About', icon: 'ℹ️' },
             ];
-            const posterMenus = [ { id: 'add_job', name: 'Post Job', icon: 'add_circle' }, { id: 'my_jobs', name: 'My Jobs', icon: 'assignment' } ];
-            const adminMenus = [ { id: 'approvals', name: 'Approve Jobs', icon: 'check_circle' }, { id: 'manage_all', name: 'Manage All', icon: 'delete' } ];
+            const posterMenus = [ { id: 'add_job', name: 'Post Job', icon: '➕' }, { id: 'my_jobs', name: 'My Jobs', icon: '📝' } ];
+            const adminMenus = [ { id: 'approvals', name: 'Approve Jobs', icon: '✅' }, { id: 'manage_all', name: 'Manage All', icon: '🗑️' } ];
 
             const handleNav = (id) => { setPage(id); setIsOpen(false); };
 
             const sidebarClass = `fixed inset-y-0 left-0 z-40 w-72 sidebar-modern text-white transform sidebar-transition 
                 ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
                 md:translate-x-0 md:static md:shadow-xl`;
-
-            // Helper for icons to keep it clean
-            const Icon = (name) => e('span', { className: "material-icons-outlined text-xl opacity-80" }, 
-                name === 'dashboard' ? 'dashboard' : 
-                name === 'work' ? 'work_outline' : 
-                name === 'flag' ? 'flag' : 
-                name === 'info' ? 'info' : 
-                name === 'add_circle' ? 'add_circle_outline' : 
-                name === 'assignment' ? 'assignment' : 
-                name === 'check_circle' ? 'check_circle_outline' : 
-                name === 'delete' ? 'delete_outline' : 'circle'
-            );
 
             return e('div', { className: sidebarClass },
                 e('div', { className: "p-6 flex items-center justify-between" },
@@ -195,14 +182,14 @@
                 e('nav', { className: "flex-1 p-4 space-y-1 overflow-y-auto" },
                     menus.map(m => 
                         e('button', { key: m.id, onClick: () => handleNav(m.id), className: `w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm transition-all ${page === m.id ? 'bg-white/20 text-white shadow-md' : 'text-white/70 hover:bg-white/10'}` },
-                            Icon(m.icon), e('span', {className: "font-medium"}, m.name)
+                            e('span', {className: "text-lg"}, m.icon), e('span', {className: "font-medium"}, m.name)
                         )
                     ),
                     canPost && e('div', {className: "mt-6 pt-4 border-t border-white/10"}, 
                         e('p', {className: "px-4 text-xs text-white/40 mb-2 uppercase tracking-wider font-semibold"}, "Management"),
                         posterMenus.map(m => 
                             e('button', { key: m.id, onClick: () => handleNav(m.id), className: `w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm transition-all ${page === m.id ? 'bg-white/20 text-white' : 'text-white/70 hover:bg-white/10'}` },
-                                Icon(m.icon), e('span', {className: "font-medium"}, m.name)
+                                e('span', {className: "text-lg"}, m.icon), e('span', {className: "font-medium"}, m.name)
                             )
                         )
                     ),
@@ -210,14 +197,14 @@
                         e('p', {className: "px-4 text-xs text-white/40 mb-2 uppercase tracking-wider font-semibold"}, "Admin Power"),
                         adminMenus.map(m => 
                             e('button', { key: m.id, onClick: () => handleNav(m.id), className: `w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm transition-all ${page === m.id ? 'bg-red-400/30 text-red-100' : 'text-white/70 hover:bg-white/10'}` },
-                                Icon(m.icon), e('span', {className: "font-medium"}, m.name)
+                                e('span', {className: "text-lg"}, m.icon), e('span', {className: "font-medium"}, m.name)
                             )
                         )
                     )
                 ),
                 e('div', { className: "p-4 border-t border-white/10" },
                     e('button', { onClick: onLogout, className: "w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-red-200 text-sm hover:bg-red-500/20 transition-colors" }, 
-                        Icon('logout'), e('span', {className: "font-medium"}, "Logout")
+                        e('span', {className: "text-lg"}, '🚪'), e('span', {className: "font-medium"}, "Logout")
                     )
                 )
             );
@@ -344,7 +331,6 @@
                 fetchJobs();
             };
 
-            // Filter by search
             const filteredJobs = jobs.filter(j => 
                 j.title.toLowerCase().includes(search.toLowerCase()) || 
                 j.location.toLowerCase().includes(search.toLowerCase())
@@ -394,7 +380,6 @@
                     return;
                 }
                 
-                // FIX: Robust Data Insertion
                 const jobData = { 
                     title: form.title,
                     location: form.location,
