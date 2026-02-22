@@ -2,44 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BRITN - Professional Network</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        brand: { 500: '#0D9488', 600: '#0F766E', 100: '#CCFBF1', 900: '#134E4A', 50: '#F0FDFA' },
-                        surface: { 50: '#f8fafc', 100: '#f1f5f9' }
+                        // Facebook-like color scheme
+                        fb: { blue: '#1877F2', hover: '#166FE5', light: '#E7F3FF' },
+                        gray: { bg: '#F0F2F5', card: '#FFFFFF' }
                     }
                 }
             }
         }
     </script>
     <style>
-        body { font-family: 'Poppins', sans-serif; background-color: #F1F5F9; margin: 0; color: #334155; }
+        body { font-family: 'Inter', sans-serif; background-color: #F0F2F5; margin: 0; color: #050505; -webkit-tap-highlight-color: transparent; }
         .font-bangla { font-family: 'Hind Siliguri', sans-serif; }
         
-        .loader { border: 3px solid #e2e8f0; border-top: 3px solid #0D9488; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; }
+        .loader { border: 3px solid #e4e6eb; border-top: 3px solid #1877F2; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        .sidebar-modern { background: linear-gradient(180deg, #134E4A 0%, #0F766E 100%); }
-        .btn-brand { background: linear-gradient(135deg, #0D9488 0%, #14B8A6 100%); transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3); }
-        .btn-brand:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(13, 148, 136, 0.4); }
+        /* Responsive Sidebar */
+        .sidebar-fb { background: #FFFFFF; border-right: 1px solid #dddfe2; }
+        .btn-fb { background: #1877F2; transition: 0.2s; }
+        .btn-fb:hover { background: #166FE5; }
         
-        .card-pro { transition: all 0.3s; background: #ffffff; border-radius: 0.75rem; border: 1px solid #e2e8f0; }
-        .card-pro:hover { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); }
-
-        .input-style { width: 100%; padding: 0.75rem 1rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; outline: none; font-size: 0.875rem; background: #fff; }
-        .input-style:focus { border-color: #0D9488; box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1); }
+        .card-fb { background: #FFFFFF; border-radius: 8px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); border: 1px solid #dddfe2; }
+        
+        .input-style { width: 100%; padding: 0.875rem 1rem; border: 1px solid #dddfe2; border-radius: 6px; outline: none; font-size: 1rem; background: #f0f2f5; }
+        .input-style:focus { background: #fff; border-color: #1877F2; }
 
         .sidebar-transition { transition: transform 0.3s ease-in-out; }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-thumb { background: #BCC0C4; border-radius: 4px; }
         
-        .feed-image { max-height: 400px; width: 100%; object-fit: cover; }
+        /* Fix mobile button tap */
+        button { touch-action: manipulation; }
     </style>
 </head>
 <body>
@@ -71,7 +73,7 @@
             } catch (err) { console.error("Fetch Error:", err); return []; }
         };
 
-        // --- Auth Screen (Fixed Title) ---
+        // --- Auth Screen (Facebook Style) ---
         const AuthScreen = ({ type, onSwitch, onSuccess }) => {
             const [form, setForm] = React.useState({ email: '', pass: '', name: '', role: 'student' });
             const [error, setError] = React.useState('');
@@ -99,124 +101,113 @@
                 finally { setLoading(false); }
             };
 
-            return e('div', { className: "min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 p-4" },
+            return e('div', { className: "min-h-screen flex flex-col items-center justify-center bg-gray-bg p-4" },
                 e('div', { className: "w-full max-w-md flex-1 flex flex-col justify-center" },
                     e('div', { className: "text-center mb-6" },
-                        e('div', { className: "inline-block p-4 bg-white rounded-full shadow-xl border mb-3" },
-                            e('img', { src: BRITN_LOGO_URL, alt: "Logo", className: "w-20 h-20 object-contain rounded-full" })
-                        ),
-                        e('h1', { className: "text-3xl font-bold text-surface-900 tracking-tight" }, "BRITN"),
-                        // FIXED: Added back the requested text
-                        e('h2', { className: "text-md text-brand-600 mt-1 font-semibold font-bangla leading-tight" }, 
-                            "Bangladesh Radiology & Imaging", 
-                            e('br'),
-                            "Technologist Network"
+                        e('h1', { className: "text-4xl font-bold text-fb-blue mb-2" }, "BRITN"),
+                        e('h2', { className: "text-gray-600 font-bangla text-sm" }, 
+                            "Bangladesh Radiology & Imaging", e('br'), "Technologist Network"
                         )
                     ),
                     
-                    e('div', { className: "bg-white p-8 rounded-2xl shadow-2xl border border-slate-200" },
-                        e('div', { className: "flex gap-2 mb-6 bg-slate-100 p-1 rounded-lg" },
-                            e('button', { 
-                                onClick: () => onSwitch('login'),
-                                className: `flex-1 py-2 text-sm font-semibold rounded-lg transition ${type === 'login' ? 'bg-white text-brand-700 shadow' : 'text-slate-500'}`
-                            }, "Login"),
-                            e('button', { 
-                                onClick: () => onSwitch('register'),
-                                className: `flex-1 py-2 text-sm font-semibold rounded-lg transition ${type === 'register' ? 'bg-white text-brand-700 shadow' : 'text-slate-500'}`
-                            }, "Register")
-                        ),
-                        
-                        error && e('div', { className: "bg-red-50 text-red-500 p-3 rounded-xl mb-4 text-sm text-center" }, error),
-                        
+                    e('div', { className: "card-fb p-4 shadow-lg" },
+                        error && e('div', { className: "bg-red-100 text-red-700 p-2 rounded mb-3 text-sm text-center" }, error),
                         e('form', { onSubmit: handleAuth, className: "space-y-3" },
                             type === 'register' && e('input', { placeholder: "Full Name", onChange: (ev) => setForm({...form, name: ev.target.value}), className: "input-style", required: true }),
-                            e('input', { type: "email", placeholder: "Email Address", value: form.email, onChange: (ev) => setForm({...form, email: ev.target.value}), className: "input-style", required: true }),
+                            e('input', { type: "email", placeholder: "Email address", value: form.email, onChange: (ev) => setForm({...form, email: ev.target.value}), className: "input-style", required: true }),
                             e('input', { type: "password", placeholder: "Password", value: form.pass, onChange: (ev) => setForm({...form, pass: ev.target.value}), className: "input-style", required: true }),
                             type === 'register' && e('select', { onChange: (ev) => setForm({...form, role: ev.target.value}), className: "input-style bg-white text-slate-600" },
                                 e('option', { value: "student" }, "Student"),
                                 e('option', { value: "technologist" }, "Technologist"),
                                 e('option', { value: "hospital" }, "Hospital")
                             ),
-                            e('button', { type: "submit", disabled: loading, className: "w-full py-3 btn-brand text-white rounded-lg font-semibold text-sm disabled:opacity-50" }, 
-                                loading ? "Please wait..." : (type === 'login' ? "Login" : "Create Account")
+                            e('button', { type: "submit", disabled: loading, className: "w-full py-3 btn-fb text-white rounded-md font-bold text-lg disabled:opacity-50" }, 
+                                loading ? "Please wait..." : (type === 'login' ? "Log In" : "Sign Up")
+                            )
+                        ),
+                        e('div', { className: "mt-4 text-center" },
+                            e('button', { onClick: () => onSwitch(type === 'login' ? 'register' : 'login'), className: "text-fb-blue text-sm font-medium hover:underline" }, 
+                                type === 'login' ? "Create new account" : "Already have an account?"
                             )
                         )
                     )
                 ),
-                e('div', { className: "text-center py-4 text-xs text-slate-400" },
-                    "Developed by ", e('span', { className: "font-bold text-brand-600" }, "SRP SOFT LTD")
+                e('div', { className: "text-center py-4 text-xs text-gray-500" },
+                    "Developed by ", e('span', { className: "font-bold text-gray-700" }, "SRP SOFT LTD")
                 )
             );
         };
 
-        // --- Sidebar ---
+        // --- Sidebar (Clean & Mobile Friendly) ---
         const Sidebar = ({ page, setPage, onLogout, role, isOpen, setIsOpen, userEmail }) => {
             const isAdmin = userEmail === ADMIN_EMAIL || role === 'super_admin';
             const canPost = role === 'hospital' || role === 'technologist' || isAdmin;
             
             const menus = [
-                { id: 'dash', name: 'Dashboard', icon: '📊' },
+                { id: 'dash', name: 'Home', icon: '🏠' },
                 { id: 'feed', name: 'News Feed', icon: '📰' },
-                { id: 'jobs', name: 'Job Portal', icon: '💼' },
-                { id: 'reports', name: 'Report List', icon: '🚩' },
+                { id: 'jobs', name: 'Jobs', icon: '💼' },
+                { id: 'reports', name: 'Reports', icon: '🚩' },
                 { id: 'about', name: 'About', icon: 'ℹ️' },
             ];
             const posterMenus = [ { id: 'add_job', name: 'Post Job', icon: '➕' }, { id: 'my_jobs', name: 'My Jobs', icon: '📝' } ];
-            const adminMenus = [ { id: 'approvals', name: 'Approve Jobs', icon: '✅' }, { id: 'manage_all', name: 'Manage All', icon: '🗑️' } ];
+            const adminMenus = [ { id: 'approvals', name: 'Approvals', icon: '✅' }, { id: 'manage_all', name: 'Manage', icon: '⚙️' } ];
 
             const handleNav = (id) => { setPage(id); setIsOpen(false); };
 
-            const sidebarClass = `fixed inset-y-0 left-0 z-40 w-72 sidebar-modern text-white transform sidebar-transition 
+            const sidebarClass = `fixed inset-y-0 left-0 z-40 w-64 sidebar-fb text-gray-800 transform sidebar-transition 
                 ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
-                md:translate-x-0 md:static md:shadow-xl`;
+                md:translate-x-0 md:static md:shadow-none border-r`;
 
             return e('div', { className: sidebarClass },
-                e('div', { className: "p-6 flex items-center justify-between border-b border-white/10" },
-                    e('div', { className: "flex items-center space-x-3" },
-                        e('img', { src: BRITN_LOGO_URL, className: "w-10 h-10 object-contain rounded-lg bg-white p-1" }),
-                        e('span', { className: "font-bold text-xl tracking-wide block" }, "BRITN")
+                e('div', { className: "p-4 border-b flex items-center justify-between" },
+                    e('div', { className: "flex items-center space-x-2" },
+                        e('img', { src: BRITN_LOGO_URL, className: "w-8 h-8 rounded-full" }),
+                        e('span', { className: "font-bold text-lg text-fb-blue" }, "BRITN")
                     ),
-                    e('button', { onClick: () => setIsOpen(false), className: "md:hidden text-white opacity-70" }, "✕")
+                    e('button', { onClick: () => setIsOpen(false), className: "md:hidden p-1 rounded-full hover:bg-gray-100" }, "✕")
                 ),
                 
-                e('nav', { className: "flex-1 p-4 space-y-1 overflow-y-auto" },
+                e('nav', { className: "flex-1 p-2 space-y-1 overflow-y-auto" },
                     menus.map(m => 
-                        e('button', { key: m.id, onClick: () => handleNav(m.id), className: `w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm transition-all ${page === m.id ? 'bg-white/20 text-white shadow-lg' : 'text-white/70 hover:bg-white/10'}` },
-                            e('span', {className: "text-xl"}, m.icon), e('span', {className: "font-medium"}, m.name)
+                        e('button', { key: m.id, onClick: () => handleNav(m.id), className: `w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition ${page === m.id ? 'bg-fb-light text-fb-blue' : 'hover:bg-gray-100'}` },
+                            e('span', {className: "text-xl"}, m.icon), e('span', null, m.name)
                         )
                     ),
-                    canPost && e('div', {className: "mt-6 pt-4 border-t border-white/10"}, 
-                        e('p', {className: "px-4 text-xs text-white/40 mb-2 uppercase tracking-wider font-semibold"}, "Management"),
+                    canPost && e('div', {className: "pt-2 mt-2 border-t"}, 
+                        e('p', {className: "px-3 text-xs text-gray-400 font-bold mb-1"}, "TOOLS"),
                         posterMenus.map(m => 
-                            e('button', { key: m.id, onClick: () => handleNav(m.id), className: `w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm transition-all ${page === m.id ? 'bg-white/20 text-white' : 'text-white/70 hover:bg-white/10'}` },
-                                e('span', {className: "text-xl"}, m.icon), e('span', {className: "font-medium"}, m.name)
+                            e('button', { key: m.id, onClick: () => handleNav(m.id), className: `w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm transition ${page === m.id ? 'bg-fb-light text-fb-blue' : 'hover:bg-gray-100'}` },
+                                e('span', {className: "text-xl"}, m.icon), e('span', null, m.name)
                             )
                         )
                     ),
-                    isAdmin && e('div', {className: "mt-6 pt-4 border-t border-white/10"}, 
-                        e('p', {className: "px-4 text-xs text-white/40 mb-2 uppercase tracking-wider font-semibold"}, "Admin Power"),
+                    isAdmin && e('div', {className: "pt-2 mt-2 border-t"}, 
+                        e('p', {className: "px-3 text-xs text-red-400 font-bold mb-1"}, "ADMIN"),
                         adminMenus.map(m => 
-                            e('button', { key: m.id, onClick: () => handleNav(m.id), className: `w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm transition-all ${page === m.id ? 'bg-red-400/30 text-red-100' : 'text-white/70 hover:bg-white/10'}` },
-                                e('span', {className: "text-xl"}, m.icon), e('span', {className: "font-medium"}, m.name)
+                            e('button', { key: m.id, onClick: () => handleNav(m.id), className: `w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm transition ${page === m.id ? 'bg-red-50 text-red-600' : 'hover:bg-gray-100'}` },
+                                e('span', {className: "text-xl"}, m.icon), e('span', null, m.name)
                             )
                         )
                     )
                 ),
-                e('div', { className: "p-4 border-t border-white/10" },
-                    e('button', { onClick: onLogout, className: "w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-red-200 text-sm hover:bg-red-500/20 transition-colors" }, 
-                        e('span', {className: "text-xl"}, '🚪'), e('span', {className: "font-medium"}, "Logout")
+                e('div', { className: "p-2 border-t" },
+                    e('button', { onClick: onLogout, className: "w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-red-500 text-sm hover:bg-red-50 font-medium" }, 
+                        e('span', {className: "text-xl"}, '🚪'), e('span', null, "Logout")
                     )
                 )
             );
         };
 
-        // --- News Feed (Admin Only Post + Verified Badge) ---
+        // --- News Feed (Admin Edit/Delete + Full Name) ---
         const FeedPage = ({ user }) => {
             const [posts, setPosts] = React.useState([]);
             const [loading, setLoading] = React.useState(true);
             const [content, setContent] = React.useState('');
             const [image, setImage] = React.useState(null);
             const [msg, setMsg] = React.useState('');
+            const [editId, setEditId] = React.useState(null); // For editing
+            const [editContent, setEditContent] = React.useState('');
             const isAdmin = user?.email === ADMIN_EMAIL;
 
             const fetchPosts = async () => {
@@ -244,111 +235,131 @@
                     content: content, image_url: image, poster_email: user.email
                 }]);
 
-                if(error) {
-                    setMsg("Error: Check SQL Policy.");
-                } else {
-                    setMsg("Posted!"); setContent(''); setImage(null); fetchPosts();
-                    setTimeout(() => setMsg(''), 2000);
-                }
+                if(error) setMsg("Error: Check SQL Policy.");
+                else { setMsg("Posted!"); setContent(''); setImage(null); fetchPosts(); setTimeout(() => setMsg(''), 2000); }
+            };
+
+            const handleDelete = async (id) => {
+                if(!confirm("Delete this post?")) return;
+                const { error } = await supabase.from('feed_posts').delete().eq('id', id);
+                if(error) alert("Error deleting. Check SQL Policy.");
+                else fetchPosts();
+            };
+
+            const handleEdit = (post) => {
+                setEditId(post.id);
+                setEditContent(post.content);
+            };
+
+            const handleUpdate = async (id) => {
+                const { error } = await supabase.from('feed_posts').update({ content: editContent }).eq('id', id);
+                if(error) alert("Update failed");
+                else { setEditId(null); fetchPosts(); }
             };
 
             if (loading) return e('div', {className: "flex justify-center py-10"}, e('div', {className: "loader"}));
 
-            return e('div', { className: "max-w-2xl mx-auto space-y-4" },
-                e('h2', { className: "text-xl font-bold text-surface-900 mb-4" }, "📰 News Feed"),
-                
-                // Show Form ONLY for Admin
-                isAdmin && e('div', { className: "bg-white p-4 rounded-xl shadow-sm border mb-6" },
-                    msg && e('div', { className: "bg-green-50 text-green-600 p-2 rounded mb-2 text-sm text-center" }, msg),
+            return e('div', { className: "max-w-xl mx-auto space-y-3" }, // Narrower like FB
+                isAdmin && e('div', { className: "card-fb p-3" },
+                    msg && e('div', { className: "bg-green-100 text-green-700 p-2 rounded mb-2 text-sm text-center" }, msg),
                     e('form', { onSubmit: handleSubmit },
-                        e('textarea', { placeholder: "Write something to broadcast...", value: content, onChange: (e) => setContent(e.target.value), className: "w-full p-3 border-b text-sm focus:outline-none resize-none mb-3", rows: 2 }),
-                        image && e('div', { className: "mb-3 relative" },
-                            e('img', { src: image, className: "max-h-40 rounded-lg mx-auto border" }),
-                            e('button', { type: "button", onClick: () => setImage(null), className: "absolute top-0 right-0 bg-gray-800 text-white rounded-full p-1 text-xs m-1" }, "✕")
+                        e('textarea', { placeholder: "What's on your mind?", value: content, onChange: (e) => setContent(e.target.value), className: "w-full p-2 border-b text-sm focus:outline-none resize-none bg-transparent", rows: 2 }),
+                        image && e('div', { className: "my-2 relative inline-block" },
+                            e('img', { src: image, className: "max-h-40 rounded-lg border" }),
+                            e('button', { type: "button", onClick: () => setImage(null), className: "absolute top-1 right-1 bg-gray-800 text-white rounded-full p-1 text-xs" }, "✕")
                         ),
-                        e('div', { className: "flex justify-between items-center" },
-                            e('label', { className: "cursor-pointer flex items-center gap-2 text-slate-500 hover:text-brand-600 text-sm" },
-                                e('span', null, "🖼️ Add Photo"),
+                        e('div', { className: "flex justify-between items-center mt-2 border-t pt-2" },
+                            e('label', { className: "cursor-pointer flex items-center gap-1 text-green-600 hover:bg-gray-100 p-2 rounded-full" },
+                                e('span', {className: "text-xl"}, "🖼️"),
                                 e('input', { type: "file", accept: "image/*", onChange: handleImageChange, className: "hidden" })
                             ),
-                            e('button', { className: "px-5 py-1.5 bg-brand-500 text-white rounded-lg text-sm font-semibold hover:bg-brand-600" }, "Post")
+                            e('button', { className: "px-4 py-1.5 btn-fb text-white rounded-md text-sm font-semibold" }, "Post")
                         )
                     )
                 ),
 
-                posts.length === 0 && e('p', {className: "text-center text-slate-400 py-10 bg-white rounded-xl"}, "No posts yet."),
+                posts.length === 0 && e('p', {className: "text-center text-gray-400 py-10 card-fb"}, "No posts yet."),
                 posts.map(post => {
                     const isAdminPost = post.poster_email === ADMIN_EMAIL;
-                    const displayName = isAdminPost ? "Admin BRITN" : post.poster_email.split('@')[0];
+                    // Full Organization Name as requested
+                    const displayName = isAdminPost ? "Bangladesh Radiology & Imaging Technologist Network" : post.poster_email.split('@')[0];
                     const avatar = isAdminPost ? e('img', { src: BRITN_LOGO_URL, className: "w-10 h-10 rounded-full object-cover" }) : 
-                                               e('div', { className: "w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center text-slate-600 font-bold" }, displayName.charAt(0).toUpperCase());
+                                               e('div', { className: "w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 font-bold" }, displayName.charAt(0).toUpperCase());
 
-                    return e('div', { key: post.id, className: "bg-white rounded-xl shadow-sm border overflow-hidden card-pro" },
-                        e('div', { className: "p-4 flex items-center gap-3 border-b" },
-                            avatar,
-                            e('div', null,
-                                e('p', { className: "font-bold text-sm text-surface-800 flex items-center gap-1" }, 
-                                    displayName, 
-                                    isAdminPost && e('span', { className: "text-blue-500 text-lg", title: "Verified" }, "✔") // Verified Badge
+                    return e('div', { key: post.id, className: "card-fb overflow-hidden" },
+                        e('div', { className: "p-3" },
+                            e('div', { className: "flex justify-between" },
+                                e('div', { className: "flex items-start gap-2" },
+                                    avatar,
+                                    e('div', null,
+                                        e('p', { className: "font-semibold text-sm text-gray-900 leading-tight" }, 
+                                            displayName, 
+                                            isAdminPost && e('span', { className: "text-fb-blue text-sm ml-1" }, "✔") // Verified Badge
+                                        ),
+                                        e('p', { className: "text-xs text-gray-500" }, new Date(post.created_at).toLocaleDateString())
+                                    )
                                 ),
-                                e('p', { className: "text-xs text-slate-400" }, new Date(post.created_at).toLocaleString())
-                            )
+                                // Admin Edit/Delete Controls
+                                isAdmin && e('div', {className: "flex gap-1"},
+                                    e('button', { onClick: () => handleEdit(post), className: "text-gray-400 hover:text-gray-600 p-1 text-xs" }, "✏️"),
+                                    e('button', { onClick: () => handleDelete(post.id), className: "text-gray-400 hover:text-red-600 p-1 text-xs" }, "🗑️")
+                                )
+                            ),
+                            
+                            // Content Logic (Edit vs View)
+                            editId === post.id ? 
+                                e('div', {className: "mt-2"},
+                                    e('textarea', { value: editContent, onChange: (e) => setEditContent(e.target.value), className: "w-full p-2 border rounded text-sm bg-gray-50" }),
+                                    e('div', {className: "flex gap-2 mt-1"},
+                                        e('button', { onClick: () => handleUpdate(post.id), className: "px-3 py-1 bg-fb-blue text-white text-xs rounded" }, "Save"),
+                                        e('button', { onClick: () => setEditId(null), className: "px-3 py-1 bg-gray-200 text-xs rounded" }, "Cancel")
+                                    )
+                                )
+                                :
+                                post.content && e('p', { className: "text-sm text-gray-800 mt-2 whitespace-pre-wrap" }, post.content)
                         ),
-                        post.content && e('p', { className: "p-4 text-sm text-slate-700" }, post.content),
-                        post.image_url && e('div', { className: "bg-slate-100" }, e('img', { src: post.image_url, className: "w-full feed-image" })),
-                        e('div', { className: "px-4 py-3 flex justify-around border-t text-slate-500 text-xs font-medium" }, 
-                            e('button', { className: "hover:bg-slate-50 p-2 rounded" }, "👍 Like"),
-                            e('button', { className: "hover:bg-slate-50 p-2 rounded" }, "💬 Comment")
+                        post.image_url && e('div', { className: "bg-black" }, e('img', { src: post.image_url, className: "w-full max-h-96 object-contain" })),
+                        
+                        e('div', { className: "px-3 py-2 flex justify-around border-t text-gray-600 text-xs font-semibold" }, 
+                            e('button', { className: "flex-1 py-1 hover:bg-gray-100 rounded" }, "👍 Like"),
+                            e('button', { className: "flex-1 py-1 hover:bg-gray-100 rounded" }, "💬 Comment")
                         )
                     );
                 })
             );
         };
 
-        // --- About Page (Payment Text Only + Reason) ---
+        // --- About Page (Clean) ---
         const AboutPage = () => {
             const handleCopy = () => {
                 navigator.clipboard.writeText(DONATION_NUMBER);
                 alert('Number Copied!');
             };
 
-            return e('div', { className: "space-y-8" },
-                e('div', { className: "bg-white p-8 rounded-2xl shadow-sm border text-center" },
-                    e('img', { src: BRITN_LOGO_URL, className: "w-24 h-24 mx-auto mb-4 object-contain rounded-xl" }),
-                    e('h1', { className: "text-2xl font-bold text-surface-900 font-bangla" }, "Bangladesh Radiology & Imaging Technologist Network")
+            return e('div', { className: "max-w-xl mx-auto space-y-4" },
+                e('div', { className: "card-fb p-6 text-center" },
+                    e('img', { src: BRITN_LOGO_URL, className: "w-20 h-20 mx-auto mb-2 object-contain rounded-lg" }),
+                    e('h1', { className: "text-lg font-bold font-bangla" }, "Bangladesh Radiology & Imaging Technologist Network")
                 ),
-                
-                // Payment Section
-                e('div', { className: "bg-white p-6 rounded-2xl border shadow-sm" },
-                    e('h2', { className: "text-xl font-bold text-surface-900 mb-2 flex items-center justify-center gap-2" }, e('span', null, "❤️"), "Support Us"),
-                    
-                    // Reason Text
-                    e('div', { className: "bg-slate-50 p-4 rounded-lg mb-6 text-center" },
-                        e('p', { className: "text-sm text-slate-600 font-bangla" }, 
-                            "আপনার সামান্য সহযোগিতা আমাদের সার্ভার ও ডোমেইন খরচ বহন করতে এবং নতুন ফিচার যুক্ত করতে সাহায্য করবে। আমরা আপনাদের সেবায় নিবেদিত।"
-                        )
-                    ),
-
-                    e('div', { className: "grid grid-cols-1 md:grid-cols-2 gap-4" },
-                        // bKash Card (Text Only)
-                        e('div', { className: "bg-pink-600 p-6 rounded-xl text-white text-center" },
-                            e('h3', { className: "text-2xl font-bold mb-2" }, "bKash"),
-                            e('p', { className: "text-xs opacity-80 mb-1" }, "Send Money"),
-                            e('p', { className: "text-xl font-bold tracking-widest font-mono my-2" }, DONATION_NUMBER),
-                            e('button', { onClick: handleCopy, className: "mt-2 px-4 py-1 bg-white text-pink-600 rounded text-sm font-bold" }, "Copy")
+                e('div', { className: "card-fb p-4" },
+                    e('h2', { className: "text-md font-bold mb-1 flex items-center gap-1" }, e('span', null, "❤️"), "Support Maintenance"),
+                    e('p', { className: "text-gray-500 text-xs mb-3 font-bangla" }, "সার্ভার ও ডোমেইন খরচ বহনে সহযোগিতা করুন।"),
+                    e('div', { className: "grid grid-cols-2 gap-2" },
+                        e('div', { className: "bg-pink-600 text-white p-3 rounded-lg text-center" },
+                            e('h3', { className: "font-bold" }, "bKash"),
+                            e('p', { className: "text-xs opacity-80" }, "Send Money"),
+                            e('p', { className: "font-mono my-1 text-sm" }, DONATION_NUMBER),
+                            e('button', { onClick: handleCopy, className: "bg-white text-pink-600 text-xs px-2 py-0.5 rounded font-bold" }, "Copy")
                         ),
-                        // Nagad Card (Text Only)
-                        e('div', { className: "bg-orange-500 p-6 rounded-xl text-white text-center" },
-                            e('h3', { className: "text-2xl font-bold mb-2" }, "Nagad"),
-                            e('p', { className: "text-xs opacity-80 mb-1" }, "Send Money"),
-                            e('p', { className: "text-xl font-bold tracking-widest font-mono my-2" }, DONATION_NUMBER),
-                            e('button', { onClick: handleCopy, className: "mt-2 px-4 py-1 bg-white text-orange-600 rounded text-sm font-bold" }, "Copy")
+                        e('div', { className: "bg-orange-500 text-white p-3 rounded-lg text-center" },
+                            e('h3', { className: "font-bold" }, "Nagad"),
+                            e('p', { className: "text-xs opacity-80" }, "Send Money"),
+                            e('p', { className: "font-mono my-1 text-sm" }, DONATION_NUMBER),
+                            e('button', { onClick: handleCopy, className: "bg-white text-orange-500 text-xs px-2 py-0.5 rounded font-bold" }, "Copy")
                         )
                     )
                 ),
-                e('div', { className: "text-center pt-4 border-t" },
-                    e('p', { className: "text-sm text-slate-400" }, "Developed by ", e('span', { className: "font-bold text-brand-600" }, "SRP SOFT LTD"))
-                )
+                e('div', { className: "text-center pt-2 text-xs text-gray-400" }, "Developed by ", e('span', { className: "font-bold" }, "SRP SOFT LTD"))
             );
         };
 
@@ -372,36 +383,35 @@
 
             const handleDeleteReport = async (id) => {
                 if(!confirm("Delete?")) return;
-                const { error } = await supabase.from('hospital_reports').delete().eq('id', id);
-                if(error) alert("Delete Failed: Run SQL Policy.");
-                else fetchReports();
+                await supabase.from('hospital_reports').delete().eq('id', id);
+                fetchReports();
             };
 
             const filteredReports = reports.filter(r => r.hospital_name.toLowerCase().includes(searchTerm.toLowerCase()));
 
-            return e('div', null,
-                e('div', { className: "flex justify-between items-center mb-4" },
-                    e('h2', { className: "text-xl font-bold text-surface-900" }, "🚩 Report List"),
-                    e('input', { placeholder: "Search...", value: searchTerm, onChange: (e) => setSearchTerm(e.target.value), className: "input-style w-64 bg-white" })
+            return e('div', {className: "max-w-xl mx-auto"}, 
+                e('div', { className: "flex justify-between items-center mb-3" },
+                    e('h2', { className: "text-lg font-bold" }, "🚩 Report List"),
+                    e('input', { placeholder: "Search...", value: searchTerm, onChange: (e) => setSearchTerm(e.target.value), className: "input-style w-40 text-sm py-2" })
                 ),
-                e('div', { className: "bg-white p-6 rounded-2xl shadow-sm border mb-6" },
-                    e('form', { onSubmit: handleSubmit, className: "space-y-3" },
-                        e('input', { placeholder: "Hospital Name", value: form.hospital_name, onChange: (e) => setForm({...form, hospital_name: e.target.value}), className: "input-style" }),
-                        e('select', { value: form.category, onChange: (e) => setForm({...form, category: e.target.value}), className: "input-style bg-white" },
+                e('div', { className: "card-fb p-3 mb-3" },
+                    e('form', { onSubmit: handleSubmit, className: "space-y-2" },
+                        e('input', { placeholder: "Hospital Name", value: form.hospital_name, onChange: (e) => setForm({...form, hospital_name: e.target.value}), className: "input-style py-2" }),
+                        e('select', { value: form.category, onChange: (e) => setForm({...form, category: e.target.value}), className: "input-style py-2 bg-white" },
                             e('option', { value: "Bad Behavior" }, "Bad Behavior"),
                             e('option', { value: "Salary Issue" }, "Salary Issue")
                         ),
-                        e('textarea', { placeholder: "Details...", value: form.details, onChange: (e) => setForm({...form, details: e.target.value}), className: "input-style", rows: 3 }),
-                        e('button', { className: "px-5 py-2 bg-red-500 text-white rounded-lg text-sm font-semibold hover:bg-red-600" }, "Submit Report")
+                        e('textarea', { placeholder: "Details...", value: form.details, onChange: (e) => setForm({...form, details: e.target.value}), className: "input-style py-2", rows: 2 }),
+                        e('button', { className: "w-full py-2 bg-red-500 text-white rounded-md font-semibold text-sm" }, "Submit")
                     )
                 ),
-                e('div', { className: "space-y-3" }, filteredReports.map(r => 
-                    e('div', { key: r.id, className: "card-pro p-4 shadow-sm flex justify-between items-start" },
+                e('div', { className: "space-y-2" }, filteredReports.map(r => 
+                    e('div', { key: r.id, className: "card-fb p-3 flex justify-between items-start" },
                         e('div', { className: "flex-1" },
-                            e('div', { className: "flex items-center gap-2 mb-1" }, e('span', {className: "font-bold"}, r.hospital_name), e('span', {className: "bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded text-xs"}, r.category)),
-                            e('p', { className: "text-slate-600 text-sm" }, r.details)
+                            e('div', { className: "flex items-center gap-2 mb-1" }, e('span', {className: "font-bold text-sm"}, r.hospital_name), e('span', {className: "bg-yellow-100 text-yellow-700 px-1.5 py-0.5 rounded text-xs"}, r.category)),
+                            e('p', { className: "text-gray-600 text-xs" }, r.details)
                         ),
-                        isAdmin && e('button', { onClick: () => handleDeleteReport(r.id), className: "ml-4 text-xs bg-red-50 text-red-500 px-3 py-1 rounded-full hover:bg-red-100 font-medium h-fit" }, "Remove")
+                        isAdmin && e('button', { onClick: () => handleDeleteReport(r.id), className: "text-red-400 hover:text-red-600 text-xs ml-2" }, "Remove")
                     )
                 ))
             );
@@ -433,22 +443,21 @@
 
             if (loading) return e('div', {className: "flex justify-center py-10"}, e('div', {className: "loader"}));
 
-            return e('div', null,
-                e('div', { className: "flex justify-between items-center mb-4" },
-                    e('h2', { className: "text-xl font-bold text-surface-900" }, title),
-                    e('input', { placeholder: "Search...", value: search, onChange: (e) => setSearch(e.target.value), className: "input-style w-64" })
+            return e('div', {className: "max-w-xl mx-auto"}, 
+                e('div', { className: "flex justify-between items-center mb-3" },
+                    e('h2', { className: "text-lg font-bold" }, title),
+                    e('input', { placeholder: "Search...", value: search, onChange: (e) => setSearch(e.target.value), className: "input-style w-40 text-sm py-2" })
                 ),
-                e('div', { className: "grid grid-cols-1 md:grid-cols-2 gap-4" }, jobs.filter(j => j.title.toLowerCase().includes(search.toLowerCase())).map(job => 
-                    e('div', { key: job.id, className: "card-pro p-0 shadow-sm overflow-hidden" },
-                        e('div', { className: "p-5" },
-                            e('h3', { className: "font-bold text-lg text-surface-800" }, job.title),
-                            !job.is_approved && e('span', { className: "bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded text-xs" }, "Pending"),
-                            e('p', { className: "text-slate-500 text-sm mt-1" }, `📍 ${job.location} | 💰 ${job.salary || 'N/A'}`),
-                            e('p', { className: "text-slate-400 text-xs mt-2" }, job.description?.substring(0, 60) + '...')
+                e('div', { className: "space-y-2" }, jobs.filter(j => j.title.toLowerCase().includes(search.toLowerCase())).map(job => 
+                    e('div', { key: job.id, className: "card-fb p-3" },
+                        e('div', { className: "flex justify-between items-start mb-1" },
+                            e('h3', { className: "font-bold text-sm" }, job.title),
+                            !job.is_approved && e('span', { className: "bg-yellow-100 text-yellow-700 px-1.5 py-0.5 rounded text-xs" }, "Pending")
                         ),
-                        e('div', { className: "bg-slate-50 px-5 py-3 flex justify-end space-x-2 border-t" },
-                            isAdmin && !job.is_approved && e('button', { onClick: () => handleAction(job.id, 'approve'), className: "px-4 py-1 bg-green-500 text-white rounded-lg text-xs font-semibold" }, "Approve"),
-                            (isAdmin || job.poster_id === user.id) && e('button', { onClick: () => handleAction(job.id, 'delete'), className: "px-4 py-1 bg-red-50 text-red-600 rounded-lg text-xs font-semibold" }, "Delete")
+                        e('p', { className: "text-gray-500 text-xs mb-2" }, `📍 ${job.location} | 💰 ${job.salary || 'Negotiable'}`),
+                        e('div', { className: "flex gap-1 justify-end border-t pt-2 mt-2" },
+                            isAdmin && !job.is_approved && e('button', { onClick: () => handleAction(job.id, 'approve'), className: "px-3 py-1 btn-fb text-white rounded text-xs font-semibold" }, "Approve"),
+                            (isAdmin || job.poster_id === user.id) && e('button', { onClick: () => handleAction(job.id, 'delete'), className: "px-3 py-1 bg-gray-200 text-gray-700 rounded text-xs font-semibold" }, "Delete")
                         )
                     )
                 ))
@@ -466,58 +475,34 @@
                 if (error) setMsg("Error"); else { setMsg("Success!"); setForm({}); }
             };
 
-            return e('div', { className: "bg-white p-6 rounded-2xl shadow-sm border max-w-2xl" },
-                e('h2', { className: "text-xl font-bold mb-4 text-surface-900 font-bangla" }, "পোস্ট করুন"),
-                msg && e('div', { className: "p-3 rounded-xl mb-4 text-sm bg-green-50 text-green-600 text-center" }, msg),
-                e('form', { onSubmit: handleSubmit, className: "space-y-3" },
-                    e('input', { placeholder: "Job Title *", value: form.title, onChange: (e) => setForm({...form, title: e.target.value}), className: "input-style" }),
-                    e('input', { placeholder: "Location *", value: form.location, onChange: (e) => setForm({...form, location: e.target.value}), className: "input-style" }),
-                    e('input', { placeholder: "Salary", value: form.salary, onChange: (e) => setForm({...form, salary: e.target.value}), className: "input-style" }),
-                    e('textarea', { placeholder: "Description", value: form.description, onChange: (e) => setForm({...form, description: e.target.value}), className: "input-style", rows: 4 }),
-                    e('button', { type: "submit", className: "w-full py-3 btn-brand text-white rounded-lg font-semibold text-sm" }, "Submit Job")
+            return e('div', { className: "max-w-xl mx-auto card-fb p-4" },
+                e('h2', { className: "text-lg font-bold mb-3 font-bangla" }, "পোস্ট করুন"),
+                msg && e('div', { className: "p-2 rounded mb-2 text-sm bg-green-100 text-green-700 text-center" }, msg),
+                e('form', { onSubmit: handleSubmit, className: "space-y-2" },
+                    e('input', { placeholder: "Job Title *", value: form.title, onChange: (e) => setForm({...form, title: e.target.value}), className: "input-style py-2" }),
+                    e('input', { placeholder: "Location *", value: form.location, onChange: (e) => setForm({...form, location: e.target.value}), className: "input-style py-2" }),
+                    e('input', { placeholder: "Salary", value: form.salary, onChange: (e) => setForm({...form, salary: e.target.value}), className: "input-style py-2" }),
+                    e('textarea', { placeholder: "Description", value: form.description, onChange: (e) => setForm({...form, description: e.target.value}), className: "input-style py-2", rows: 3 }),
+                    e('button', { type: "submit", className: "w-full py-2 btn-fb text-white rounded-md font-semibold text-sm" }, "Submit Job")
                 )
             );
         };
 
         // --- Dashboard ---
         const Dashboard = ({ user, setPage }) => {
-            return e('div', { className: "space-y-6" },
-                e('div', { className: "flex justify-between items-center" },
-                    e('div', null,
-                        e('h1', { className: "text-2xl font-bold text-surface-900" }, "Welcome Back! 👋"),
-                        e('p', { className: "text-slate-500 text-sm mt-1" }, `Logged in as: ${user?.email}`)
-                    ),
-                    e('span', { className: "px-3 py-1 rounded-full text-xs font-bold bg-brand-100 text-brand-700 uppercase" }, user?.user_metadata?.role || "User")
+            return e('div', { className: "max-w-xl mx-auto space-y-3" },
+                e('div', { className: "card-fb p-4" },
+                    e('h1', { className: "text-xl font-bold" }, "Welcome! 👋"),
+                    e('p', { className: "text-gray-500 text-xs mt-1" }, `Logged in as: ${user?.email}`),
+                    e('span', { className: "inline-block mt-2 px-2 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-fb-blue uppercase" }, user?.user_metadata?.role || "User")
                 ),
-                e('div', { className: "grid grid-cols-1 md:grid-cols-3 gap-6" }, 
-                    e('div', { className: "card-pro p-6 flex justify-between items-center" },
-                        e('div', null, e('h3', { className: "text-slate-500 text-xs uppercase" }, "Role"), e('p', { className: "text-xl font-bold text-surface-900 mt-1 capitalize" }, user?.user_metadata?.role)),
-                        e('div', {className: "w-10 h-10 bg-brand-50 rounded-full flex items-center justify-center text-xl"}, "👤")
-                    ),
-                    e('div', { className: "card-pro p-6 flex justify-between items-center" },
-                        e('div', null, e('h3', { className: "text-slate-500 text-xs uppercase" }, "Status"), e('p', { className: "text-xl font-bold text-green-600 mt-1" }, "Active")),
-                        e('div', {className: "w-10 h-10 bg-green-50 rounded-full flex items-center justify-center text-xl"}, "✅")
-                    ),
-                    e('div', { className: "card-pro p-6 flex justify-between items-center" },
-                        e('div', null, e('h3', { className: "text-slate-500 text-xs uppercase" }, "Latest"), e('p', { className: "text-xl font-bold text-brand-600 mt-1 font-bangla" }, "News Feed")),
-                        e('button', { onClick: () => setPage('feed'), className: "text-sm px-3 py-1 bg-brand-50 rounded-full text-brand-700 font-medium hover:bg-brand-100" }, "View")
-                    )
-                ),
-                e('div', { className: "bg-white p-6 rounded-2xl border shadow-sm" },
-                    e('h3', { className: "font-bold text-surface-900 mb-4 font-bangla" }, "দ্রুত অ্যাকশন"),
-                    e('div', { className: "grid grid-cols-2 md:grid-cols-4 gap-3" }, 
-                        e('button', { onClick: () => setPage('add_job'), className: "flex flex-col items-center justify-center p-4 bg-slate-50 rounded-xl hover:bg-brand-50 transition-colors group" },
-                            e('span', { className: "text-2xl mb-1 group-hover:scale-110 transition-transform" }, "➕"), e('span', { className: "text-xs font-medium text-slate-600 font-bangla" }, "পোস্ট করুন")
-                        ),
-                        e('button', { onClick: () => setPage('jobs'), className: "flex flex-col items-center justify-center p-4 bg-slate-50 rounded-xl hover:bg-brand-50 transition-colors group" },
-                            e('span', { className: "text-2xl mb-1 group-hover:scale-110 transition-transform" }, "🔍"), e('span', { className: "text-xs font-medium text-slate-600 font-bangla" }, "জব খুঁজুন")
-                        ),
-                        e('button', { onClick: () => setPage('feed'), className: "flex flex-col items-center justify-center p-4 bg-slate-50 rounded-xl hover:bg-brand-50 transition-colors group" },
-                            e('span', { className: "text-2xl mb-1 group-hover:scale-110 transition-transform" }, "📰"), e('span', { className: "text-xs font-medium text-slate-600 font-bangla" }, "নিউজ ফিড")
-                        ),
-                        e('button', { onClick: () => setPage('reports'), className: "flex flex-col items-center justify-center p-4 bg-slate-50 rounded-xl hover:bg-brand-50 transition-colors group" },
-                            e('span', { className: "text-2xl mb-1 group-hover:scale-110 transition-transform" }, "🚩"), e('span', { className: "text-xs font-medium text-slate-600 font-bangla" }, "রিপোর্ট")
-                        )
+                e('div', { className: "card-fb p-4" },
+                    e('h3', { className: "font-bold text-sm mb-2" }, "Quick Actions"),
+                    e('div', { className: "grid grid-cols-2 gap-2" }, 
+                        e('button', { onClick: () => setPage('add_job'), className: "bg-gray-100 p-2 rounded-lg text-xs font-medium hover:bg-gray-200" }, "➕ Post Job"),
+                        e('button', { onClick: () => setPage('feed'), className: "bg-gray-100 p-2 rounded-lg text-xs font-medium hover:bg-gray-200" }, "📰 News Feed"),
+                        e('button', { onClick: () => setPage('jobs'), className: "bg-gray-100 p-2 rounded-lg text-xs font-medium hover:bg-gray-200" }, "💼 Find Jobs"),
+                        e('button', { onClick: () => setPage('reports'), className: "bg-gray-100 p-2 rounded-lg text-xs font-medium hover:bg-gray-200" }, "🚩 Reports")
                     )
                 )
             );
@@ -529,13 +514,13 @@
             
             if (page === 'dash') return e(Dashboard, { user, setPage });
             if (page === 'feed') return e(FeedPage, { user });
-            if (page === 'jobs') return e(JobList, { title: "Job Portal", filter: 'approved', user });
+            if (page === 'jobs') return e(JobList, { title: "Jobs", filter: 'approved', user });
             if (page === 'reports') return e(ReportList, { user });
             if (page === 'about') return e(AboutPage);
             if (page === 'add_job') return e(AddJobForm, { user, isAdmin });
-            if (page === 'my_jobs') return e(JobList, { title: "My Posted Jobs", filter: 'my_posts', user });
-            if (isAdmin && page === 'approvals') return e(JobList, { title: "Pending Approvals", filter: 'pending', isAdmin: true, user });
-            if (isAdmin && page === 'manage_all') return e(JobList, { title: "Manage All Jobs", filter: 'all', isAdmin: true, user });
+            if (page === 'my_jobs') return e(JobList, { title: "My Jobs", filter: 'my_posts', user });
+            if (isAdmin && page === 'approvals') return e(JobList, { title: "Pending", filter: 'pending', isAdmin: true, user });
+            if (isAdmin && page === 'manage_all') return e(JobList, { title: "Manage", filter: 'all', isAdmin: true, user });
             return e('div', null, e('h1', null, "Page not found"));
         };
 
@@ -558,20 +543,20 @@
                 return () => subscription.unsubscribe();
             }, []);
 
-            if (view === 'loading') return e('div', { className: "flex h-screen items-center justify-center bg-slate-100" }, e('div', { className: "loader" }));
+            if (view === 'loading') return e('div', { className: "flex h-screen items-center justify-center" }, e('div', { className: "loader" }));
             if (view === 'login') return e(AuthScreen, { type: 'login', onSwitch: setView, onSuccess: () => setView('app') });
             if (view === 'register') return e(AuthScreen, { type: 'register', onSwitch: setView });
 
-            return e('div', { className: "flex min-h-screen bg-slate-100" },
-                sidebarOpen && e('div', { onClick: () => setSidebarOpen(false), className: "fixed inset-0 z-30 bg-black/50 backdrop-blur-sm md:hidden" }),
+            return e('div', { className: "flex min-h-screen bg-gray-bg" },
+                sidebarOpen && e('div', { onClick: () => setSidebarOpen(false), className: "fixed inset-0 z-30 bg-black/30 md:hidden" }),
                 e(Sidebar, { page, setPage, onLogout: () => supabase.auth.signOut(), role: user?.user_metadata?.role, isOpen: sidebarOpen, setIsOpen: setSidebarOpen, userEmail: user.email }),
                 e('div', { className: "flex-1 flex flex-col w-full md:ml-0 min-h-screen" },
-                    e('div', { className: "md:hidden sticky top-0 z-20 bg-white/80 backdrop-blur-lg border-b p-4 flex items-center justify-between shadow-sm" },
-                        e('button', { onClick: () => setSidebarOpen(true), className: "p-2 rounded-lg hover:bg-slate-100 text-slate-600" }, "☰"),
-                        e('span', { className: "font-bold text-lg text-brand-700" }, "BRITN"),
+                    e('div', { className: "md:hidden sticky top-0 z-20 bg-white border-b p-2 flex items-center justify-between shadow-sm" },
+                        e('button', { onClick: () => setSidebarOpen(true), className: "p-2 rounded-full hover:bg-gray-100" }, "☰"),
+                        e('span', { className: "font-bold text-fb-blue" }, "BRITN"),
                         e('div', { className: "w-8" })
                     ),
-                    e('div', { className: "flex-1 p-6 md:p-8 overflow-auto" }, e(ContentArea, { page, user, setPage }))
+                    e('div', { className: "flex-1 p-2 md:p-4 overflow-auto" }, e(ContentArea, { page, user, setPage }))
                 )
             );
         };
