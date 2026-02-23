@@ -11,150 +11,119 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#0A1931',
-                        accent: '#1F4068',
+                        primary: '#0A66C2',
+                        'primary-dark': '#004182',
+                        'primary-light': '#70B5F9',
+                        surface: '#F3F2EF',
+                        card: '#FFFFFF',
+                        text: '#1D1D1D',
+                        'text-secondary': '#666666',
+                        'text-muted': '#8D8D8D',
                         highlight: '#FFD700',
-                        success: '#00C897',
-                        danger: '#FF4C4C',
-                        surface: 'rgba(255, 255, 255, 0.05)',
-                        'surface-light': 'rgba(255, 255, 255, 0.1)',
+                        success: '#057642',
+                        danger: '#D11124',
+                        border: '#E0E0E0',
+                        'pinned-bg': '#E8F4FD',
                     }
                 }
             }
         }
     </script>
     <style>
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background: linear-gradient(135deg, #0A1931 0%, #1F4068 100%);
-            margin: 0; 
-            color: #FFFFFF;
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
+            background: #F3F2EF;
+            color: #1D1D1D;
             min-height: 100vh;
             overflow-x: hidden;
         }
         .font-bangla { font-family: 'Hind Siliguri', sans-serif; }
         
-        /* Glassmorphism Utilities */
-        .glass {
-            background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        /* Professional Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #C4C4C4; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #A0A0A0; }
+        
+        /* Card Style */
+        .card {
+            background: #FFFFFF;
+            border-radius: 12px;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+            transition: box-shadow 0.2s ease;
         }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #0A1931;
+        .card:hover {
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.08);
         }
-        .glass-dark {
-            background: rgba(10, 25, 49, 0.6);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Inputs */
-        .input-smart {
+        
+        /* Professional Input */
+        .input-pro {
             width: 100%; 
-            padding: 12px 16px; 
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.2); 
-            border-radius: 12px; 
+            padding: 14px 16px; 
+            background: #FFFFFF;
+            border: 1px solid #E0E0E0; 
+            border-radius: 8px; 
             outline: none; 
-            font-size: 14px;
-            color: #0A1931;
-            transition: all 0.3s ease;
+            font-size: 15px;
+            color: #1D1D1D;
+            transition: all 0.2s ease;
+            line-height: 1.5;
         }
-        .input-smart:focus { 
-            border-color: #00C897; 
-            background: #FFFFFF; 
-            box-shadow: 0 0 0 3px rgba(0, 200, 151, 0.2); 
+        .input-pro:focus { 
+            border-color: #0A66C2; 
+            box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.15); 
         }
-        .input-dark {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255,255,255,0.2);
+        .input-pro::placeholder { color: #8D8D8D; }
+        
+        /* Large Textarea */
+        .textarea-lg {
+            min-height: 200px;
+            resize: vertical;
+            line-height: 1.7;
+            padding: 20px;
+            font-size: 15px;
+        }
+        .textarea-xl {
+            min-height: 280px;
+        }
+        
+        /* Button Styles */
+        .btn-primary {
+            background: #0A66C2;
             color: white;
-        }
-        .input-dark::placeholder { color: rgba(255,255,255,0.6); }
-        .input-dark:focus { 
-            background: rgba(255, 255, 255, 0.15); 
-            border-color: #00C897; 
-            box-shadow: 0 0 0 2px rgba(0, 200, 151, 0.2);
-        }
-
-        /* Loader */
-        .loader { 
-            border: 3px solid rgba(255, 255, 255, 0.1); 
-            border-top: 3px solid #00C897; 
-            border-radius: 50%; 
-            width: 30px; 
-            height: 30px; 
-            animation: spin 0.8s linear infinite; 
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        /* Verified Badge */
-        .verified-badge { 
-            background: linear-gradient(135deg, #FFD700, #FFA500); 
-            color: #0A1931; 
-            padding: 2px 8px; 
-            border-radius: 6px; 
-            font-size: 9px; 
-            font-weight: 800; 
-            letter-spacing: 0.5px;
+            padding: 12px 24px;
+            border-radius: 24px;
+            font-weight: 600;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        /* Sidebar */
-        .sidebar-design { 
-            background: rgba(10, 25, 49, 0.8); 
-            backdrop-filter: blur(20px);
-            border-right: 1px solid rgba(255, 255, 255, 0.05); 
-        }
-        .nav-item { 
-            transition: all 0.2s; 
-            border-left: 3px solid transparent; 
-            color: rgba(255, 255, 255, 0.7);
-        }
-        .nav-item.active { 
-            background: rgba(255, 255, 255, 0.1); 
-            border-left-color: #00C897; 
-            color: #FFFFFF; 
-            font-weight: 600; 
-        }
-        .nav-item:hover { background: rgba(255, 255, 255, 0.05); color: white; }
-
-        /* Bottom Nav */
-        .bottom-nav-item {
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            color: rgba(255,255,255,0.5);
-            transition: all 0.2s;
-            font-size: 10px;
-            gap: 2px;
+            gap: 8px;
         }
-        .bottom-nav-item.active { color: #00C897; }
-        .bottom-nav-item span.icon { font-size: 20px; transition: transform 0.2s; }
-        .bottom-nav-item.active span.icon { transform: translateY(-2px); }
-
-        /* Animations */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        .btn-primary:hover { background: #004182; }
+        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
         
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
-        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.4); }
+        .btn-secondary {
+            background: transparent;
+            color: #0A66C2;
+            padding: 12px 24px;
+            border-radius: 24px;
+            font-weight: 600;
+            font-size: 14px;
+            border: 2px solid #0A66C2;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            background: white;
+        }
+        .btn-secondary:hover { background: rgba(10, 102, 194, 0.08); }
         
-        button { touch-action: manipulation; position: relative; overflow: hidden; }
-        
-        /* Ripple Effect Stub */
-        .ripple:after {
+        /* Ripple Effect */
+        .ripple { position: relative; overflow: hidden; }
+        .ripple::after {
             content: "";
             display: block;
             position: absolute;
@@ -163,504 +132,1856 @@
             top: 0;
             left: 0;
             pointer-events: none;
-            background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+            background-image: radial-gradient(circle, rgba(255,255,255,0.4) 10%, transparent 10.01%);
             background-repeat: no-repeat;
             background-position: 50%;
-            transform: scale(10, 10);
+            transform: scale(10);
             opacity: 0;
-            transition: transform .4s, opacity .8s;
+            transition: transform 0.4s, opacity 0.6s;
         }
-        .ripple:active:after {
-            transform: scale(0, 0);
-            opacity: .2;
+        .ripple:active::after {
+            transform: scale(0);
+            opacity: 1;
             transition: 0s;
         }
-
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-16px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes skeleton {
+            0% { background-position: -200px 0; }
+            100% { background-position: calc(200px + 100%) 0; }
+        }
+        .fade-in { animation: fadeIn 0.35s ease-out forwards; }
+        .slide-in { animation: slideIn 0.25s ease-out forwards; }
+        
+        /* Skeleton Loading */
+        .skeleton {
+            background: linear-gradient(90deg, #F0F0F0 0px, #E8E8E8 40px, #F0F0F0 80px);
+            background-size: 200px 100%;
+            animation: skeleton 1.4s ease-in-out infinite;
+            border-radius: 6px;
+        }
+        
+        /* Verified Badge */
+        .verified-badge { 
+            background: linear-gradient(135deg, #FFD700, #FFB800); 
+            color: #1D1D1D; 
+            padding: 3px 10px; 
+            border-radius: 4px; 
+            font-size: 10px; 
+            font-weight: 700; 
+            letter-spacing: 0.3px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        /* Pinned Post Style */
+        .pinned-post {
+            background: linear-gradient(135deg, #E8F4FD 0%, #F0F7FF 100%);
+            border-left: 4px solid #0A66C2;
+            border-radius: 12px;
+        }
+        .pin-badge {
+            background: #0A66C2;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* Character Counter */
+        .char-counter {
+            font-size: 12px;
+            color: #8D8D8D;
+            text-align: right;
+            margin-top: 6px;
+            transition: color 0.2s;
+        }
+        .char-counter.warning { color: #D11124; font-weight: 500; }
+        
+        /* Loader */
+        .loader { 
+            border: 3px solid #E0E0E0; 
+            border-top: 3px solid #0A66C2; 
+            border-radius: 50%; 
+            width: 32px; 
+            height: 32px; 
+            animation: spin 0.8s linear infinite; 
+        }
+        .loader-sm { width: 20px; height: 20px; border-width: 2px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
         /* Toast */
-        .toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
-        .toast { padding: 12px 20px; border-radius: 12px; color: white; font-size: 13px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); animation: slideIn 0.3s ease-out; }
-        .toast-success { background: #00C897; }
-        .toast-error { background: #FF4C4C; }
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        .toast-container { 
+            position: fixed; 
+            top: 70px; 
+            right: 20px; 
+            z-index: 9999; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+        }
+        .toast { 
+            padding: 14px 20px; 
+            border-radius: 10px; 
+            background: #FFFFFF;
+            color: #1D1D1D;
+            font-size: 14px; 
+            font-weight: 500;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.12); 
+            animation: fadeIn 0.3s ease-out;
+            border-left: 4px solid;
+            max-width: 360px;
+        }
+        .toast-success { border-left-color: #057642; }
+        .toast-error { border-left-color: #D11124; }
+        
+        /* Hover Effects */
+        .hover-lift {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+        
+        /* Nav Icon */
+        .nav-icon-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 16px;
+            height: 52px;
+            justify-content: center;
+            color: #666666;
+            position: relative;
+            cursor: pointer;
+            transition: color 0.15s;
+            text-decoration: none;
+            border: none;
+            background: transparent;
+        }
+        .nav-icon-btn:hover { color: #1D1D1D; }
+        .nav-icon-btn.active { color: #0A66C2; }
+        .nav-icon-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 52px;
+            height: 3px;
+            background: #0A66C2;
+            border-radius: 3px 3px 0 0;
+        }
+        .nav-icon-btn span { font-size: 12px; margin-top: 2px; font-weight: 500; }
+        
+        /* Dropdown */
+        .dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+            min-width: 300px;
+            z-index: 100;
+            animation: fadeIn 0.2s ease-out;
+            border: 1px solid #E0E0E0;
+        }
+        
+        /* Mobile Bottom Nav */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #E0E0E0;
+            z-index: 50;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 0;
+            color: #666666;
+            cursor: pointer;
+            transition: color 0.15s;
+            border: none;
+            background: transparent;
+            flex: 1;
+        }
+        .bottom-nav-item.active { color: #0A66C2; }
+        .bottom-nav-item span { font-size: 10px; margin-top: 2px; font-weight: 600; }
+        
+        /* Format Toolbar */
+        .format-toolbar {
+            display: flex;
+            gap: 2px;
+            padding: 10px 12px;
+            background: #FAFAFA;
+            border: 1px solid #E0E0E0;
+            border-bottom: none;
+            border-radius: 10px 10px 0 0;
+        }
+        .format-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #666666;
+            transition: all 0.15s;
+        }
+        .format-btn:hover { background: #E8E8E8; color: #1D1D1D; }
+        
+        /* Post Action Buttons */
+        .post-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 8px;
+            border-radius: 6px;
+            color: #666666;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s;
+            border: none;
+            background: transparent;
+            flex: 1;
+        }
+        .post-action:hover { background: rgba(0,0,0,0.06); color: #1D1D1D; }
+        
+        /* Form Label */
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1D1D1D;
+            margin-bottom: 8px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .desktop-only { display: none !important; }
+            .textarea-lg { min-height: 160px; }
+            .textarea-xl { min-height: 200px; }
+        }
+        @media (min-width: 769px) {
+            .mobile-only { display: none !important; }
+        }
+        
+        /* Main Container Safety */
+        #root { min-height: 100vh; }
+        .app-container { min-height: 100vh; display: flex; flex-direction: column; }
     </style>
 </head>
 <body>
-    <div id="root" style="height: 100vh; display: flex; align-items: center; justify-content: center;">
-        <div class="loader"></div>
-    </div>
+    <div id="root"></div>
 
     <script type="module">
         import React from 'https://esm.sh/react@18.2.0';
         import ReactDOM from 'https://esm.sh/react-dom@18.2.0/client';
+        import htm from 'https://esm.sh/htm@3.1.1';
         import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-        // --- CONFIGURATION ---
+        const html = htm.bind(React.createElement);
+
+        // Configuration
         const BRITN_LOGO_URL = 'https://z-cdn-media.chatglm.cn/files/947017d9-2ded-4447-ab50-1dfd8ce35fcd.jpg?auth_key=1871748799-320010bf4fcc40a98d5d6172607e7c73-0-134513578fae2800da62ba56df7d4c44';
         const DONATION_NUMBER = '01843860547';
         const SUPABASE_URL = 'https://hosiwwylofzjtweclycv.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhvc2l3d3lsb2Z6anR3ZWNseWN2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2NTc3ODgsImV4cCI6MjA4NzIzMzc4OH0.DkCioDXAQQYZm9NOhfsyuXvArR1TQjMMRf7OFv8FClA';
         const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-        
         const ADMIN_EMAIL = 'admin@britn.com';
-        const e = React.createElement;
 
-        // --- Context for Toasts ---
+        // Toast Context
         const ToastContext = React.createContext(null);
+        
         const ToastProvider = ({ children }) => {
             const [toasts, setToasts] = React.useState([]);
             const addToast = (message, type = 'success') => {
                 const id = Date.now();
                 setToasts(prev => [...prev, { id, message, type }]);
-                setTimeout(() => setToasts(prev => prev.filter(t => t.id !== id)), 3000);
+                setTimeout(() => setToasts(prev => prev.filter(t => t.id !== id)), 4000);
             };
-            return e(ToastContext.Provider, { value: addToast }, 
-                children,
-                e('div', { className: "toast-container" }, 
-                    toasts.map(t => e('div', { key: t.id, className: `toast toast-${t.type}` }, t.message))
-                )
-            );
+            return html`
+                <${ToastContext.Provider} value=${addToast}>
+                    ${children}
+                    <div className="toast-container">
+                        ${toasts.map(t => html`
+                            <div key=${t.id} className="toast toast-${t.type}">${t.message}</div>
+                        `)}
+                    </div>
+                <//>
+            `;
         };
+        
         const useToast = () => React.useContext(ToastContext);
 
-        // --- Helper ---
+        // Safe Fetch Helper
         const safeFetch = async (query) => {
-            try { const { data, error } = await query; if (error) throw error; return data || []; } 
-            catch (err) { console.error("Fetch Error:", err); return []; }
+            try { 
+                const { data, error } = await query; 
+                if (error) throw error; 
+                return data || []; 
+            } catch (err) { 
+                console.error("Fetch Error:", err); 
+                return []; 
+            }
         };
 
-        // --- Smart Auth Screen ---
+        // Icons
+        const Icon = ({ name, size = 20, className = "" }) => {
+            const icons = {
+                home: html`<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="9,22 9,12 15,12 15,22" fill="none" stroke="currentColor" stroke-width="2"/>`,
+                network: html`<path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" fill="currentColor"/>`,
+                jobs: html`<path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z" fill="currentColor"/>`,
+                notifications: html`<path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" fill="currentColor"/>`,
+                profile: html`<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" fill="currentColor"/>`,
+                search: html`<circle cx="11" cy="11" r="8" fill="none" stroke="currentColor" stroke-width="2"/><line x1="21" y1="21" x2="16.65" y2="16.65" stroke="currentColor" stroke-width="2"/>`,
+                more: html`<circle cx="12" cy="6" r="2" fill="currentColor"/><circle cx="12" cy="12" r="2" fill="currentColor"/><circle cx="12" cy="18" r="2" fill="currentColor"/>`,
+                like: html`<path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3" fill="none" stroke="currentColor" stroke-width="2"/>`,
+                comment: html`<path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" fill="none" stroke="currentColor" stroke-width="2"/>`,
+                share: html`<circle cx="18" cy="5" r="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="6" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="19" r="3" fill="none" stroke="currentColor" stroke-width="2"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" stroke="currentColor" stroke-width="2"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" stroke="currentColor" stroke-width="2"/>`,
+                pin: html`<path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2" fill="none" stroke="currentColor" stroke-width="2"/><line x1="12" y1="11" x2="12" y2="17" stroke="currentColor" stroke-width="2"/><line x1="9" y1="14" x2="15" y2="14" stroke="currentColor" stroke-width="2"/>`,
+                bookmark: html`<path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" fill="none" stroke="currentColor" stroke-width="2"/>`,
+                close: html`<line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2"/><line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2"/>`,
+                edit: html`<path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" fill="none" stroke="currentColor" stroke-width="2"/>`,
+                delete: html`<polyline points="3,6 5,6 21,6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" fill="none" stroke="currentColor" stroke-width="2"/>`,
+                plus: html`<line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2"/><line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2"/>`,
+                check: html`<polyline points="20,6 9,17 4,12" fill="none" stroke="currentColor" stroke-width="2"/>`,
+                image: html`<rect x="3" y="3" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/><polyline points="21,15 16,10 5,21" fill="none" stroke="currentColor" stroke-width="2"/>`,
+                settings: html`<circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" fill="none" stroke="currentColor" stroke-width="2"/>`,
+                logout: html`<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="16,17 21,12 16,7" fill="none" stroke="currentColor" stroke-width="2"/><line x1="21" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="2"/>`,
+            };
+            return html`
+                <svg width=${size} height=${size} viewBox="0 0 24 24" fill="none" className=${className}>
+                    ${icons[name] || ''}
+                </svg>
+            `;
+        };
+
+        // Auth Screen
         const AuthScreen = ({ type, onSwitch, onSuccess }) => {
             const [form, setForm] = React.useState({ email: '', pass: '', name: '', role: 'student' });
             const [error, setError] = React.useState('');
             const [loading, setLoading] = React.useState(false);
             
             const handleAuth = async (ev) => {
-                ev.preventDefault(); setError(''); setLoading(true);
+                ev.preventDefault(); 
+                setError(''); 
+                setLoading(true);
                 try {
                     if (type === 'login') {
-                        const { error } = await supabase.auth.signInWithPassword({ email: form.email, password: form.pass });
-                        if (error) throw error; onSuccess();
+                        const { error } = await supabase.auth.signInWithPassword({ 
+                            email: form.email, 
+                            password: form.pass 
+                        });
+                        if (error) throw error; 
+                        onSuccess();
                     } else {
                         if (form.email === ADMIN_EMAIL) throw new Error("Admin email reserved.");
                         const { error } = await supabase.auth.signUp({
-                            email: form.email, password: form.pass,
+                            email: form.email, 
+                            password: form.pass,
                             options: { data: { full_name: form.name, role: form.role } }
                         });
                         if (error) throw error;
-                        alert("Registered! Please login."); onSwitch('login');
+                        alert("Registered successfully! Please login."); 
+                        onSwitch('login');
                     }
-                } catch (err) { setError(err.message); } finally { setLoading(false); }
+                } catch (err) { 
+                    setError(err.message); 
+                } finally { 
+                    setLoading(false); 
+                }
             };
 
-            return e('div', { className: "min-h-screen flex flex-col md:flex-row items-center justify-center p-4 relative overflow-hidden" },
-                // Background Decoration
-                e('div', { className: "absolute top-0 left-0 w-96 h-96 bg-accent rounded-full filter blur-3xl opacity-20 -translate-x-1/2 -translate-y-1/2" }),
-                e('div', { className: "absolute bottom-0 right-0 w-96 h-96 bg-primary rounded-full filter blur-3xl opacity-20 translate-x-1/2 translate-y-1/2" }),
-                
-                // Card
-                e('div', { className: "relative z-10 w-full max-w-sm fade-in" },
-                    e('div', { className: "glass-card rounded-3xl p-8 shadow-2xl" },
-                        // Logo Header
-                        e('div', { className: "text-center mb-6" },
-                            e('div', { className: "w-16 h-16 mx-auto bg-primary rounded-2xl flex items-center justify-center shadow-lg mb-3 transform hover:rotate-6 transition-transform" },
-                                e('img', { src: BRITN_LOGO_URL, className: "w-10 h-10 object-contain" })
-                            ),
-                            e('h1', { className: "text-2xl font-bold text-primary" }, "BRITN"),
-                            e('p', { className: "text-slate-500 text-xs font-bangla mt-1" }, "Bangladesh Radiology & Imaging Technologist Network")
-                        ),
+            return html`
+                <div className="min-h-screen flex items-center justify-center p-4 bg-surface">
+                    <div className="w-full max-w-md fade-in">
+                        <div className="text-center mb-6">
+                            <div className="flex items-center justify-center gap-3 mb-4">
+                                <img src=${BRITN_LOGO_URL} className="w-14 h-14 rounded-xl shadow-md" alt="BRITN"/>
+                                <span className="text-3xl font-bold text-text">BRITN</span>
+                            </div>
+                            <p className="text-text-secondary text-sm font-bangla">Bangladesh Radiology and Imaging Technologist Network</p>
+                            <h2 className="text-xl font-semibold text-text mt-8">${type === 'login' ? 'Sign in' : 'Create account'}</h2>
+                            <p className="text-text-muted text-sm mt-1">${type === 'login' ? 'Stay updated on your professional world' : 'Join the professional network'}</p>
+                        </div>
                         
-                        error && e('div', { className: "bg-red-50 text-red-600 p-3 rounded-xl mb-4 text-xs text-center font-medium" }, error),
-                        
-                        e('form', { onSubmit: handleAuth, className: "space-y-4" },
-                            type === 'register' && 
-                                e('input', { placeholder: "Full Name", onChange: (ev) => setForm({...form, name: ev.target.value}), className: "input-smart", required: true }),
-                            e('input', { type: "email", placeholder: "Email", value: form.email, onChange: (ev) => setForm({...form, email: ev.target.value}), className: "input-smart", required: true }),
-                            e('input', { type: "password", placeholder: "Password", value: form.pass, onChange: (ev) => setForm({...form, pass: ev.target.value}), className: "input-smart", required: true }),
+                        <div className="card p-8">
+                            ${error && html`<div className="bg-red-50 text-danger border border-red-200 p-3 rounded-lg mb-4 text-sm font-medium">${error}</div>`}
                             
-                            type === 'register' && e('div', { className: "grid grid-cols-3 gap-2 pt-1" }, 
-                                ['student', 'technologist', 'hospital'].map(r => 
-                                    e('button', { type: "button", key: r, onClick: () => setForm({...form, role: r}), 
-                                        className: `py-2 rounded-xl text-xs font-semibold transition-all duration-200 border ${form.role === r ? 'bg-primary text-white border-primary shadow-md' : 'bg-slate-50 border-slate-200 text-slate-500 hover:bg-slate-100'}` 
-                                    }, r.charAt(0).toUpperCase() + r.slice(1))
-                                )
-                            ),
-                            e('button', { type: "submit", disabled: loading, className: "w-full py-3 bg-primary text-white rounded-xl font-bold text-sm hover:bg-accent transition-all duration-300 shadow-lg hover:shadow-xl mt-2 ripple" }, 
-                                loading ? e('div', {className: "loader mx-auto border-white border-t-transparent"}, null) : "Continue"
-                            )
-                        ),
+                            <form onSubmit=${handleAuth} className="space-y-5">
+                                ${type === 'register' && html`
+                                    <div>
+                                        <label className="form-label">Full Name</label>
+                                        <input 
+                                            placeholder="Enter your full name" 
+                                            value=${form.name} 
+                                            onChange=${(ev) => setForm({...form, name: ev.target.value})} 
+                                            className="input-pro" 
+                                            required
+                                        />
+                                    </div>
+                                `}
+                                <div>
+                                    <label className="form-label">Email</label>
+                                    <input 
+                                        type="email" 
+                                        placeholder="Enter your email" 
+                                        value=${form.email} 
+                                        onChange=${(ev) => setForm({...form, email: ev.target.value})} 
+                                        className="input-pro" 
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label className="form-label">Password</label>
+                                    <input 
+                                        type="password" 
+                                        placeholder="Enter password (min 6 characters)" 
+                                        value=${form.pass} 
+                                        onChange=${(ev) => setForm({...form, pass: ev.target.value})} 
+                                        className="input-pro" 
+                                        required 
+                                        minLength="6"
+                                    />
+                                </div>
+                                
+                                ${type === 'register' && html`
+                                    <div>
+                                        <label className="form-label">I am a</label>
+                                        <div className="grid grid-cols-3 gap-3">
+                                            ${['student', 'technologist', 'hospital'].map(r => html`
+                                                <button 
+                                                    type="button" 
+                                                    key=${r} 
+                                                    onClick=${() => setForm({...form, role: r})} 
+                                                    className="py-3 rounded-lg text-sm font-semibold transition-all border ${form.role === r ? 'bg-primary text-white border-primary' : 'bg-white border-border text-text-secondary hover:bg-gray-50'}"
+                                                >${r.charAt(0).toUpperCase() + r.slice(1)}</button>
+                                            `)}
+                                        </div>
+                                    </div>
+                                `}
+                                
+                                <button 
+                                    type="submit" 
+                                    disabled=${loading} 
+                                    className="btn-primary w-full py-3.5 text-base ripple"
+                                >
+                                    ${loading ? html`<div className="loader loader-sm mx-auto border-white border-t-transparent"></div>` : (type === 'login' ? 'Sign In' : 'Join Now')}
+                                </button>
+                            </form>
+                        </div>
                         
-                        e('div', { className: "mt-6 text-center text-xs text-slate-400" },
-                            type === 'login' ? "No account yet? " : "Already registered? ",
-                            e('button', { onClick: () => onSwitch(type === 'login' ? 'register' : 'login'), className: "text-accent font-bold hover:underline" }, type === 'login' ? "Sign Up" : "Sign In")
-                        )
-                    ),
-                    e('p', { className: "text-center text-[10px] text-slate-300 mt-4 opacity-60" }, "Powered by SRP SOFT LTD")
-                )
-            );
+                        <p className="text-center text-sm text-text-secondary mt-6">
+                            ${type === 'login' ? 'New to BRITN? ' : 'Already have an account? '}
+                            <button 
+                                onClick=${() => onSwitch(type === 'login' ? 'register' : 'login')} 
+                                className="text-primary font-semibold hover:underline"
+                            >${type === 'login' ? 'Join now' : 'Sign in'}</button>
+                        </p>
+                        
+                        <p className="text-center text-xs text-text-muted mt-8">Powered by SRP SOFT LTD</p>
+                    </div>
+                </div>
+            `;
         };
 
-        // --- Sidebar (Desktop) ---
-        const Sidebar = ({ page, setPage, onLogout, role, isOpen, setIsOpen, userEmail }) => {
-            const isAdmin = userEmail === ADMIN_EMAIL || role === 'super_admin';
-            const canPost = role === 'hospital' || role === 'technologist' || isAdmin;
-            
-            const menus = [
-                { id: 'dash', name: 'Dashboard', icon: '🏠' },
-                { id: 'feed', name: 'News Feed', icon: '📰' },
-                { id: 'jobs', name: 'Jobs', icon: '💼' },
-                { id: 'reports', name: 'Reports', icon: '🚩' },
-                { id: 'profile', name: 'Profile', icon: '👤' },
+        // Top Navbar
+        const TopNavbar = ({ user, search, setSearch, currentPage, setPage, showDropdown, setShowDropdown }) => {
+            const isAdmin = user?.email === ADMIN_EMAIL;
+            const navItems = [
+                { id: 'dash', icon: 'home', label: 'Home' },
+                { id: 'feed', icon: 'network', label: 'Feed' },
+                { id: 'jobs', icon: 'jobs', label: 'Jobs' },
+                { id: 'notifications', icon: 'notifications', label: 'Notifications' },
             ];
-            const posterMenus = [ { id: 'add_job', name: 'Post Job', icon: '➕' }, { id: 'my_jobs', name: 'My Posts', icon: '📝' } ];
-            const adminMenus = [ { id: 'approvals', name: 'Approvals', icon: '✅' }, { id: 'manage_all', name: 'Manage All', icon: '⚙️' } ];
 
-            const sidebarClass = `fixed inset-y-0 left-0 z-40 w-64 sidebar-design text-white transform transition-transform duration-300 ease-in-out 
-                ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
-                md:translate-x-0 md:static md:w-72`;
-
-            return e('div', { className: sidebarClass },
-                e('div', { className: "p-4 flex items-center justify-between border-b border-white/10" },
-                    e('div', { className: "flex items-center gap-3" },
-                        e('img', { src: BRITN_LOGO_URL, className: "w-10 h-10 rounded-xl shadow-md" }),
-                        e('div', null,
-                            e('span', { className: "font-bold text-lg tracking-wide" }, "BRITN"),
-                            e('span', { className: "block text-[9px] text-white/50 font-bangla" }, "Professional Network")
-                        )
-                    ),
-                    e('button', { onClick: () => setIsOpen(false), className: "md:hidden p-2 rounded-lg hover:bg-white/10" }, "✕")
-                ),
-                
-                e('nav', { className: "flex-1 py-4 space-y-1 overflow-y-auto px-3" },
-                    menus.map(m => 
-                        e('button', { key: m.id, onClick: () => { setPage(m.id); setIsOpen(false); }, className: `nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg ${page === m.id ? 'active' : ''}` },
-                            e('span', {className: "text-lg"}, m.icon), e('span', {className: "font-medium text-sm"}, m.name)
-                        )
-                    ),
-                    canPost && e('div', {className: "pt-4 mt-4 border-t border-white/10"}, 
-                        e('p', {className: "px-4 text-[10px] text-white/30 uppercase mb-2"}, "Content"),
-                        posterMenus.map(m => 
-                            e('button', { key: m.id, onClick: () => { setPage(m.id); setIsOpen(false); }, className: `nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg ${page === m.id ? 'active' : ''}` },
-                                e('span', {className: "text-lg"}, m.icon), e('span', {className: "font-medium text-sm"}, m.name)
-                            )
-                        )
-                    ),
-                    isAdmin && e('div', {className: "pt-4 mt-4 border-t border-white/10"}, 
-                        e('p', {className: "px-4 text-[10px] text-white/30 uppercase mb-2"}, "Admin Panel"),
-                        adminMenus.map(m => 
-                            e('button', { key: m.id, onClick: () => { setPage(m.id); setIsOpen(false); }, className: `nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-300 hover:bg-red-500/10 ${page === m.id ? 'bg-red-500/20 text-red-200' : ''}` },
-                                e('span', {className: "text-lg"}, m.icon), e('span', {className: "font-medium text-sm"}, m.name)
-                            )
-                        )
-                    )
-                ),
-                e('div', { className: "p-4 border-t border-white/10" },
-                    e('button', { onClick: onLogout, className: "w-full flex items-center justify-center gap-2 px-4 py-2 bg-danger/10 text-danger hover:bg-danger hover:text-white rounded-xl text-sm font-semibold transition-all" }, 
-                        e('span', null, "🚪"), "Logout"
-                    )
-                )
-            );
+            return html`
+                <nav className="sticky top-0 z-40 bg-white border-b border-border">
+                    <div className="max-w-[1128px] mx-auto px-4 h-[52px] flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-2 flex-1">
+                            <button onClick=${() => setPage('dash')} className="flex-shrink-0 hover:opacity-80 transition-opacity">
+                                <img src=${BRITN_LOGO_URL} className="w-10 h-10 rounded-lg shadow-sm" alt="BRITN"/>
+                            </button>
+                            <div className="relative flex-1 max-w-[280px]">
+                                <input 
+                                    placeholder="Search" 
+                                    value=${search} 
+                                    onChange=${(ev) => setSearch(ev.target.value)}
+                                    className="w-full py-2.5 pl-10 pr-4 bg-surface rounded-lg text-sm outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                                />
+                                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted">
+                                    <${Icon} name="search" size=${18}/>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div className="desktop-only flex items-center h-full">
+                            ${navItems.map(item => html`
+                                <button 
+                                    key=${item.id} 
+                                    onClick=${() => setPage(item.id)} 
+                                    className="nav-icon-btn ${currentPage === item.id ? 'active' : ''}"
+                                >
+                                    <${Icon} name=${item.icon} size=${22}/>
+                                    <span>${item.label}</span>
+                                </button>
+                            `)}
+                            <div className="relative ml-2">
+                                <button 
+                                    onClick=${() => setShowDropdown(!showDropdown)}
+                                    className="nav-icon-btn ${currentPage === 'profile' ? 'active' : ''}"
+                                >
+                                    <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold">
+                                        ${user?.email?.charAt(0).toUpperCase()}
+                                    </div>
+                                    <span>Me</span>
+                                </button>
+                                
+                                ${showDropdown && html`
+                                    <div className="dropdown">
+                                        <div className="p-4 border-b border-border">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white text-lg font-bold">
+                                                    ${user?.email?.charAt(0).toUpperCase()}
+                                                </div>
+                                                <div>
+                                                    <p className="font-semibold text-text">${user?.user_metadata?.full_name || 'User'}</p>
+                                                    <p className="text-sm text-text-secondary">${user?.email}</p>
+                                                </div>
+                                            </div>
+                                            <button 
+                                                onClick=${() => { setPage('profile'); setShowDropdown(false); }}
+                                                className="w-full mt-3 btn-secondary text-sm py-2"
+                                            >View Profile</button>
+                                        </div>
+                                        <div className="py-2">
+                                            ${isAdmin && html`
+                                                <button 
+                                                    onClick=${() => { setPage('approvals'); setShowDropdown(false); }}
+                                                    className="w-full px-4 py-2.5 text-left text-sm hover:bg-gray-50 flex items-center gap-3"
+                                                >
+                                                    <${Icon} name="settings" size=${18}/>
+                                                    <span>Admin Panel</span>
+                                                </button>
+                                            `}
+                                            <button 
+                                                onClick=${() => { setPage('about'); setShowDropdown(false); }}
+                                                className="w-full px-4 py-2.5 text-left text-sm hover:bg-gray-50 flex items-center gap-3"
+                                            >
+                                                <${Icon} name="network" size=${18}/>
+                                                <span>About BRITN</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                `}
+                            </div>
+                        </div>
+                        
+                        <div className="mobile-only flex items-center gap-2">
+                            <button 
+                                onClick=${() => setPage('notifications')}
+                                className="p-2 rounded-lg hover:bg-gray-100 relative"
+                            >
+                                <${Icon} name="notifications" size=${22}/>
+                                <span className="absolute top-1 right-1 w-2 h-2 bg-danger rounded-full"></span>
+                            </button>
+                        </div>
+                    </div>
+                </nav>
+            `;
         };
 
-        // --- Bottom Nav (Mobile) ---
-        const BottomNav = ({ page, setPage }) => {
-            const items = [ { id: 'dash', icon: '🏠', label: 'Home' }, { id: 'feed', icon: '📰', label: 'Feed' }, { id: 'jobs', icon: '💼', label: 'Jobs' }, { id: 'profile', icon: '👤', label: 'Profile' } ];
-            return e('div', { className: "md:hidden fixed bottom-0 left-0 right-0 glass-dark z-50 border-t border-white/10" },
-                e('div', { className: "flex justify-around items-center h-16" },
-                    items.map(item => 
-                        e('button', { key: item.id, onClick: () => setPage(item.id), className: `bottom-nav-item flex-1 h-full pt-1 ${page === item.id ? 'active' : ''}` },
-                            e('span', { className: "icon" }, item.icon),
-                            e('span', { className: "font-medium" }, item.label)
-                        )
-                    )
-                )
-            );
+        // Left Sidebar (Desktop)
+        const LeftSidebar = ({ user, setPage }) => {
+            const isAdmin = user?.email === ADMIN_EMAIL;
+            const canPost = user?.user_metadata?.role === 'hospital' || user?.user_metadata?.role === 'technologist' || isAdmin;
+            
+            return html`
+                <aside className="desktop-only w-[220px] flex-shrink-0 space-y-3">
+                    <div className="card overflow-hidden">
+                        <div className="h-14 bg-gradient-to-r from-primary to-primary-dark"></div>
+                        <div className="px-4 pb-4 text-center">
+                            <button 
+                                onClick=${() => setPage('profile')}
+                                className="relative -mt-8 mb-2"
+                            >
+                                <div className="w-16 h-16 rounded-full bg-white p-1 mx-auto shadow-md">
+                                    <div className="w-full h-full rounded-full bg-primary flex items-center justify-center text-white text-2xl font-bold">
+                                        ${user?.email?.charAt(0).toUpperCase()}
+                                    </div>
+                                </div>
+                            </button>
+                            <h3 className="font-semibold text-text">${user?.user_metadata?.full_name || 'User'}</h3>
+                            <p className="text-xs text-text-secondary mt-0.5 capitalize">${user?.user_metadata?.role || 'Member'}</p>
+                            <div className="mt-3 pt-3 border-t border-border">
+                                <div className="flex justify-between text-xs text-text-secondary">
+                                    <span>Profile viewers</span>
+                                    <span className="text-primary font-semibold">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="card p-3">
+                        <p className="text-xs font-semibold text-text-muted mb-2 px-1">Quick Links</p>
+                        <button onClick=${() => setPage('reports')} className="w-full text-left px-3 py-2 rounded-lg text-sm hover:bg-gray-100 flex items-center gap-2">
+                            <${Icon} name="network" size=${16}/> Submit Report
+                        </button>
+                        ${canPost && html`
+                            <button onClick=${() => setPage('add_job')} className="w-full text-left px-3 py-2 rounded-lg text-sm hover:bg-gray-100 flex items-center gap-2">
+                                <${Icon} name="plus" size=${16}/> Post a Job
+                            </button>
+                        `}
+                        ${isAdmin && html`
+                            <button onClick=${() => setPage('approvals')} className="w-full text-left px-3 py-2 rounded-lg text-sm hover:bg-gray-100 flex items-center gap-2 text-danger">
+                                <${Icon} name="settings" size=${16}/> Admin Panel
+                            </button>
+                        `}
+                    </div>
+                </aside>
+            `;
         };
 
-        // --- Feed Page ---
+        // Right Sidebar (Desktop)
+        const RightSidebar = ({ jobs }) => {
+            const trendingJobs = jobs.filter(j => j.is_approved).slice(0, 3);
+            
+            return html`
+                <aside className="desktop-only w-[300px] flex-shrink-0 space-y-3">
+                    <div className="card p-4">
+                        <h3 className="font-semibold text-sm text-text mb-3">Trending Jobs</h3>
+                        ${trendingJobs.length === 0 ? html`
+                            <p className="text-sm text-text-muted">No jobs available</p>
+                        ` : trendingJobs.map((job, i) => html`
+                            <div key=${job.id} className="py-2 ${i < trendingJobs.length - 1 ? 'border-b border-border' : ''}">
+                                <p className="font-medium text-sm text-text">${job.title}</p>
+                                <p className="text-xs text-text-secondary mt-0.5">${job.location}</p>
+                            </div>
+                        `)}
+                    </div>
+                    
+                    <div className="card p-4">
+                        <h3 className="font-semibold text-sm text-text mb-3">Support BRITN</h3>
+                        <p className="text-xs text-text-secondary font-bangla mb-3">Help us maintain this platform</p>
+                        <div className="grid grid-cols-2 gap-2">
+                            <div className="bg-pink-600 rounded-lg p-3 text-center text-white">
+                                <p className="font-bold text-sm">bKash</p>
+                                <p className="text-xs mt-1 font-mono">${DONATION_NUMBER}</p>
+                            </div>
+                            <div className="bg-orange-500 rounded-lg p-3 text-center text-white">
+                                <p className="font-bold text-sm">Nagad</p>
+                                <p className="text-xs mt-1 font-mono">${DONATION_NUMBER}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="text-center text-xs text-text-muted px-4">
+                        <p class="mb-1">BRITN - Bangladesh Radiology & Imaging Technologist Network</p>
+                        <p class="text-text-muted">Powered by SRP SOFT LTD</p>
+                    </div>
+                </aside>
+            `;
+        };
+
+        // Bottom Nav (Mobile)
+        const BottomNav = ({ currentPage, setPage }) => {
+            const items = [
+                { id: 'dash', icon: 'home', label: 'Home' },
+                { id: 'feed', icon: 'network', label: 'Feed' },
+                { id: 'jobs', icon: 'jobs', label: 'Jobs' },
+                { id: 'notifications', icon: 'notifications', label: 'Alerts' },
+                { id: 'profile', icon: 'profile', label: 'Profile' },
+            ];
+            
+            return html`
+                <div className="mobile-only bottom-nav">
+                    <div className="flex">
+                        ${items.map(item => html`
+                            <button 
+                                key=${item.id}
+                                onClick=${() => setPage(item.id)} 
+                                className="bottom-nav-item ${currentPage === item.id ? 'active' : ''}"
+                            >
+                                <${Icon} name=${item.icon} size=${22}/>
+                                <span>${item.label}</span>
+                            </button>
+                        `)}
+                    </div>
+                </div>
+            `;
+        };
+
+        // Feed Page
         const FeedPage = ({ user }) => {
-            const [posts, setPosts] = React.useState([]); const [loading, setLoading] = React.useState(true);
-            const [content, setContent] = React.useState(''); const [image, setImage] = React.useState(null);
-            const [editId, setEditId] = React.useState(null); const [editContent, setEditContent] = React.useState('');
+            const [posts, setPosts] = React.useState([]);
+            const [loading, setLoading] = React.useState(true);
+            const [content, setContent] = React.useState('');
+            const [image, setImage] = React.useState(null);
+            const [editId, setEditId] = React.useState(null);
+            const [editContent, setEditContent] = React.useState('');
+            const [charCount, setCharCount] = React.useState(0);
             const isAdmin = user?.email === ADMIN_EMAIL;
             const toast = useToast();
+            const MAX_CHARS = 2000;
 
-            const fetchPosts = async () => { setPosts(await safeFetch(supabase.from('feed_posts').select('*').order('created_at', { ascending: false }).limit(20))); setLoading(false); };
+            const fetchPosts = async () => {
+                const data = await safeFetch(
+                    supabase.from('feed_posts').select('*').order('created_at', { ascending: false }).limit(30)
+                );
+                setPosts(data);
+                setLoading(false);
+            };
+            
             React.useEffect(() => { fetchPosts(); }, []);
 
-            const handleSubmit = async (ev) => { ev.preventDefault(); if(!content && !image) return; await supabase.from('feed_posts').insert([{ content, image_url: image, poster_email: user.email }]); setContent(''); setImage(null); fetchPosts(); toast("Post published!"); };
-            const handleDelete = async (id) => { if(confirm("Delete?")) { await supabase.from('feed_posts').delete().eq('id', id); fetchPosts(); toast("Post deleted", "error"); } };
-            const handleEdit = (post) => { setEditId(post.id); setEditContent(post.content); };
-            const handleUpdate = async (id) => { await supabase.from('feed_posts').update({ content: editContent }).eq('id', id); setEditId(null); fetchPosts(); toast("Post updated!"); };
-            const handleImage = (e) => { const file = e.target.files[0]; if(file){ const r = new FileReader(); r.onloadend = () => setImage(r.result); r.readAsDataURL(file); }};
+            const handleSubmit = async (ev) => {
+                ev.preventDefault();
+                if (!content.trim() && !image) return;
+                
+                await supabase.from('feed_posts').insert([{
+                    content: content.trim(),
+                    image_url: image,
+                    poster_email: user.email,
+                    is_pinned: false
+                }]);
+                
+                setContent('');
+                setImage(null);
+                setCharCount(0);
+                fetchPosts();
+                toast('Post published successfully!');
+            };
 
-            if (loading) return e('div', {className: "flex justify-center py-10"}, e('div', {className: "loader"}));
+            const handleDelete = async (id) => {
+                if (confirm('Delete this post?')) {
+                    await supabase.from('feed_posts').delete().eq('id', id);
+                    fetchPosts();
+                    toast('Post deleted', 'error');
+                }
+            };
 
-            return e('div', { className: "max-w-xl mx-auto space-y-4 pb-20 md:pb-4" },
-                isAdmin && e('div', { className: "glass rounded-2xl p-4 mb-2 fade-in" },
-                    e('form', { onSubmit: handleSubmit },
-                        e('textarea', { placeholder: "Write an announcement...", value: content, onChange: (e) => setContent(e.target.value), className: "w-full p-3 bg-transparent outline-none text-white text-sm resize-none placeholder-white/40", rows: 3 }),
-                        image && e('div', { className: "relative mt-2 inline-block" }, e('img', { src: image, className: "max-h-32 rounded-lg" }), e('button', { type: "button", onClick: () => setImage(null), className: "absolute top-1 right-1 bg-danger text-white rounded-full p-1 text-xs" }, "✕")),
-                        e('div', { className: "flex justify-between items-center pt-3 border-t border-white/10 mt-2" },
-                            e('label', { className: "text-white/50 cursor-pointer hover:text-white transition-colors" }, 
-                                e('span', {className: "text-xl"}, "🖼️"), 
-                                e('input', { type: "file", onChange: handleImage, className: "hidden" })
-                            ),
-                            e('button', { className: "px-5 py-2 bg-success text-primary font-bold rounded-xl text-sm hover:opacity-90 transition ripple" }, "Post")
-                        )
-                    )
-                ),
+            const handleEdit = (post) => {
+                setEditId(post.id);
+                setEditContent(post.content);
+            };
 
-                posts.map((post, i) => {
-                    const isAdminPost = post.poster_email === ADMIN_EMAIL;
-                    const displayName = isAdminPost ? "Bangladesh Radiology & Imaging Technologist Network" : post.poster_email.split('@')[0];
-                    const avatar = isAdminPost ? e('img', { src: BRITN_LOGO_URL, className: "w-10 h-10 rounded-full object-cover ring-2 ring-highlight" }) : 
-                                               e('div', { className: "w-10 h-10 bg-accent rounded-full flex items-center justify-center font-bold text-white text-xs" }, displayName.charAt(0).toUpperCase());
+            const handleUpdate = async (id) => {
+                await supabase.from('feed_posts').update({ content: editContent }).eq('id', id);
+                setEditId(null);
+                fetchPosts();
+                toast('Post updated!');
+            };
 
-                    return e('div', { key: post.id, className: "glass-card rounded-2xl overflow-hidden fade-in", style: { animationDelay: `${i * 0.05}s` } },
-                        e('div', { className: "p-4" },
-                            e('div', { className: "flex justify-between items-start" },
-                                e('div', { className: "flex gap-3" },
-                                    avatar,
-                                    e('div', null,
-                                        e('h3', { className: "font-bold text-sm text-primary leading-tight flex items-center gap-2" }, 
-                                            displayName, 
-                                            isAdminPost && e('span', { className: "verified-badge" }, "✓ VERIFIED")
-                                        ),
-                                        e('p', { className: "text-[10px] text-slate-400 mt-0.5" }, new Date(post.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }))
-                                    )
-                                ),
-                                isAdmin && e('div', {className: "flex gap-1"},
-                                    e('button', { onClick: () => handleEdit(post), className: "p-1.5 hover:bg-slate-100 rounded-lg text-slate-400 text-xs" }, "✏️"),
-                                    e('button', { onClick: () => handleDelete(post.id), className: "p-1.5 hover:bg-red-50 rounded-lg text-red-400 text-xs" }, "🗑️")
-                                )
-                            ),
-                            
-                            editId === post.id ? 
-                                e('div', {className: "mt-3"},
-                                    e('textarea', { value: editContent, onChange: (e) => setEditContent(e.target.value), className: "w-full bg-slate-50 p-2 border rounded-xl text-sm outline-none focus:ring-1" }),
-                                    e('div', {className: "flex gap-2 mt-2 justify-end"},
-                                        e('button', { onClick: () => handleUpdate(post.id), className: "px-3 py-1 bg-success text-white text-xs rounded-lg" }, "Save"),
-                                        e('button', { onClick: () => setEditId(null), className: "px-3 py-1 bg-slate-100 text-xs rounded-lg" }, "Cancel")
-                                    )
-                                )
-                                :
-                                e('p', { className: "text-slate-600 text-sm mt-3 leading-relaxed" }, post.content)
-                        ),
-                        post.image_url && e('img', { src: post.image_url, className: "w-full bg-slate-50 border-t" })
-                    );
-                })
-            );
+            const handleTogglePin = async (post) => {
+                const newPinStatus = !post.is_pinned;
+                const pinnedCount = posts.filter(p => p.is_pinned).length;
+                
+                if (newPinStatus && pinnedCount >= 3) {
+                    toast('Maximum 3 pinned posts allowed', 'error');
+                    return;
+                }
+                
+                await supabase.from('feed_posts').update({ is_pinned: newPinStatus }).eq('id', post.id);
+                fetchPosts();
+                toast(newPinStatus ? 'Post pinned!' : 'Post unpinned');
+            };
+
+            const handleImage = (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onloadend = () => setImage(reader.result);
+                    reader.readAsDataURL(file);
+                }
+            };
+
+            const handleContentChange = (e) => {
+                const value = e.target.value;
+                if (value.length <= MAX_CHARS) {
+                    setContent(value);
+                    setCharCount(value.length);
+                }
+            };
+
+            // Sort posts: pinned first, then by date
+            const sortedPosts = [...posts].sort((a, b) => {
+                if (a.is_pinned && !b.is_pinned) return -1;
+                if (!a.is_pinned && b.is_pinned) return 1;
+                return new Date(b.created_at) - new Date(a.created_at);
+            });
+
+            const pinnedPosts = sortedPosts.filter(p => p.is_pinned);
+            const regularPosts = sortedPosts.filter(p => !p.is_pinned);
+
+            if (loading) {
+                return html`
+                    <div className="space-y-4">
+                        <div className="card p-4">
+                            <div className="skeleton h-20 w-full"></div>
+                        </div>
+                        <div className="card p-4">
+                            <div className="skeleton h-32 w-full"></div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            return html`
+                <div className="max-w-[600px] mx-auto space-y-4 pb-20 md:pb-4">
+                    ${isAdmin && html`
+                        <div className="card p-4 fade-in">
+                            <form onSubmit=${handleSubmit}>
+                                <div className="flex items-start gap-3">
+                                    <div className="w-11 h-11 rounded-full bg-primary flex items-center justify-center text-white font-bold flex-shrink-0">
+                                        ${user?.email?.charAt(0).toUpperCase()}
+                                    </div>
+                                    <div className="flex-1">
+                                        <textarea 
+                                            placeholder="Share an announcement with the network..."
+                                            value=${content}
+                                            onChange=${handleContentChange}
+                                            className="input-pro resize-none min-h-[100px] text-base"
+                                            rows="3"
+                                        />
+                                        <div className="flex justify-between items-center mt-2">
+                                            <span className="char-counter ${charCount > MAX_CHARS * 0.9 ? 'warning' : ''}">
+                                                ${charCount}/${MAX_CHARS}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                ${image && html`
+                                    <div className="relative mt-3 inline-block ml-14">
+                                        <img src=${image} className="max-h-48 rounded-lg shadow-md"/>
+                                        <button 
+                                            type="button" 
+                                            onClick=${() => setImage(null)}
+                                            className="absolute -top-2 -right-2 w-6 h-6 bg-danger text-white rounded-full flex items-center justify-center text-xs shadow-md hover:bg-red-700 transition-colors"
+                                        >
+                                            <${Icon} name="close" size=${14}/>
+                                        </button>
+                                    </div>
+                                `}
+                                
+                                <div className="flex items-center justify-between mt-3 pt-3 border-t border-border">
+                                    <div className="flex items-center gap-2">
+                                        <label className="p-2 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors">
+                                            <${Icon} name="image" size=${20} className="text-primary"/>
+                                            <input type="file" onChange=${handleImage} accept="image/*" className="hidden"/>
+                                        </label>
+                                    </div>
+                                    <button type="submit" className="btn-primary ripple" disabled=${!content.trim() && !image}>
+                                        Post
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    `}
+                    
+                    ${pinnedPosts.length > 0 && html`
+                        <div className="space-y-3">
+                            ${pinnedPosts.map((post, i) => PostCard({ 
+                                post, 
+                                i, 
+                                isAdmin, 
+                                user,
+                                editId, 
+                                editContent, 
+                                setEditContent, 
+                                handleEdit, 
+                                handleUpdate, 
+                                handleDelete, 
+                                handleTogglePin,
+                                isPinnedSection: true
+                            }))}
+                        </div>
+                    `}
+                    
+                    ${pinnedPosts.length > 0 && regularPosts.length > 0 && html`
+                        <div className="border-t border-border my-4"></div>
+                    `}
+                    
+                    <div className="space-y-3">
+                        ${regularPosts.map((post, i) => PostCard({ 
+                            post, 
+                            i, 
+                            isAdmin, 
+                            user,
+                            editId, 
+                            editContent, 
+                            setEditContent, 
+                            handleEdit, 
+                            handleUpdate, 
+                            handleDelete, 
+                            handleTogglePin,
+                            isPinnedSection: false
+                        }))}
+                    </div>
+                    
+                    ${posts.length === 0 && html`
+                        <div className="card p-12 text-center">
+                            <div className="text-4xl mb-3">📰</div>
+                            <p className="text-text-secondary font-medium">No posts yet</p>
+                            <p className="text-text-muted text-sm mt-1">Be the first to share!</p>
+                        </div>
+                    `}
+                </div>
+            `;
         };
 
-        // --- Profile Page ---
-        const ProfilePage = ({ user }) => {
-            return e('div', { className: "max-w-xl mx-auto pb-20 md:pb-4 fade-in" },
-                e('div', { className: "glass rounded-2xl p-6 text-center" },
-                    e('div', { className: "w-20 h-20 mx-auto bg-accent rounded-full flex items-center justify-center text-3xl mb-4 ring-4 ring-highlight" }, 
-                        user?.email?.charAt(0).toUpperCase() 
-                    ),
-                    e('h2', { className: "text-xl font-bold text-white" }, user?.user_metadata?.full_name || "User"),
-                    e('p', { className: "text-white/60 text-sm mt-1" }, user?.email),
-                    e('div', { className: "mt-4 inline-block px-3 py-1 rounded-full bg-success/20 text-success text-xs font-bold uppercase" }, 
-                        user?.user_metadata?.role || "Member"
-                    ),
-                    e('div', { className: "mt-6 border-t border-white/10 pt-4 grid grid-cols-2 gap-4 text-center" },
-                        e('div', null, e('p', {className: "text-white/40 text-[10px]"}, "STATUS"), e('p', {className: "text-white font-bold"}, "Active")),
-                        e('div', null, e('p', {className: "text-white/40 text-[10px]"}, "JOINED"), e('p', {className: "text-white font-bold"}, new Date(user?.created_at).getFullYear()))
-                    )
-                )
-            );
+        // Post Card Component
+        const PostCard = ({ post, i, isAdmin, user, editId, editContent, setEditContent, handleEdit, handleUpdate, handleDelete, handleTogglePin, isPinnedSection }) => {
+            const isAdminPost = post.poster_email === ADMIN_EMAIL;
+            const displayName = isAdminPost ? 'Bangladesh Radiology & Imaging Technologist Network' : post.poster_email.split('@')[0];
+            const [showMenu, setShowMenu] = React.useState(false);
+            
+            const cardClass = post.is_pinned ? 'pinned-post p-4 fade-in' : 'card p-4 fade-in';
+            const animationDelay = `${i * 0.05}s`;
+
+            return html`
+                <div className=${cardClass} style=${{ animationDelay }}>
+                    <div className="flex items-start justify-between">
+                        <div className="flex items-start gap-3">
+                            ${isAdminPost ? html`
+                                <img src=${BRITN_LOGO_URL} className="w-12 h-12 rounded-full object-cover ring-2 ring-highlight shadow-md"/>
+                            ` : html`
+                                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+                                    ${displayName.charAt(0).toUpperCase()}
+                                </div>
+                            `}
+                            <div>
+                                <div className="flex items-center gap-2 flex-wrap">
+                                    <h3 className="font-semibold text-text">${displayName}</h3>
+                                    ${isAdminPost && html`<span className="verified-badge">Verified</span>`}
+                                    ${post.is_pinned && html`<span className="pin-badge">Pinned</span>`}
+                                </div>
+                                <p className="text-xs text-text-muted mt-0.5">
+                                    ${new Date(post.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                                </p>
+                            </div>
+                        </div>
+                        
+                        ${isAdmin && html`
+                            <div className="relative">
+                                <button 
+                                    onClick=${() => setShowMenu(!showMenu)}
+                                    className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                                >
+                                    <${Icon} name="more" size=${18}/>
+                                </button>
+                                
+                                ${showMenu && html`
+                                    <div className="absolute right-0 top-full mt-1 bg-white rounded-xl shadow-lg border border-border py-2 min-w-[160px] z-10 fade-in">
+                                        ${!isAdminPost && html`
+                                            <button 
+                                                onClick=${() => { handleTogglePin(post); setShowMenu(false); }}
+                                                className="w-full px-4 py-2.5 text-left text-sm hover:bg-gray-50 flex items-center gap-3"
+                                            >
+                                                <${Icon} name="pin" size=${16}/>
+                                                ${post.is_pinned ? 'Unpin Post' : 'Pin Post'}
+                                            </button>
+                                        `}
+                                        <button 
+                                            onClick=${() => { handleEdit(post); setShowMenu(false); }}
+                                            className="w-full px-4 py-2.5 text-left text-sm hover:bg-gray-50 flex items-center gap-3"
+                                        >
+                                            <${Icon} name="edit" size=${16}/>
+                                            Edit Post
+                                        </button>
+                                        <button 
+                                            onClick=${() => { handleDelete(post.id); setShowMenu(false); }}
+                                            className="w-full px-4 py-2.5 text-left text-sm hover:bg-red-50 text-danger flex items-center gap-3"
+                                        >
+                                            <${Icon} name="delete" size=${16}/>
+                                            Delete Post
+                                        </button>
+                                    </div>
+                                `}
+                            </div>
+                        `}
+                    </div>
+                    
+                    ${editId === post.id ? html`
+                        <div className="mt-4">
+                            <textarea 
+                                value=${editContent}
+                                onChange=${(e) => setEditContent(e.target.value)}
+                                className="input-pro resize-none min-h-[120px]"
+                            />
+                            <div className="flex gap-2 mt-3 justify-end">
+                                <button onClick=${() => setEditId(null)} className="btn-secondary text-sm py-2 px-4">Cancel</button>
+                                <button onClick=${() => handleUpdate(post.id)} className="btn-primary text-sm py-2 px-4">Save</button>
+                            </div>
+                        </div>
+                    ` : html`
+                        <p className="text-text mt-3 leading-relaxed whitespace-pre-wrap">${post.content}</p>
+                    `}
+                    
+                    ${post.image_url && html`
+                        <img src=${post.image_url} className="w-full mt-3 rounded-xl border border-border"/>
+                    `}
+                    
+                    <div className="flex items-center mt-4 pt-3 border-t border-border gap-1">
+                        <button className="post-action hover:text-primary hover:bg-blue-50">
+                            <${Icon} name="like" size=${18}/>
+                            <span>Like</span>
+                        </button>
+                        <button className="post-action hover:text-primary hover:bg-blue-50">
+                            <${Icon} name="comment" size=${18}/>
+                            <span>Comment</span>
+                        </button>
+                        <button className="post-action hover:text-primary hover:bg-blue-50">
+                            <${Icon} name="share" size=${18}/>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                </div>
+            `;
         };
 
-        // --- About Page ---
-        const AboutPage = () => {
-            const handleCopy = () => { navigator.clipboard.writeText(DONATION_NUMBER); alert('Number Copied!'); };
-            return e('div', { className: "max-w-xl mx-auto space-y-4 pb-20 md:pb-4 fade-in" },
-                e('div', { className: "glass rounded-2xl p-6 text-center" },
-                    e('img', { src: BRITN_LOGO_URL, className: "w-20 h-20 mx-auto mb-2 rounded-xl shadow-lg" }),
-                    e('h1', { className: "font-bold text-lg font-bangla text-white" }, "Bangladesh Radiology & Imaging Technologist Network"),
-                    e('p', { className: "text-white/50 text-xs mt-2" }, "Connecting professionals across the nation.")
-                ),
-                e('div', { className: "glass rounded-2xl p-4" },
-                    e('h2', { className: "font-bold text-sm mb-2 text-highlight" }, "❤️ Support the Cause"),
-                    e('p', { className: "text-white/60 text-xs mb-3 font-bangla" }, "সার্ভার খরচ বহনে সহযোগিতা করুন।"),
-                    e('div', { className: "grid grid-cols-2 gap-3" },
-                        e('div', { className: "bg-pink-600 p-3 rounded-xl text-center shadow-md transform hover:scale-105 transition-transform" }, e('h3', {className: "font-bold text-sm"}, "bKash"), e('p', {className: "font-mono text-[11px] my-1"}, DONATION_NUMBER), e('button', { onClick: handleCopy, className: "bg-white/20 text-white px-2 py-0.5 rounded text-[10px]" }, "Copy")),
-                        e('div', { className: "bg-orange-500 p-3 rounded-xl text-center shadow-md transform hover:scale-105 transition-transform" }, e('h3', {className: "font-bold text-sm"}, "Nagad"), e('p', {className: "font-mono text-[11px] my-1"}, DONATION_NUMBER), e('button', { onClick: handleCopy, className: "bg-white/20 text-white px-2 py-0.5 rounded text-[10px]" }, "Copy"))
-                    )
-                ),
-                e('p', { className: "text-center text-[10px] text-white/30" }, "Developed by ", e('span', {className: "font-bold text-white/50"}, "SRP SOFT LTD"))
-            );
+        // Job Card
+        const JobCard = ({ job, onApprove, onDelete, isAdmin, showActions = true }) => {
+            return html`
+                <div className="card p-5 hover-lift fade-in">
+                    <div className="flex justify-between items-start gap-3">
+                        <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                                <h3 className="font-semibold text-text text-lg">${job.title}</h3>
+                                ${!job.is_approved && html`<span className="text-xs bg-highlight text-primary-dark px-2 py-0.5 rounded font-semibold">Pending</span>`}
+                            </div>
+                            <p className="text-sm text-text-secondary flex items-center gap-1">
+                                <span>${job.location || 'Location not specified'}</span>
+                                ${job.salary && html`<span class="text-text-muted">|</span><span>${job.salary}</span>`}
+                            </p>
+                        </div>
+                        <button className="p-2 rounded-lg hover:bg-gray-100 text-text-muted">
+                            <${Icon} name="bookmark" size=${20}/>
+                        </button>
+                    </div>
+                    
+                    <p className="text-sm text-text-secondary mt-3 leading-relaxed line-clamp-3">${job.description}</p>
+                    
+                    ${showActions && html`
+                        <div className="flex items-center gap-2 mt-4 pt-4 border-t border-border">
+                            ${job.is_approved ? html`
+                                <button className="btn-primary text-sm py-2 flex-1 ripple">Apply Now</button>
+                            ` : html`
+                                ${isAdmin && html`
+                                    <button onClick=${() => onApprove(job.id)} className="btn-primary text-sm py-2 flex-1 ripple">
+                                        <${Icon} name="check" size=${16}/>
+                                        Approve
+                                    </button>
+                                `}
+                            `}
+                            ${isAdmin && html`
+                                <button onClick=${() => onDelete(job.id)} className="btn-secondary text-sm py-2 px-4 border-danger text-danger hover:bg-red-50">Delete</button>
+                            `}
+                        </div>
+                    `}
+                </div>
+            `;
         };
 
-        // --- Report List ---
-        const ReportList = ({ user }) => {
-            const [reports, setReports] = React.useState([]); const [form, setForm] = React.useState({ hospital_name: '', category: 'Bad Behavior', details: '' }); const [search, setSearch] = React.useState('');
+        // Jobs Page
+        const JobsPage = ({ user, title = "Latest Jobs", filter = 'approved' }) => {
+            const [jobs, setJobs] = React.useState([]);
+            const [loading, setLoading] = React.useState(true);
+            const [search, setSearch] = React.useState('');
+            const isAdmin = user?.email === ADMIN_EMAIL;
+            
+            const fetchJobs = async () => {
+                let query = supabase.from('jobs').select('*');
+                
+                if (filter === 'pending') query = query.eq('is_approved', false);
+                else if (filter === 'approved') query = query.eq('is_approved', true);
+                else if (filter === 'my_posts') query = query.eq('poster_id', user.id);
+                
+                const data = await safeFetch(query.order('created_at', { ascending: false }).limit(20));
+                setJobs(data);
+                setLoading(false);
+            };
+            
+            React.useEffect(() => { fetchJobs(); }, [filter]);
+
+            const handleApprove = async (id) => {
+                await supabase.from('jobs').update({ is_approved: true }).eq('id', id);
+                fetchJobs();
+            };
+
+            const handleDelete = async (id) => {
+                if (confirm('Delete this job?')) {
+                    await supabase.from('jobs').delete().eq('id', id);
+                    fetchJobs();
+                }
+            };
+
+            const filteredJobs = jobs.filter(j => 
+                j.title.toLowerCase().includes(search.toLowerCase()) ||
+                (j.location && j.location.toLowerCase().includes(search.toLowerCase()))
+            );
+
+            if (loading) {
+                return html`
+                    <div className="space-y-4">
+                        ${[1,2,3].map(i => html`<div key=${i} className="card p-5"><div className="skeleton h-24 w-full"></div></div>`)}
+                    </div>
+                `;
+            }
+
+            return html`
+                <div className="max-w-[600px] mx-auto space-y-4 pb-20 md:pb-4 fade-in">
+                    <div className="flex items-center justify-between gap-3 flex-wrap">
+                        <h2 className="text-xl font-bold text-text">${title}</h2>
+                        <div className="relative">
+                            <input 
+                                placeholder="Search jobs..." 
+                                value=${search}
+                                onChange=${(e) => setSearch(e.target.value)}
+                                className="input-pro py-2 pl-9 pr-4 text-sm w-48"
+                            />
+                            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted">
+                                <${Icon} name="search" size=${16}/>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    ${filteredJobs.length === 0 ? html`
+                        <div className="card p-12 text-center">
+                            <div className="text-4xl mb-3">💼</div>
+                            <p className="text-text-secondary font-medium">No jobs found</p>
+                            <p className="text-text-muted text-sm mt-1">Check back later for new opportunities</p>
+                        </div>
+                    ` : html`
+                        <div className="space-y-3">
+                            ${filteredJobs.map(job => html`
+                                <${JobCard} 
+                                    key=${job.id} 
+                                    job=${job} 
+                                    onApprove=${handleApprove}
+                                    onDelete=${handleDelete}
+                                    isAdmin=${isAdmin}
+                                />
+                            `)}
+                        </div>
+                    `}
+                </div>
+            `;
+        };
+
+        // Add Job Form
+        const AddJobForm = ({ user }) => {
+            const [form, setForm] = React.useState({ title: '', location: '', salary: '', description: '' });
+            const [charCount, setCharCount] = React.useState(0);
+            const [loading, setLoading] = React.useState(false);
             const isAdmin = user?.email === ADMIN_EMAIL;
             const toast = useToast();
-            const fetch = async () => setReports(await safeFetch(supabase.from('hospital_reports').select('*').order('created_at', { ascending: false }).limit(50)));
-            React.useEffect(() => { fetch(); }, []);
-            const handleSubmit = async (ev) => { ev.preventDefault(); await supabase.from('hospital_reports').insert([{...form, reporter_email: user?.email}]); setForm({ hospital_name: '', details: '' }); fetch(); toast("Report Submitted"); };
-            const handleDelete = async (id) => { await supabase.from('hospital_reports').delete().eq('id', id); fetch(); };
-            const filtered = reports.filter(r => r.hospital_name.toLowerCase().includes(search.toLowerCase()));
-            return e('div', {className: "max-w-xl mx-auto pb-20 md:pb-4 fade-in"}, 
-                e('div', { className: "flex justify-between items-center mb-3" }, e('h2', {className: "font-bold text-white text-lg"}, "🚩 Reports"), e('input', {placeholder: "Search...", value: search, onChange: e => setSearch(e.target.value), className: "input-dark py-1 w-28 text-xs rounded-lg"})),
-                e('div', { className: "glass rounded-2xl p-4 mb-3" },
-                    e('form', { onSubmit: handleSubmit, className: "space-y-2" },
-                        e('input', { placeholder: "Hospital Name", value: form.hospital_name, onChange: e => setForm({...form, hospital_name: e.target.value}), className: "input-dark py-2 text-xs rounded-lg", required: true }),
-                        e('textarea', { placeholder: "Details...", value: form.details, onChange: e => setForm({...form, details: e.target.value}), className: "input-dark py-2 text-xs rounded-lg", rows: 2 }),
-                        e('button', { className: "w-full py-2 bg-danger text-white rounded-lg text-xs font-bold ripple" }, "Submit Report")
-                    )
-                ),
-                e('div', { className: "space-y-2" }, filtered.map(r => 
-                    e('div', { key: r.id, className: "glass rounded-xl p-3 flex justify-between items-start" },
-                        e('div', null, 
-                            e('span', {className: "font-bold text-sm text-white"}, r.hospital_name), 
-                            e('br'), 
-                            e('span', {className: "text-[10px] text-white/60"}, r.details)
-                        ),
-                        isAdmin && e('button', { onClick: () => handleDelete(r.id), className: "text-white/30 hover:text-danger text-xs p-1" }, "✕")
-                    )
-                ))
-            );
-        };
+            const MAX_CHARS = 3000;
 
-        // --- Job List & Forms ---
-        const JobList = ({ title, filter, isAdmin, user }) => {
-            const [jobs, setJobs] = React.useState([]); const [loading, setLoading] = React.useState(true); const [search, setSearch] = React.useState('');
-            const fetch = async () => { setLoading(true); let q = supabase.from('jobs').select('*'); if (filter === 'pending') q = q.eq('is_approved', false); else if (filter === 'approved') q = q.eq('is_approved', true); else if (filter === 'my_posts') q = q.eq('poster_id', user.id); setJobs(await safeFetch(q.order('created_at', { ascending: false }).limit(20))); setLoading(false); };
-            React.useEffect(() => { fetch(); }, [filter]);
-            const action = async (id, a) => { if(a==='del') await supabase.from('jobs').delete().eq('id', id); if(a==='app') await supabase.from('jobs').update({ is_approved: true }).eq('id', id); fetch(); };
-            if(loading) return e('div', {className: "flex justify-center py-10"}, e('div', {className: "loader"}));
-            return e('div', {className: "max-w-xl mx-auto pb-20 md:pb-4 fade-in"},
-                e('div', { className: "flex justify-between items-center mb-3" }, e('h2', {className: "font-bold text-white text-lg"}, title), e('input', {placeholder: "Search...", value: search, onChange: e => setSearch(e.target.value), className: "input-dark py-1 w-28 text-xs rounded-lg"})),
-                e('div', {className: "space-y-2"}, jobs.filter(j => j.title.toLowerCase().includes(search.toLowerCase())).map(j => 
-                    e('div', {key: j.id, className: "glass rounded-2xl p-4"}, 
-                        e('div', {className: "flex justify-between items-start"}, 
-                            e('div', null,
-                                e('h3', {className: "font-bold text-white"}, j.title),
-                                e('p', {className: "text-xs text-white/50 mt-1"}, `📍 ${j.location} | 💰 ${j.salary || 'N/A'}`)
-                            ),
-                            !j.is_approved && e('span', {className: "text-[9px] bg-highlight text-primary px-2 py-0.5 rounded-full font-bold"}, "PENDING")
-                        ),
-                        e('p', {className: "text-slate-200 text-xs mt-2"}, j.description),
-                        e('div', {className: "flex gap-2 mt-3 justify-end"}, 
-                            isAdmin && !j.is_approved && e('button', {onClick: () => action(j.id, 'app'), className: "text-[10px] px-3 py-1 bg-success text-white rounded-lg font-bold ripple"}, "Approve"),
-                            (isAdmin || j.poster_id === user.id) && e('button', {onClick: () => action(j.id, 'del'), className: "text-[10px] px-3 py-1 bg-danger/20 text-danger rounded-lg font-bold"}, "Delete")
-                        )
-                    )
-                ))
-            );
-        };
-
-        const AddJobForm = ({ user, isAdmin }) => {
-            const [form, setForm] = React.useState({ title: '', location: '', salary: '', description: '' }); const toast = useToast();
-            const submit = async (ev) => { ev.preventDefault(); await supabase.from('jobs').insert([{...form, poster_id: user.id, is_approved: isAdmin}]); toast("Job Posted!"); setForm({}); };
-            return e('div', { className: "max-w-xl mx-auto fade-in pb-20 md:pb-4" },
-                e('div', { className: "glass rounded-2xl p-6" },
-                    e('h2', { className: "font-bold text-lg mb-4 text-white font-bangla" }, "নতুন চাকরি পোস্ট করুন"),
-                    e('form', { onSubmit: submit, className: "space-y-3" },
-                        e('input', { placeholder: "Job Title", value: form.title, onChange: e => setForm({...form, title: e.target.value}), className: "input-dark py-2.5 text-sm rounded-xl", required: true }),
-                        e('div', { className: "grid grid-cols-2 gap-3" },
-                            e('input', { placeholder: "Location", value: form.location, onChange: e => setForm({...form, location: e.target.value}), className: "input-dark py-2.5 text-sm rounded-xl", required: true }),
-                            e('input', { placeholder: "Salary", value: form.salary, onChange: e => setForm({...form, salary: e.target.value}), className: "input-dark py-2.5 text-sm rounded-xl" })
-                        ),
-                        e('textarea', { placeholder: "Description...", value: form.description, onChange: e => setForm({...form, description: e.target.value}), className: "input-dark py-2.5 text-sm rounded-xl", rows: 3 }),
-                        e('button', { className: "w-full py-3 bg-success text-primary font-bold rounded-xl text-sm hover:bg-white transition-all ripple" }, "Submit Post")
-                    )
-                )
-            );
-        };
-
-        // --- Dashboard ---
-        const Dashboard = ({ user, setPage }) => 
-            e('div', { className: "max-w-xl mx-auto space-y-4 pb-20 md:pb-4 fade-in" },
-                e('div', { className: "glass rounded-2xl p-6 flex items-center gap-4" },
-                    e('div', { className: "w-14 h-14 bg-accent rounded-full flex items-center justify-center text-2xl" }, "👋"),
-                    e('div', null,
-                        e('h1', { className: "text-lg font-bold text-white" }, "Assalamu Alaikum!"),
-                        e('p', { className: "text-white/60 text-sm" }, user?.user_metadata?.full_name || "Welcome Back")
-                    )
-                ),
-                e('div', { className: "grid grid-cols-2 gap-3" },
-                    e('button', { onClick: () => setPage('feed'), className: "glass p-4 rounded-2xl text-left hover:bg-white/10 transition" },
-                        e('span', {className: "text-2xl"}, "📰"), e('p', {className: "font-bold text-white mt-2"}, "News Feed"), e('p', {className: "text-white/40 text-xs"}, "Latest updates")
-                    ),
-                    e('button', { onClick: () => setPage('jobs'), className: "glass p-4 rounded-2xl text-left hover:bg-white/10 transition" },
-                        e('span', {className: "text-2xl"}, "💼"), e('p', {className: "font-bold text-white mt-2"}, "Jobs"), e('p', {className: "text-white/40 text-xs"}, "Find opportunities")
-                    ),
-                    e('button', { onClick: () => setPage('reports'), className: "glass p-4 rounded-2xl text-left hover:bg-white/10 transition" },
-                        e('span', {className: "text-2xl"}, "🚩"), e('p', {className: "font-bold text-white mt-2"}, "Reports"), e('p', {className: "text-white/40 text-xs"}, "Community watch")
-                    ),
-                    e('button', { onClick: () => setPage('add_job'), className: "glass p-4 rounded-2xl text-left hover:bg-white/10 transition" },
-                        e('span', {className: "text-2xl"}, "➕"), e('p', {className: "font-bold text-white mt-2"}, "Post Job"), e('p', {className: "text-white/40 text-xs"}, "Hire talent")
-                    )
-                )
-            );
-
-        // --- Content Router ---
-        const ContentArea = ({ page, user, setPage }) => {
-            const isAdmin = user?.email === ADMIN_EMAIL || user?.user_metadata?.role === 'super_admin';
-            const content = {
-                'dash': e(Dashboard, { user, setPage }),
-                'feed': e(FeedPage, { user }),
-                'jobs': e(JobList, { title: "Latest Jobs", filter: 'approved', user }),
-                'reports': e(ReportList, { user }),
-                'about': e(AboutPage),
-                'profile': e(ProfilePage, { user }),
-                'add_job': e(AddJobForm, { user, isAdmin }),
-                'my_jobs': e(JobList, { title: "My Posts", filter: 'my_posts', user }),
-                'approvals': isAdmin ? e(JobList, { title: "Pending Approval", filter: 'pending', isAdmin: true, user }) : null,
-                'manage_all': isAdmin ? e(JobList, { title: "Manage All Jobs", filter: 'all', isAdmin: true, user }) : null
+            const handleSubmit = async (ev) => {
+                ev.preventDefault();
+                setLoading(true);
+                
+                await supabase.from('jobs').insert([{
+                    ...form,
+                    poster_id: user.id,
+                    is_approved: isAdmin
+                }]);
+                
+                setForm({ title: '', location: '', salary: '', description: '' });
+                setCharCount(0);
+                setLoading(false);
+                toast('Job posted successfully!');
             };
-            return e('div', { className: "flex-1 overflow-auto p-4 md:p-6" }, content[page] || content['dash']);
+
+            const handleDescChange = (e) => {
+                const value = e.target.value;
+                if (value.length <= MAX_CHARS) {
+                    setForm({ ...form, description: value });
+                    setCharCount(value.length);
+                }
+            };
+
+            return html`
+                <div className="max-w-[600px] mx-auto pb-20 md:pb-4 fade-in">
+                    <h2 className="text-xl font-bold text-text mb-4">Post a New Job</h2>
+                    
+                    <div className="card p-6">
+                        <form onSubmit=${handleSubmit} className="space-y-5">
+                            <div>
+                                <label className="form-label">Job Title *</label>
+                                <input 
+                                    placeholder="e.g., Senior Radiographer"
+                                    value=${form.title}
+                                    onChange=${(e) => setForm({ ...form, title: e.target.value })}
+                                    className="input-pro"
+                                    required
+                                />
+                            </div>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="form-label">Location *</label>
+                                    <input 
+                                        placeholder="e.g., Dhaka, Bangladesh"
+                                        value=${form.location}
+                                        onChange=${(e) => setForm({ ...form, location: e.target.value })}
+                                        className="input-pro"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label className="form-label">Salary</label>
+                                    <input 
+                                        placeholder="e.g., BDT 50,000 - 70,000"
+                                        value=${form.salary}
+                                        onChange=${(e) => setForm({ ...form, salary: e.target.value })}
+                                        className="input-pro"
+                                    />
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label className="form-label">Job Description *</label>
+                                <div className="format-toolbar rounded-t-lg">
+                                    <button type="button" className="format-btn font-bold">B</button>
+                                    <button type="button" className="format-btn italic">I</button>
+                                    <button type="button" className="format-btn underline">U</button>
+                                    <span className="w-px bg-border mx-1"></span>
+                                    <button type="button" className="format-btn">List</button>
+                                    <button type="button" className="format-btn">Link</button>
+                                </div>
+                                <textarea 
+                                    placeholder="Describe the role, requirements, responsibilities, and any other relevant details..."
+                                    value=${form.description}
+                                    onChange=${handleDescChange}
+                                    className="input-pro textarea-xl rounded-t-none"
+                                    required
+                                />
+                                <div className="char-counter ${charCount > MAX_CHARS * 0.9 ? 'warning' : ''}">
+                                    ${charCount}/${MAX_CHARS} characters
+                                </div>
+                            </div>
+                            
+                            <div className="pt-4">
+                                <button 
+                                    type="submit" 
+                                    disabled=${loading || !form.title || !form.location || !form.description}
+                                    className="btn-primary w-full py-3 ripple"
+                                >
+                                    ${loading ? html`<div className="loader loader-sm mx-auto border-white border-t-transparent"></div>` : 'Post Job'}
+                                </button>
+                                ${!isAdmin && html`
+                                    <p className="text-xs text-text-muted text-center mt-2">Your post will be reviewed before publishing</p>
+                                `}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `;
         };
 
-        // --- Header (Mobile) ---
-        const MobileHeader = ({ user, setOpenSidebar }) => {
-            return e('div', { className: "md:hidden sticky top-0 z-20 glass-dark border-b border-white/10 p-3 flex items-center justify-between" },
-                e('button', { onClick: () => setOpenSidebar(true), className: "p-1 rounded hover:bg-white/10" }, 
-                    e('span', {className: "text-xl"}, "☰")
-                ),
-                e('div', { className: "flex items-center gap-2" },
-                    e('img', { src: BRITN_LOGO_URL, className: "w-6 h-6 rounded-md" }),
-                    e('span', { className: "font-bold text-white text-sm" }, "BRITN")
-                ),
-                e('button', { className: "p-1 rounded hover:bg-white/10 relative" }, 
-                    e('span', {className: "text-xl"}, "🔔"),
-                    e('span', {className: "absolute top-0 right-0 w-2 h-2 bg-danger rounded-full"})
-                )
-            );
-        };
+        // Report Page
+        const ReportPage = ({ user }) => {
+            const [reports, setReports] = React.useState([]);
+            const [form, setForm] = React.useState({ hospital_name: '', category: 'Bad Behavior', details: '' });
+            const [search, setSearch] = React.useState('');
+            const [loading, setLoading] = React.useState(true);
+            const [charCount, setCharCount] = React.useState(0);
+            const isAdmin = user?.email === ADMIN_EMAIL;
+            const toast = useToast();
+            const MAX_CHARS = 2500;
 
-        // --- Main App ---
-        const App = () => {
-            const [user, setUser] = React.useState(null); const [view, setView] = React.useState('loading'); const [page, setPage] = React.useState('dash'); const [sidebarOpen, setSidebarOpen] = React.useState(false);
-            React.useEffect(() => { supabase.auth.getSession().then(({ data: { session } }) => { setUser(session?.user); setView(session ? 'app' : 'login'); }); supabase.auth.onAuthStateChange((e, s) => { setUser(s?.user); setView(s?.user ? 'app' : 'login'); }); }, []);
+            const fetchReports = async () => {
+                const data = await safeFetch(
+                    supabase.from('hospital_reports').select('*').order('created_at', { ascending: false }).limit(50)
+                );
+                setReports(data);
+                setLoading(false);
+            };
             
-            if (view === 'loading') return e('div', { className: "flex h-screen items-center justify-center" }, e('div', { className: "loader" }));
-            if (view === 'login') return e(AuthScreen, { type: 'login', onSwitch: setView, onSuccess: () => setView('app') });
-            if (view === 'register') return e(AuthScreen, { type: 'register', onSwitch: setView });
+            React.useEffect(() => { fetchReports(); }, []);
 
-            return e(ToastProvider, null,
-                e('div', { className: "flex h-screen" },
-                    // Desktop Sidebar Overlay
-                    sidebarOpen && e('div', { onClick: () => setSidebarOpen(false), className: "fixed inset-0 z-30 bg-black/20 backdrop-blur-sm md:hidden" }),
-                    
-                    // Sidebar
-                    e(Sidebar, { page, setPage, onLogout: () => supabase.auth.signOut(), role: user?.user_metadata?.role, isOpen: sidebarOpen, setIsOpen: setSidebarOpen, userEmail: user.email }),
-                    
-                    // Main Area
-                    e('div', { className: "flex-1 flex flex-col relative overflow-hidden" },
-                        e(MobileHeader, { user, setOpenSidebar: setSidebarOpen }),
-                        e(ContentArea, { page, user, setPage }),
-                        e(BottomNav, { page, setPage })
-                    )
-                )
+            const handleSubmit = async (ev) => {
+                ev.preventDefault();
+                await supabase.from('hospital_reports').insert([{
+                    ...form,
+                    reporter_email: user?.email
+                }]);
+                setForm({ hospital_name: '', category: 'Bad Behavior', details: '' });
+                setCharCount(0);
+                fetchReports();
+                toast('Report submitted successfully');
+            };
+
+            const handleDelete = async (id) => {
+                if (confirm('Delete this report?')) {
+                    await supabase.from('hospital_reports').delete().eq('id', id);
+                    fetchReports();
+                }
+            };
+
+            const handleDetailsChange = (e) => {
+                const value = e.target.value;
+                if (value.length <= MAX_CHARS) {
+                    setForm({ ...form, details: value });
+                    setCharCount(value.length);
+                }
+            };
+
+            const filtered = reports.filter(r => 
+                r.hospital_name.toLowerCase().includes(search.toLowerCase())
             );
+
+            return html`
+                <div className="max-w-[600px] mx-auto space-y-4 pb-20 md:pb-4 fade-in">
+                    <h2 className="text-xl font-bold text-text">Submit Report</h2>
+                    
+                    <div className="card p-6">
+                        <form onSubmit=${handleSubmit} className="space-y-5">
+                            <div>
+                                <label className="form-label">Hospital Name *</label>
+                                <input 
+                                    placeholder="Enter hospital or institution name"
+                                    value=${form.hospital_name}
+                                    onChange=${(e) => setForm({ ...form, hospital_name: e.target.value })}
+                                    className="input-pro"
+                                    required
+                                />
+                            </div>
+                            
+                            <div>
+                                <label className="form-label">Category</label>
+                                <select 
+                                    value=${form.category}
+                                    onChange=${(e) => setForm({ ...form, category: e.target.value })}
+                                    className="input-pro"
+                                >
+                                    <option value="Bad Behavior">Bad Behavior</option>
+                                    <option value="Salary Issue">Salary Issue</option>
+                                    <option value="Workplace Safety">Workplace Safety</option>
+                                    <option value="Equipment Issue">Equipment Issue</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label className="form-label">Report Details *</label>
+                                <textarea 
+                                    placeholder="Provide detailed information about the incident. Include dates, names of involved parties (if known), and any other relevant details..."
+                                    value=${form.details}
+                                    onChange=${handleDetailsChange}
+                                    className="input-pro textarea-lg"
+                                    required
+                                />
+                                <div className="char-counter ${charCount > MAX_CHARS * 0.9 ? 'warning' : ''}">
+                                    ${charCount}/${MAX_CHARS} characters
+                                </div>
+                            </div>
+                            
+                            <button type="submit" className="btn-primary w-full py-3 ripple">Submit Report</button>
+                        </form>
+                    </div>
+                    
+                    <div className="flex items-center justify-between mt-6 mb-2">
+                        <h3 className="font-semibold text-text">Recent Reports</h3>
+                        <input 
+                            placeholder="Search..."
+                            value=${search}
+                            onChange=${(e) => setSearch(e.target.value)}
+                            className="input-pro py-2 px-3 text-sm w-36"
+                        />
+                    </div>
+                    
+                    ${loading ? html`
+                        <div className="space-y-2">
+                            ${[1,2,3].map(i => html`<div key=${i} className="card p-4"><div className="skeleton h-16 w-full"></div></div>`)}
+                        </div>
+                    ` : html`
+                        <div className="space-y-2">
+                            ${filtered.length === 0 ? html`
+                                <div className="card p-8 text-center">
+                                    <p className="text-text-muted">No reports found</p>
+                                </div>
+                            ` : filtered.map(r => html`
+                                <div key=${r.id} className="card p-4 flex justify-between items-start gap-3">
+                                    <div>
+                                        <div className="flex items-center gap-2">
+                                            <span className="font-semibold text-text">${r.hospital_name}</span>
+                                            <span className="text-xs bg-gray-100 text-text-secondary px-2 py-0.5 rounded">${r.category}</span>
+                                        </div>
+                                        <p className="text-sm text-text-secondary mt-1 line-clamp-2">${r.details}</p>
+                                    </div>
+                                    ${isAdmin && html`
+                                        <button 
+                                            onClick=${() => handleDelete(r.id)}
+                                            className="p-1.5 rounded hover:bg-red-50 text-text-muted hover:text-danger"
+                                        >
+                                            <${Icon} name="delete" size=${16}/>
+                                        </button>
+                                    `}
+                                </div>
+                            `)}
+                        </div>
+                    `}
+                </div>
+            `;
         };
 
-        ReactDOM.createRoot(document.getElementById('root')).render(e(App));
+        // Profile Page
+        const ProfilePage = ({ user }) => {
+            return html`
+                <div className="max-w-[800px] mx-auto pb-20 md:pb-4 fade-in">
+                    <div className="card overflow-hidden">
+                        <div className="h-32 md:h-40 bg-gradient-to-r from-primary via-primary-dark to-primary-light"></div>
+                        <div className="px-6 pb-6">
+                            <div className="-mt-16 md:-mt-20 mb-4">
+                                <div className="w-28 h-28 md:w-32 md:h-32 rounded-full bg-white p-1 shadow-lg mx-auto md:mx-0">
+                                    <div className="w-full h-full rounded-full bg-primary flex items-center justify-center text-white text-4xl md:text-5xl font-bold">
+                                        ${user?.email?.charAt(0).toUpperCase()}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="md:flex md:justify-between md:items-start">
+                                <div class="text-center md:text-left">
+                                    <h1 class="text-2xl font-bold text-text">${user?.user_metadata?.full_name || 'User'}</h1>
+                                    <p class="text-text-secondary mt-1">${user?.email}</p>
+                                    <div class="mt-2">
+                                        <span class="inline-block px-3 py-1 rounded-full text-sm font-semibold capitalize
+                                            ${user?.user_metadata?.role === 'hospital' ? 'bg-purple-100 text-purple-700' : 
+                                            user?.user_metadata?.role === 'technologist' ? 'bg-green-100 text-green-700' : 
+                                            'bg-blue-100 text-blue-700'}">
+                                            ${user?.user_metadata?.role || 'Member'}
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex justify-center gap-4 mt-6 md:mt-0">
+                                    <div class="text-center">
+                                        <p class="text-2xl font-bold text-text">0</p>
+                                        <p class="text-xs text-text-muted">Posts</p>
+                                    </div>
+                                    <div class="w-px bg-border"></div>
+                                    <div class="text-center">
+                                        <p class="text-2xl font-bold text-text">0</p>
+                                        <p class="text-xs text-text-muted">Connections</p>
+                                    </div>
+                                    <div class="w-px bg-border"></div>
+                                    <div class="text-center">
+                                        <p class="text-2xl font-bold text-text">0</p>
+                                        <p class="text-xs text-text-muted">Jobs</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-4 mt-4">
+                        <div class="card p-5">
+                            <h3 class="font-semibold text-text mb-3">Account Details</h3>
+                            <div class="space-y-3">
+                                <div>
+                                    <p class="text-xs text-text-muted">Email</p>
+                                    <p class="text-sm text-text">${user?.email}</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-text-muted">Member Since</p>
+                                    <p class="text-sm text-text">${new Date(user?.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-text-muted">Account Status</p>
+                                    <span class="inline-flex items-center gap-1 text-sm text-success font-medium">
+                                        <span class="w-2 h-2 rounded-full bg-success"></span>
+                                        Active
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card p-5">
+                            <h3 class="font-semibold text-text mb-3">Quick Actions</h3>
+                            <div class="space-y-2">
+                                <button class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-gray-100 flex items-center gap-3 text-sm">
+                                    <${Icon} name="edit" size=${18}/>
+                                    Edit Profile
+                                </button>
+                                <button class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-gray-100 flex items-center gap-3 text-sm">
+                                    <${Icon} name="settings" size=${18}/>
+                                    Account Settings
+                                </button>
+                                <button 
+                                    onClick=${() => supabase.auth.signOut()}
+                                    class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-red-50 flex items-center gap-3 text-sm text-danger"
+                                >
+                                    <${Icon} name="logout" size=${18}/>
+                                    Sign Out
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        };
+
+        // About Page
+        const AboutPage = () => {
+            const handleCopy = () => {
+                navigator.clipboard.writeText(DONATION_NUMBER);
+                alert('Number copied!');
+            };
+
+            return html`
+                <div className="max-w-[600px] mx-auto space-y-4 pb-20 md:pb-4 fade-in">
+                    <div className="card p-6 text-center">
+                        <img src=${BRITN_LOGO_URL} className="w-20 h-20 mx-auto mb-4 rounded-xl shadow-md"/>
+                        <h1 class="text-xl font-bold text-text font-bangla">Bangladesh Radiology & Imaging Technologist Network</h1>
+                        <p class="text-text-secondary text-sm mt-2">Connecting professionals across the nation</p>
+                    </div>
+                    
+                    <div className="card p-6">
+                        <h2 class="font-semibold text-text mb-3">About BRITN</h2>
+                        <p class="text-sm text-text-secondary leading-relaxed">
+                            BRITN is the premier professional network for radiology and imaging technologists in Bangladesh. 
+                            We connect professionals, share knowledge, and advocate for the advancement of medical imaging 
+                            technology and patient care across the country.
+                        </p>
+                    </div>
+                    
+                    <div className="card p-6">
+                        <h2 class="font-semibold text-text mb-3 flex items-center gap-2">
+                            <span class="text-danger">❤</span> Support the Cause
+                        </h2>
+                        <p class="text-sm text-text-secondary font-bangla mb-4">সার্ভার খরচ বহনে সহযোগিতা করুন।</p>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="bg-pink-600 rounded-xl p-4 text-center text-white">
+                                <h3 class="font-bold text-sm">bKash</h3>
+                                <p class="font-mono text-xs mt-2">${DONATION_NUMBER}</p>
+                                <button onClick=${handleCopy} class="mt-2 bg-white/20 text-white px-3 py-1 rounded-lg text-xs font-medium hover:bg-white/30">Copy</button>
+                            </div>
+                            <div class="bg-orange-500 rounded-xl p-4 text-center text-white">
+                                <h3 class="font-bold text-sm">Nagad</h3>
+                                <p class="font-mono text-xs mt-2">${DONATION_NUMBER}</p>
+                                <button onClick=${handleCopy} class="mt-2 bg-white/20 text-white px-3 py-1 rounded-lg text-xs font-medium hover:bg-white/30">Copy</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-center text-xs text-text-muted">Developed by <span class="font-semibold">SRP SOFT LTD</span></p>
+                </div>
+            `;
+        };
+
+        // Dashboard Page
+        const Dashboard = ({ user, setPage }) => {
+            return html`
+                <div class="max-w-[600px] mx-auto space-y-4 pb-20 md:pb-4 fade-in">
+                    <div class="card p-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-white text-2xl">
+                                ${user?.email?.charAt(0).toUpperCase()}
+                            </div>
+                            <div>
+                                <h1 class="text-lg font-semibold text-text">Assalamu Alaikum!</h1>
+                                <p class="text-text-secondary">${user?.user_metadata?.full_name || 'Welcome back'}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onClick=${() => setPage('feed')} class="card p-5 text-left hover-lift">
+                            <span class="text-2xl">📰</span>
+                            <p class="font-semibold text-text mt-2">News Feed</p>
+                            <p class="text-xs text-text-muted mt-1">Latest updates</p>
+                        </button>
+                        <button onClick=${() => setPage('jobs')} class="card p-5 text-left hover-lift">
+                            <span class="text-2xl">💼</span>
+                            <p class="font-semibold text-text mt-2">Jobs</p>
+                            <p class="text-xs text-text-muted mt-1">Find opportunities</p>
+                        </button>
+                        <button onClick=${() => setPage('reports')} class="card p-5 text-left hover-lift">
+                            <span class="text-2xl">🚩</span>
+                            <p class="font-semibold text-text mt-2">Reports</p>
+                            <p class="text-xs text-text-muted mt-1">Submit feedback</p>
+                        </button>
+                        <button onClick=${() => setPage('about')} class="card p-5 text-left hover-lift">
+                            <span class="text-2xl">ℹ️</span>
+                            <p class="font-semibold text-text mt-2">About</p>
+                            <p class="text-xs text-text-muted mt-1">Learn more</p>
+                        </button>
+                    </div>
+                    
+                    <div class="card p-5">
+                        <h3 class="font-semibold text-text mb-3">Quick Links</h3>
+                        <div class="space-y-1">
+                            <button onClick=${() => setPage('profile')} class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 flex items-center gap-3 text-sm">
+                                <${Icon} name="profile" size=${18}/>
+                                View Profile
+                            </button>
+                            <button onClick=${() => setPage('add_job')} class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 flex items-center gap-3 text-sm">
+                                <${Icon} name="plus" size=${18}/>
+                                Post a Job
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        };
+
+        // Admin Dashboard
+        const AdminDashboard = ({ user, setPage }) => {
+            const [stats, setStats] = React.useState({ users: 0, posts: 0, jobs: 0, reports: 0 });
+            const [loading, setLoading] = React.useState(true);
+            
+            React.useEffect(() => {
+                const fetchStats = async () => {
+                    const [usersData, postsData, jobsData, reportsData] = await Promise.all([
+                        safeFetch(supabase.from('profiles').select('id', { count: 'exact' })),
+                        safeFetch(supabase.from('feed_posts').select('id', { count: 'exact' })),
+                        safeFetch(supabase.from('jobs').select('id', { count: 'exact' })),
+                        safeFetch(supabase.from('hospital_reports').select('id', { count: 'exact' }))
+                    ]);
+                    
+                    setStats({
+                        users: usersData?.length || 0,
+                        posts: postsData?.length || 0,
+                        jobs: jobsData?.length || 0,
+                        reports: reportsData?.length || 0
+                    });
+                    setLoading(false);
+                };
+                fetchStats();
+            }, []);
+
+            return html`
+                <div class="max-w-[900px] mx-auto space-y-4 pb-20 md:pb-4 fade-in">
+                    <h2 class="text-xl font-bold text-text">Admin Dashboard</h2>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <div class="card p-5 text-center hover-lift">
+                            <div class="text-3xl font-bold text-primary">${stats.users}</div>
+                            <p class="text-sm text-text-secondary mt-1">Total Users</p>
+                        </div>
+                        <div class="card p-5 text-center hover-lift">
+                            <div class="text-3xl font-bold text-primary">${stats.posts}</div>
+                            <p class="text-sm text-text-secondary mt-1">Posts</p>
+                        </div>
+                        <div class="card p-5 text-center hover-lift">
+                            <div class="text-3xl font-bold text-primary">${stats.jobs}</div>
+                            <p class="text-sm text-text-secondary mt-1">Jobs</p>
+                        </div>
+                        <div class="card p-5 text-center hover-lift">
+                            <div class="text-3xl font-bold text-danger">${stats.reports}</div>
+                            <p class="text-sm text-text-secondary mt-1">Reports</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <button onClick=${() => setPage('approvals')} class="card p-5 text-left hover-lift">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                                    <${Icon} name="check" size=${24} className="text-primary"/>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-text">Pending Approvals</h3>
+                                    <p class="text-sm text-text-secondary">Review job posts</p>
+                                </div>
+                            </div>
+                        </button>
+                        <button onClick=${() => setPage('manage_all')} class="card p-5 text-left hover-lift">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                                    <${Icon} name="settings" size=${24} className="text-primary"/>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-text">Manage Content</h3>
+                                    <p class="text-sm text-text-secondary">Jobs and posts</p>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            `;
+        };
+
+        // Main App
+        const App = () => {
+            const [user, setUser] = React.useState(null);
+            const [view, setView] = React.useState('loading');
+            const [page, setPage] = React.useState('dash');
+            const [search, setSearch] = React.useState('');
+            const [showDropdown, setShowDropdown] = React.useState(false);
+            const [jobs, setJobs] = React.useState([]);
+
+            // Auth state
+            React.useEffect(() => {
+                let mounted = true;
+                
+                const getSession = async () => {
+                    try {
+                        const { data: { session } } = await supabase.auth.getSession();
+                        if (mounted) {
+                            setUser(session?.user);
+                            setView(session ? 'app' : 'login');
+                        }
+                    } catch (err) {
+                        console.error('Session error:', err);
+                        if (mounted) setView('login');
+                    }
+                };
+                
+                getSession();
+                
+                const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+                    if (mounted) {
+                        setUser(session?.user);
+                        setView(session?.user ? 'app' : 'login');
+                    }
+                });
+                
+                return () => {
+                    mounted = false;
+                    subscription?.unsubscribe();
+                };
+            }, []);
+
+            // Fetch jobs for sidebar
+            React.useEffect(() => {
+                if (view === 'app') {
+                    safeFetch(supabase.from('jobs').select('*').eq('is_approved', true).limit(5)).then(setJobs);
+                }
+            }, [view]);
+
+            // Close dropdown when clicking outside
+            React.useEffect(() => {
+                const handleClick = () => setShowDropdown(false);
+                if (showDropdown) {
+                    document.addEventListener('click', handleClick);
+                    return () => document.removeEventListener('click', handleClick);
+                }
+            }, [showDropdown]);
+
+            // Timeout fallback
+            React.useEffect(() => {
+                const timeout = setTimeout(() => {
+                    if (view === 'loading') {
+                        console.warn('Auth timeout, showing login');
+                        setView('login');
+                    }
+                }, 5000);
+                return () => clearTimeout(timeout);
+            }, [view]);
+
+            // Loading screen
+            if (view === 'loading') {
+                return html`
+                    <div class="min-h-screen flex items-center justify-center bg-surface">
+                        <div class="text-center">
+                            <div class="loader mx-auto mb-4"></div>
+                            <p class="text-text-secondary text-sm">Loading BRITN...</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Auth screens
+            if (view === 'login' || view === 'register') {
+                return html`<${AuthScreen} type=${view} onSwitch=${setView} onSuccess=${() => setView('app')}/>`;
+            }
+
+            // Main app
+            const isAdmin = user?.email === ADMIN_EMAIL;
+            
+            const renderContent = () => {
+                switch (page) {
+                    case 'dash': return html`<${Dashboard} user=${user} setPage=${setPage}/>`;
+                    case 'feed': return html`<${FeedPage} user=${user}/>`;
+                    case 'jobs': return html`<${JobsPage} user=${user} title="Latest Jobs" filter="approved"/>`;
+                    case 'reports': return html`<${ReportPage} user=${user}/>`;
+                    case 'profile': return html`<${ProfilePage} user=${user}/>`;
+                    case 'about': return html`<${AboutPage}/>`;
+                    case 'add_job': return html`<${AddJobForm} user=${user}/>`;
+                    case 'my_jobs': return html`<${JobsPage} user=${user} title="My Posts" filter="my_posts"/>`;
+                    case 'approvals': return isAdmin ? html`<${JobsPage} user=${user} title="Pending Approval" filter="pending"/>` : null;
+                    case 'manage_all': return isAdmin ? html`<${JobsPage} user=${user} title="Manage All Jobs" filter="all"/>` : null;
+                    case 'admin': return isAdmin ? html`<${AdminDashboard} user=${user} setPage=${setPage}/>` : null;
+                    case 'notifications': return html`
+                        <div class="max-w-[600px] mx-auto pb-20 md:pb-4 fade-in">
+                            <h2 class="text-xl font-bold text-text mb-4">Notifications</h2>
+                            <div class="card p-8 text-center">
+                                <p class="text-text-muted">No new notifications</p>
+                            </div>
+                        </div>
+                    `;
+                    default: return html`<${Dashboard} user=${user} setPage=${setPage}/>`;
+                }
+            };
+
+            return html`
+                <${ToastProvider}>
+                    <div class="app-container bg-surface">
+                        <${TopNavbar} 
+                            user=${user} 
+                            search=${search} 
+                            setSearch=${setSearch}
+                            currentPage=${page}
+                            setPage=${setPage}
+                            showDropdown=${showDropdown}
+                            setShowDropdown=${setShowDropdown}
+                        />
+                        
+                        <div class="flex-1 flex">
+                            <div class="hidden md:block">
+                                <${LeftSidebar} user=${user} setPage=${setPage}/>
+                            </div>
+                            
+                            <main class="flex-1 overflow-auto p-4 md:py-6">
+                                ${renderContent()}
+                            </main>
+                            
+                            <div class="hidden md:block">
+                                <${RightSidebar} jobs=${jobs}/>
+                            </div>
+                        </div>
+                        
+                        <${BottomNav} currentPage=${page} setPage=${setPage}/>
+                    </div>
+                <//>
+            `;
+        };
+
+        // Render
+        const root = document.getElementById('root');
+        ReactDOM.createRoot(root).render(html`<${App}/>`);
     </script>
 </body>
 </html>
