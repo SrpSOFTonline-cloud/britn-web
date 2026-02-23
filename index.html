@@ -41,20 +41,17 @@
         }
         .font-bangla { font-family: 'Hind Siliguri', sans-serif; }
         
-        /* Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #C4C4C4; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #A0A0A0; }
         
-        /* Card */
         .card {
             background: #FFFFFF;
             border-radius: 12px;
             box-shadow: 0 0 0 1px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
         }
         
-        /* Input */
         .input-pro {
             width: 100%; 
             padding: 14px 16px; 
@@ -73,17 +70,9 @@
         }
         .input-pro::placeholder { color: #8D8D8D; }
         
-        /* Large Textarea */
-        .textarea-lg {
-            min-height: 200px;
-            resize: vertical;
-            line-height: 1.7;
-            padding: 20px;
-            font-size: 16px;
-        }
+        .textarea-lg { min-height: 200px; resize: vertical; line-height: 1.7; padding: 20px; font-size: 16px; }
         .textarea-xl { min-height: 280px; }
         
-        /* Buttons */
         .btn-primary {
             background: #0A66C2;
             color: white;
@@ -131,7 +120,20 @@
         }
         .btn-whatsapp:hover { background: #1DA851; }
         
-        /* Animations */
+        .btn-danger {
+            background: #D11124;
+            color: white;
+            padding: 14px 24px;
+            border-radius: 24px;
+            font-weight: 600;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            min-height: 48px;
+        }
+        .btn-danger:hover { background: #A00D1C; }
+        
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -143,7 +145,6 @@
         .fade-in { animation: fadeIn 0.35s ease-out forwards; }
         .modal-in { animation: modalIn 0.25s ease-out forwards; }
         
-        /* Loader */
         .loader { 
             border: 3px solid #E0E0E0; 
             border-top: 3px solid #0A66C2; 
@@ -155,7 +156,6 @@
         .loader-sm { width: 20px; height: 20px; border-width: 2px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        /* Toast */
         .toast-container { 
             position: fixed; 
             top: 70px; 
@@ -184,7 +184,6 @@
         .toast-success { border-left-color: #057642; }
         .toast-error { border-left-color: #D11124; }
         
-        /* Modal */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -206,7 +205,6 @@
             flex-direction: column;
         }
         
-        /* Verified Badge */
         .verified-badge { 
             background: linear-gradient(135deg, #FFD700, #FFB800); 
             color: #1D1D1D; 
@@ -216,7 +214,6 @@
             font-weight: 700; 
         }
         
-        /* Pinned Post */
         .pinned-post {
             background: linear-gradient(135deg, #E8F4FD 0%, #F0F7FF 100%);
             border-left: 4px solid #0A66C2;
@@ -230,7 +227,6 @@
             font-weight: 600;
         }
         
-        /* Character Counter */
         .char-counter {
             font-size: 12px;
             color: #8D8D8D;
@@ -239,7 +235,6 @@
         }
         .char-counter.warning { color: #D11124; font-weight: 500; }
         
-        /* Nav Icon */
         .nav-icon-btn {
             display: flex;
             flex-direction: column;
@@ -269,7 +264,6 @@
         }
         .nav-icon-btn span { font-size: 11px; margin-top: 2px; font-weight: 500; }
         
-        /* Bottom Nav */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -296,7 +290,6 @@
         .bottom-nav-item.active { color: #0A66C2; }
         .bottom-nav-item span { font-size: 10px; margin-top: 3px; font-weight: 600; }
         
-        /* Dropdown */
         .dropdown {
             position: absolute;
             top: calc(100% + 8px);
@@ -309,7 +302,6 @@
             border: 1px solid #E0E0E0;
         }
         
-        /* Format Toolbar */
         .format-toolbar {
             display: flex;
             gap: 2px;
@@ -336,7 +328,6 @@
         }
         .format-btn:hover { background: #E8E8E8; color: #1D1D1D; }
         
-        /* Post Action */
         .post-action {
             display: flex;
             align-items: center;
@@ -354,9 +345,9 @@
             flex: 1;
             min-height: 44px;
         }
-        .post-action:hover { background: rgba(0,0,0,0.06); color: #1D1D1D; }
+        .post-action:hover { background: rgba(0,0,0,0.06); }
+        .post-action.liked { color: #D11124; }
         
-        /* Form Label */
         .form-label {
             display: block;
             font-size: 14px;
@@ -365,23 +356,45 @@
             margin-bottom: 8px;
         }
         
-        /* Report Text - No Truncation */
-        .report-text {
-            white-space: normal;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            line-height: 1.6;
-        }
-        
-        /* Job Description - Full Display */
-        .job-description {
+        .report-text, .job-description {
             white-space: normal;
             word-wrap: break-word;
             overflow-wrap: break-word;
             line-height: 1.7;
         }
         
-        /* Responsive */
+        .admin-tab {
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #666666;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.15s;
+        }
+        .admin-tab:hover { color: #1D1D1D; }
+        .admin-tab.active { color: #0A66C2; border-bottom-color: #0A66C2; }
+        
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #E0E0E0;
+        }
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #0A66C2;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #666666;
+            margin-top: 4px;
+        }
+        
         @media (max-width: 768px) {
             .desktop-only { display: none !important; }
             .input-pro { font-size: 16px; }
@@ -392,7 +405,6 @@
             .mobile-only { display: none !important; }
         }
         
-        /* Main Container */
         #root { min-height: 100vh; }
         .app-container { min-height: 100vh; display: flex; flex-direction: column; }
     </style>
@@ -429,9 +441,7 @@
                 <${ToastContext.Provider} value=${addToast}>
                     ${children}
                     <div className="toast-container">
-                        ${toasts.map(t => html`
-                            <div key=${t.id} className="toast toast-${t.type}">${t.message}</div>
-                        `)}
+                        ${toasts.map(t => html`<div key=${t.id} className="toast toast-${t.type}">${t.message}</div>`)}
                     </div>
                 <//>
             `;
@@ -439,29 +449,17 @@
         
         const useToast = () => React.useContext(ToastContext);
 
-        // Safe Fetch
-        const safeFetch = async (query) => {
-            try { 
-                const { data, error } = await query; 
-                if (error) { console.error("Supabase Error:", error); return []; }
-                return data || [];
-            } catch (err) { 
-                console.error("Fetch Error:", err); 
-                return []; 
-            }
-        };
-
         // Icons
         const Icon = ({ name, size = 20, className = "" }) => {
             const icons = {
                 home: html`<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="9,22 9,12 15,12 15,22" fill="none" stroke="currentColor" stroke-width="2"/>`,
                 network: html`<path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" fill="currentColor"/>`,
                 jobs: html`<path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z" fill="currentColor"/>`,
-                notifications: html`<path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" fill="currentColor"/>`,
                 profile: html`<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" fill="currentColor"/>`,
                 search: html`<circle cx="11" cy="11" r="8" fill="none" stroke="currentColor" stroke-width="2"/><line x1="21" y1="21" x2="16.65" y2="16.65" stroke="currentColor" stroke-width="2"/>`,
                 more: html`<circle cx="12" cy="6" r="2" fill="currentColor"/><circle cx="12" cy="12" r="2" fill="currentColor"/><circle cx="12" cy="18" r="2" fill="currentColor"/>`,
                 like: html`<path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3" fill="none" stroke="currentColor" stroke-width="2"/>`,
+                likeFilled: html`<path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14z" fill="currentColor"/><path d="M7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3" fill="currentColor"/>`,
                 comment: html`<path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" fill="none" stroke="currentColor" stroke-width="2"/>`,
                 share: html`<circle cx="18" cy="5" r="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="6" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="19" r="3" fill="none" stroke="currentColor" stroke-width="2"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" stroke="currentColor" stroke-width="2"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" stroke="currentColor" stroke-width="2"/>`,
                 pin: html`<path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2" fill="none" stroke="currentColor" stroke-width="2"/><line x1="12" y1="11" x2="12" y2="17" stroke="currentColor" stroke-width="2"/><line x1="9" y1="14" x2="15" y2="14" stroke="currentColor" stroke-width="2"/>`,
@@ -471,26 +469,22 @@
                 delete: html`<polyline points="3,6 5,6 21,6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" fill="none" stroke="currentColor" stroke-width="2"/>`,
                 plus: html`<line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2"/><line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2"/>`,
                 check: html`<polyline points="20,6 9,17 4,12" fill="none" stroke="currentColor" stroke-width="2"/>`,
-                image: html`<rect x="3" y="3" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/><polyline points="21,15 16,10 5,21" fill="none" stroke="currentColor" stroke-width="2"/>`,
                 email: html`<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="22,6 12,13 2,6" fill="none" stroke="currentColor" stroke-width="2"/>`,
                 whatsapp: html`<path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" fill="none" stroke="currentColor" stroke-width="2"/>`,
                 phone: html`<path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" fill="none" stroke="currentColor" stroke-width="2"/>`,
                 settings: html`<circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" fill="none" stroke="currentColor" stroke-width="2"/>`,
                 logout: html`<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="16,17 21,12 16,7" fill="none" stroke="currentColor" stroke-width="2"/><line x1="21" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="2"/>`,
-                expand: html`<polyline points="7,13 12,18 17,13" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="7,6 12,11 17,6" fill="none" stroke="currentColor" stroke-width="2"/>`,
-                collapse: html`<polyline points="17,11 12,6 7,11" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="17,18 12,13 7,18" fill="none" stroke="currentColor" stroke-width="2"/>`,
+                admin: html`<path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 12l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2"/>`,
+                users: html`<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M23 21v-2a4 4 0 00-3-3.87" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 3.13a4 4 0 010 7.75" fill="none" stroke="currentColor" stroke-width="2"/>`,
+                refresh: html`<polyline points="23 4 23 10 17 10" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="1 20 1 14 7 14" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" fill="none" stroke="currentColor" stroke-width="2"/>`,
             };
-            return html`
-                <svg width=${size} height=${size} viewBox="0 0 24 24" fill="none" className=${className}>
-                    ${icons[name] || ''}
-                </svg>
-            `;
+            return html`<svg width=${size} height=${size} viewBox="0 0 24 24" fill="none" className=${className}>${icons[name] || ''}</svg>`;
         };
 
-        // Apply Modal Component
+        // Apply Modal
         const ApplyModal = ({ job, onClose }) => {
             const subject = encodeURIComponent(`Job Application: ${job.title}`);
-            const body = encodeURIComponent(`Dear Hiring Manager,\n\nI am writing to express my interest in the ${job.title} position at your organization.\n\nBest regards`);
+            const body = encodeURIComponent(`Dear Hiring Manager,\n\nI am writing to express my interest in the ${job.title} position.\n\nBest regards`);
             
             const handleEmailApply = () => {
                 window.location.href = `mailto:${job.contact_email}?subject=${subject}&body=${body}`;
@@ -507,40 +501,18 @@
                     <div className="modal-content modal-in" onClick=${(e) => e.stopPropagation()}>
                         <div className="p-5 border-b border-border flex items-center justify-between">
                             <h3 className="text-lg font-bold text-text">Apply for Job</h3>
-                            <button onClick=${onClose} className="p-2 rounded-lg hover:bg-gray-100">
-                                <${Icon} name="close" size=${20}/>
-                            </button>
+                            <button onClick=${onClose} className="p-2 rounded-lg hover:bg-gray-100"><${Icon} name="close" size=${20}/></button>
                         </div>
-                        
                         <div className="p-5">
                             <div className="mb-5 p-4 bg-surface rounded-lg">
                                 <h4 className="font-semibold text-text">${job.title}</h4>
                                 <p className="text-sm text-text-secondary mt-1">${job.location}</p>
                                 ${job.salary && html`<p className="text-sm text-success font-medium mt-1">${job.salary}</p>`}
                             </div>
-                            
                             <p className="text-text-secondary mb-5 text-center">Choose how you want to apply:</p>
-                            
                             <div className="space-y-3">
-                                ${job.contact_email && html`
-                                    <button 
-                                        onClick=${handleEmailApply}
-                                        className="btn-primary w-full"
-                                    >
-                                        <${Icon} name="email" size=${20}/>
-                                        Apply via Email
-                                    </button>
-                                `}
-                                
-                                ${job.whatsapp_number && html`
-                                    <button 
-                                        onClick=${handleWhatsAppApply}
-                                        className="btn-whatsapp w-full"
-                                    >
-                                        <${Icon} name="whatsapp" size=${20}/>
-                                        Apply via WhatsApp
-                                    </button>
-                                `}
+                                ${job.contact_email && html`<button onClick=${handleEmailApply} className="btn-primary w-full"><${Icon} name="email" size=${20}/> Apply via Email</button>`}
+                                ${job.whatsapp_number && html`<button onClick=${handleWhatsAppApply} className="btn-whatsapp w-full"><${Icon} name="whatsapp" size=${20}/> Apply via WhatsApp</button>`}
                             </div>
                         </div>
                     </div>
@@ -548,7 +520,137 @@
             `;
         };
 
-        // Report Detail Modal
+        // Comment Modal
+        const CommentModal = ({ post, onClose, user, onRefresh }) => {
+            const [comments, setComments] = React.useState([]);
+            const [loading, setLoading] = React.useState(true);
+            const [newComment, setNewComment] = React.useState('');
+            const [submitting, setSubmitting] = React.useState(false);
+            const toast = useToast();
+
+            React.useEffect(() => {
+                fetchComments();
+            }, [post.id]);
+
+            const fetchComments = async () => {
+                try {
+                    const { data, error } = await supabase
+                        .from('post_comments')
+                        .select('*')
+                        .eq('post_id', post.id)
+                        .order('created_at', { ascending: true });
+                    if (error) throw error;
+                    setComments(data || []);
+                } catch (err) {
+                    console.error('Error fetching comments:', err);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                if (!newComment.trim()) return;
+                
+                setSubmitting(true);
+                try {
+                    const { error } = await supabase.from('post_comments').insert([{
+                        post_id: post.id,
+                        content: newComment.trim(),
+                        commenter_email: user.email,
+                        commenter_name: user.user_metadata?.full_name || user.email.split('@')[0]
+                    }]);
+                    
+                    if (error) throw error;
+                    
+                    setNewComment('');
+                    fetchComments();
+                    onRefresh();
+                    toast('Comment added!');
+                } catch (err) {
+                    console.error('Error adding comment:', err);
+                    toast('Failed to add comment', 'error');
+                } finally {
+                    setSubmitting(false);
+                }
+            };
+
+            return html`
+                <div className="modal-overlay" onClick=${onClose}>
+                    <div className="modal-content modal-in" onClick=${(e) => e.stopPropagation()} style="max-width: 550px;">
+                        <div className="p-5 border-b border-border flex items-center justify-between flex-shrink-0">
+                            <h3 className="text-lg font-bold text-text">Comments</h3>
+                            <button onClick=${onClose} className="p-2 rounded-lg hover:bg-gray-100"><${Icon} name="close" size=${20}/></button>
+                        </div>
+                        
+                        <div className="p-5 overflow-y-auto" style="max-height: 400px;">
+                            ${loading ? html`<div className="loader mx-auto"></div>` : 
+                                comments.length === 0 ? html`<p className="text-center text-text-muted py-8">No comments yet. Be the first to comment!</p>` :
+                                html`<div className="space-y-4">
+                                    ${comments.map(c => html`
+                                        <div key=${c.id} className="flex gap-3">
+                                            <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                                                ${(c.commenter_name || c.commenter_email)?.charAt(0)?.toUpperCase()}
+                                            </div>
+                                            <div className="flex-1">
+                                                <div className="bg-surface rounded-xl p-3">
+                                                    <p className="font-semibold text-sm text-text">${c.commenter_name || c.commenter_email}</p>
+                                                    <p className="text-sm text-text-secondary mt-1">${c.content}</p>
+                                                </div>
+                                                <p className="text-xs text-text-muted mt-1">${new Date(c.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</p>
+                                            </div>
+                                        </div>
+                                    `)}
+                                </div>`
+                            }
+                        </div>
+                        
+                        <form onSubmit=${handleSubmit} className="p-4 border-t border-border flex-shrink-0">
+                            <div className="flex gap-2">
+                                <input
+                                    type="text"
+                                    placeholder="Write a comment..."
+                                    value=${newComment}
+                                    onChange=${(e) => setNewComment(e.target.value)}
+                                    className="input-pro flex-1 py-3"
+                                />
+                                <button type="submit" disabled=${submitting || !newComment.trim()} className="btn-primary px-6">Post</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `;
+        };
+
+        // Share Modal
+        const ShareModal = ({ post, onClose }) => {
+            const shareUrl = window.location.href;
+            const shareText = encodeURIComponent(post.content?.substring(0, 100) + '...');
+            
+            const handleCopy = () => {
+                navigator.clipboard.writeText(shareUrl);
+                alert('Link copied!');
+            };
+
+            return html`
+                <div className="modal-overlay" onClick=${onClose}>
+                    <div className="modal-content modal-in" onClick=${(e) => e.stopPropagation()} style="max-width: 400px;">
+                        <div className="p-5 border-b border-border flex items-center justify-between">
+                            <h3 className="text-lg font-bold text-text">Share Post</h3>
+                            <button onClick=${onClose} className="p-2 rounded-lg hover:bg-gray-100"><${Icon} name="close" size=${20}/></button>
+                        </div>
+                        <div className="p-5 space-y-3">
+                            <button onClick=${() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`, '_blank')} className="w-full py-3 bg-blue-600 text-white rounded-lg font-semibold">Share on Facebook</button>
+                            <button onClick=${() => window.open(`https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`, '_blank')} className="w-full py-3 bg-sky-500 text-white rounded-lg font-semibold">Share on Twitter</button>
+                            <button onClick=${() => window.open(`https://wa.me/?text=${shareText}%20${shareUrl}`, '_blank')} className="w-full py-3 bg-green-500 text-white rounded-lg font-semibold flex items-center justify-center gap-2"><${Icon} name="whatsapp" size=${18}/> Share on WhatsApp</button>
+                            <button onClick=${handleCopy} className="w-full py-3 bg-gray-100 text-text rounded-lg font-semibold">Copy Link</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        };
+
+        // Report Modal
         const ReportModal = ({ report, onClose }) => {
             return html`
                 <div className="modal-overlay" onClick=${onClose}>
@@ -558,17 +660,13 @@
                                 <h3 className="text-lg font-bold text-text">${report.hospital_name}</h3>
                                 <span className="text-xs bg-gray-100 text-text-secondary px-2 py-0.5 rounded">${report.category}</span>
                             </div>
-                            <button onClick=${onClose} className="p-2 rounded-lg hover:bg-gray-100">
-                                <${Icon} name="close" size=${20}/>
-                            </button>
+                            <button onClick=${onClose} className="p-2 rounded-lg hover:bg-gray-100"><${Icon} name="close" size=${20}/></button>
                         </div>
-                        
                         <div className="p-5 overflow-y-auto" style="max-height: calc(85vh - 140px);">
                             <div className="mb-4">
                                 <p className="text-xs text-text-muted mb-1">Submitted</p>
                                 <p className="text-sm text-text">${new Date(report.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
                             </div>
-                            
                             <div>
                                 <p className="text-xs text-text-muted mb-2">Report Details</p>
                                 <p className="text-text leading-relaxed report-text">${report.details}</p>
@@ -591,18 +689,14 @@
                                     <p className="text-sm text-text-secondary mt-1">${job.location}</p>
                                     ${job.salary && html`<p className="text-sm text-success font-medium mt-1">${job.salary}</p>`}
                                 </div>
-                                <button onClick=${onClose} className="p-2 rounded-lg hover:bg-gray-100 -mt-1 -mr-1">
-                                    <${Icon} name="close" size=${20}/>
-                                </button>
+                                <button onClick=${onClose} className="p-2 rounded-lg hover:bg-gray-100 -mt-1 -mr-1"><${Icon} name="close" size=${20}/></button>
                             </div>
                         </div>
-                        
                         <div className="p-5 overflow-y-auto" style="max-height: calc(85vh - 180px);">
                             <div className="mb-5">
                                 <p className="text-xs text-text-muted mb-2">Description</p>
                                 <p className="text-text leading-relaxed job-description">${job.description}</p>
                             </div>
-                            
                             ${(job.contact_email || job.whatsapp_number) && html`
                                 <div className="mb-5 p-4 bg-surface rounded-lg">
                                     <p className="text-xs text-text-muted mb-2">Contact Information</p>
@@ -610,17 +704,9 @@
                                     ${job.whatsapp_number && html`<p className="text-sm text-text flex items-center gap-2"><${Icon} name="phone" size=${16}/> ${job.whatsapp_number}</p>`}
                                 </div>
                             `}
-                            
                             <p className="text-xs text-text-muted">Posted: ${new Date(job.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
                         </div>
-                        
-                        ${job.is_approved && html`
-                            <div className="p-5 border-t border-border flex-shrink-0">
-                                <button onClick=${onApply} className="btn-primary w-full">
-                                    Apply Now
-                                </button>
-                            </div>
-                        `}
+                        ${job.is_approved && html`<div className="p-5 border-t border-border flex-shrink-0"><button onClick=${onApply} className="btn-primary w-full">Apply Now</button></div>`}
                     </div>
                 </div>
             `;
@@ -638,10 +724,7 @@
                 setLoading(true);
                 try {
                     if (type === 'login') {
-                        const { error } = await supabase.auth.signInWithPassword({ 
-                            email: form.email.trim().toLowerCase(), 
-                            password: form.pass 
-                        });
+                        const { error } = await supabase.auth.signInWithPassword({ email: form.email.trim().toLowerCase(), password: form.pass });
                         if (error) throw error; 
                         onSuccess();
                     } else {
@@ -675,82 +758,17 @@
                             <h2 className="text-xl font-semibold text-text mt-8">${type === 'login' ? 'Sign in' : 'Create account'}</h2>
                             <p className="text-text-muted text-sm mt-1">${type === 'login' ? 'Stay updated on your professional world' : 'Join the professional network'}</p>
                         </div>
-                        
                         <div className="card p-6 md:p-8">
                             ${error && html`<div className="bg-red-50 text-danger border border-red-200 p-3 rounded-lg mb-4 text-sm font-medium">${error}</div>`}
-                            
                             <form onSubmit=${handleAuth} className="space-y-5">
-                                ${type === 'register' && html`
-                                    <div>
-                                        <label className="form-label">Full Name</label>
-                                        <input 
-                                            placeholder="Enter your full name" 
-                                            value=${form.name} 
-                                            onChange=${(ev) => setForm({...form, name: ev.target.value})} 
-                                            className="input-pro" 
-                                            required
-                                        />
-                                    </div>
-                                `}
-                                <div>
-                                    <label className="form-label">Email</label>
-                                    <input 
-                                        type="email" 
-                                        placeholder="Enter your email" 
-                                        value=${form.email} 
-                                        onChange=${(ev) => setForm({...form, email: ev.target.value})} 
-                                        className="input-pro" 
-                                        required
-                                        autoCapitalize="none"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="form-label">Password</label>
-                                    <input 
-                                        type="password" 
-                                        placeholder="Enter password (min 6 characters)" 
-                                        value=${form.pass} 
-                                        onChange=${(ev) => setForm({...form, pass: ev.target.value})} 
-                                        className="input-pro" 
-                                        required 
-                                        minLength="6"
-                                    />
-                                </div>
-                                
-                                ${type === 'register' && html`
-                                    <div>
-                                        <label className="form-label">I am a</label>
-                                        <div className="grid grid-cols-3 gap-2 md:gap-3">
-                                            ${['student', 'technologist', 'hospital'].map(r => html`
-                                                <button 
-                                                    type="button" 
-                                                    key=${r} 
-                                                    onClick=${() => setForm({...form, role: r})} 
-                                                    className="py-3 rounded-lg text-sm font-semibold transition-all border ${form.role === r ? 'bg-primary text-white border-primary' : 'bg-white border-border text-text-secondary hover:bg-gray-50'}"
-                                                >${r.charAt(0).toUpperCase() + r.slice(1)}</button>
-                                            `)}
-                                        </div>
-                                    </div>
-                                `}
-                                
-                                <button 
-                                    type="submit" 
-                                    disabled=${loading} 
-                                    className="btn-primary w-full ripple"
-                                >
-                                    ${loading ? html`<div className="loader loader-sm mx-auto border-white border-t-transparent"></div>` : (type === 'login' ? 'Sign In' : 'Join Now')}
-                                </button>
+                                ${type === 'register' && html`<div><label className="form-label">Full Name</label><input placeholder="Enter your full name" value=${form.name} onChange=${(ev) => setForm({...form, name: ev.target.value})} className="input-pro" required/></div>`}
+                                <div><label className="form-label">Email</label><input type="email" placeholder="Enter your email" value=${form.email} onChange=${(ev) => setForm({...form, email: ev.target.value})} className="input-pro" required autoCapitalize="none"/></div>
+                                <div><label className="form-label">Password</label><input type="password" placeholder="Enter password (min 6 characters)" value=${form.pass} onChange=${(ev) => setForm({...form, pass: ev.target.value})} className="input-pro" required minLength="6"/></div>
+                                ${type === 'register' && html`<div><label className="form-label">I am a</label><div className="grid grid-cols-3 gap-2 md:gap-3">${['student', 'technologist', 'hospital'].map(r => html`<button type="button" key=${r} onClick=${() => setForm({...form, role: r})} className="py-3 rounded-lg text-sm font-semibold transition-all border ${form.role === r ? 'bg-primary text-white border-primary' : 'bg-white border-border text-text-secondary hover:bg-gray-50'}">${r.charAt(0).toUpperCase() + r.slice(1)}</button>`)}</div></div>`}
+                                <button type="submit" disabled=${loading} className="btn-primary w-full">${loading ? html`<div className="loader loader-sm mx-auto border-white border-t-transparent"></div>` : (type === 'login' ? 'Sign In' : 'Join Now')}</button>
                             </form>
                         </div>
-                        
-                        <p className="text-center text-sm text-text-secondary mt-6">
-                            ${type === 'login' ? 'New to BRITN? ' : 'Already have an account? '}
-                            <button 
-                                onClick=${() => onSwitch(type === 'login' ? 'register' : 'login')} 
-                                className="text-primary font-semibold hover:underline"
-                            >${type === 'login' ? 'Join now' : 'Sign in'}</button>
-                        </p>
-                        
+                        <p className="text-center text-sm text-text-secondary mt-6">${type === 'login' ? 'New to BRITN? ' : 'Already have an account? '}<button onClick=${() => onSwitch(type === 'login' ? 'register' : 'login')} className="text-primary font-semibold hover:underline">${type === 'login' ? 'Join now' : 'Sign in'}</button></p>
                         <p className="text-center text-xs text-text-muted mt-8">Powered by SRP SOFT LTD</p>
                     </div>
                 </div>
@@ -759,107 +777,48 @@
 
         // Top Navbar
         const TopNavbar = ({ user, search, setSearch, currentPage, setPage, showDropdown, setShowDropdown }) => {
+            const isAdmin = user?.email === ADMIN_EMAIL;
             const navItems = [
                 { id: 'dash', icon: 'home', label: 'Home' },
                 { id: 'feed', icon: 'network', label: 'Feed' },
                 { id: 'jobs', icon: 'jobs', label: 'Jobs' },
-                { id: 'notifications', icon: 'notifications', label: 'Alerts' },
             ];
 
             return html`
                 <nav className="sticky top-0 z-40 bg-white border-b border-border">
                     <div className="max-w-[1128px] mx-auto px-4 h-[52px] flex items-center justify-between gap-4">
                         <div className="flex items-center gap-2 flex-1">
-                            <button onClick=${() => setPage('dash')} className="flex-shrink-0 hover:opacity-80 transition-opacity">
-                                <img src=${BRITN_LOGO_URL} className="w-9 h-9 md:w-10 md:h-10 rounded-lg shadow-sm" alt="BRITN"/>
-                            </button>
+                            <button onClick=${() => setPage('dash')} className="flex-shrink-0 hover:opacity-80 transition-opacity"><img src=${BRITN_LOGO_URL} className="w-9 h-9 md:w-10 md:h-10 rounded-lg shadow-sm" alt="BRITN"/></button>
                             <div className="relative flex-1 max-w-[280px]">
-                                <input 
-                                    placeholder="Search" 
-                                    value=${search} 
-                                    onChange=${(ev) => setSearch(ev.target.value)}
-                                    className="w-full py-2 pl-9 pr-4 bg-surface rounded-lg text-sm outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-                                />
-                                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted">
-                                    <${Icon} name="search" size=${16}/>
-                                </div>
+                                <input placeholder="Search" value=${search} onChange=${(ev) => setSearch(ev.target.value)} className="w-full py-2 pl-9 pr-4 bg-surface rounded-lg text-sm outline-none focus:ring-2 focus:ring-primary/30 transition-all"/>
+                                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted"><${Icon} name="search" size=${16}/></div>
                             </div>
                         </div>
-                        
                         <div className="desktop-only flex items-center h-full">
-                            ${navItems.map(item => html`
-                                <button 
-                                    key=${item.id} 
-                                    onClick=${() => setPage(item.id)} 
-                                    className="nav-icon-btn ${currentPage === item.id ? 'active' : ''}"
-                                >
-                                    <${Icon} name=${item.icon} size=${22}/>
-                                    <span>${item.label}</span>
-                                </button>
-                            `)}
+                            ${navItems.map(item => html`<button key=${item.id} onClick=${() => setPage(item.id)} className="nav-icon-btn ${currentPage === item.id ? 'active' : ''}"><${Icon} name=${item.icon} size=${22}/><span>${item.label}</span></button>`)}
                             <div className="relative ml-2">
-                                <button 
-                                    onClick=${() => setShowDropdown(!showDropdown)}
-                                    className="nav-icon-btn ${currentPage === 'profile' ? 'active' : ''}"
-                                >
-                                    <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold">
-                                        ${user?.email?.charAt(0).toUpperCase()}
-                                    </div>
+                                <button onClick=${() => setShowDropdown(!showDropdown)} className="nav-icon-btn ${currentPage === 'profile' ? 'active' : ''}">
+                                    <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold">${user?.email?.charAt(0).toUpperCase()}</div>
                                     <span>Me</span>
                                 </button>
-                                
                                 ${showDropdown && html`
                                     <div className="dropdown">
                                         <div className="p-4 border-b border-border">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white text-lg font-bold">
-                                                    ${user?.email?.charAt(0).toUpperCase()}
-                                                </div>
-                                                <div>
-                                                    <p className="font-semibold text-text">${user?.user_metadata?.full_name || 'User'}</p>
-                                                    <p className="text-sm text-text-secondary">${user?.email}</p>
-                                                </div>
+                                                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white text-lg font-bold">${user?.email?.charAt(0).toUpperCase()}</div>
+                                                <div><p className="font-semibold text-text">${user?.user_metadata?.full_name || 'User'}</p><p className="text-sm text-text-secondary">${user?.email}</p></div>
                                             </div>
-                                            <button 
-                                                onClick=${() => { setPage('profile'); setShowDropdown(false); }}
-                                                className="w-full mt-3 btn-secondary text-sm py-2"
-                                            >View Profile</button>
+                                            <button onClick=${() => { setPage('profile'); setShowDropdown(false); }} className="w-full mt-3 btn-secondary text-sm py-2">View Profile</button>
                                         </div>
                                         <div className="py-2">
-                                            <button 
-                                                onClick=${() => { setPage('add_job'); setShowDropdown(false); }}
-                                                className="w-full px-4 py-2.5 text-left text-sm hover:bg-gray-50 flex items-center gap-3"
-                                            >
-                                                <${Icon} name="plus" size=${18}/>
-                                                <span>Post a Job</span>
-                                            </button>
-                                            <button 
-                                                onClick=${() => { setPage('reports'); setShowDropdown(false); }}
-                                                className="w-full px-4 py-2.5 text-left text-sm hover:bg-gray-50 flex items-center gap-3"
-                                            >
-                                                <${Icon} name="network" size=${18}/>
-                                                <span>Submit Report</span>
-                                            </button>
-                                            <button 
-                                                onClick=${() => { supabase.auth.signOut(); setShowDropdown(false); }}
-                                                className="w-full px-4 py-2.5 text-left text-sm hover:bg-red-50 text-danger flex items-center gap-3"
-                                            >
-                                                <${Icon} name="logout" size=${18}/>
-                                                <span>Sign Out</span>
-                                            </button>
+                                            ${isAdmin && html`<button onClick=${() => { setPage('admin'); setShowDropdown(false); }} className="w-full px-4 py-2.5 text-left text-sm hover:bg-gray-50 flex items-center gap-3"><${Icon} name="admin" size=${18}/><span>Admin Panel</span></button>`}
+                                            <button onClick=${() => { setPage('add_job'); setShowDropdown(false); }} className="w-full px-4 py-2.5 text-left text-sm hover:bg-gray-50 flex items-center gap-3"><${Icon} name="plus" size=${18}/><span>Post a Job</span></button>
+                                            <button onClick=${() => { setPage('reports'); setShowDropdown(false); }} className="w-full px-4 py-2.5 text-left text-sm hover:bg-gray-50 flex items-center gap-3"><${Icon} name="network" size=${18}/><span>Submit Report</span></button>
+                                            <button onClick=${() => { supabase.auth.signOut(); setShowDropdown(false); }} className="w-full px-4 py-2.5 text-left text-sm hover:bg-red-50 text-danger flex items-center gap-3"><${Icon} name="logout" size=${18}/><span>Sign Out</span></button>
                                         </div>
                                     </div>
                                 `}
                             </div>
-                        </div>
-                        
-                        <div className="mobile-only flex items-center gap-1">
-                            <button 
-                                onClick=${() => setPage('notifications')}
-                                className="p-2 rounded-lg hover:bg-gray-100 relative"
-                            >
-                                <${Icon} name="notifications" size=${22}/>
-                            </button>
                         </div>
                     </div>
                 </nav>
@@ -868,34 +827,26 @@
 
         // Left Sidebar
         const LeftSidebar = ({ user, setPage }) => {
+            const isAdmin = user?.email === ADMIN_EMAIL;
             return html`
                 <aside className="desktop-only w-[220px] flex-shrink-0 space-y-3">
                     <div className="card overflow-hidden">
                         <div className="h-14 bg-gradient-to-r from-primary to-primary-dark"></div>
                         <div className="px-4 pb-4 text-center">
-                            <button 
-                                onClick=${() => setPage('profile')}
-                                className="relative -mt-8 mb-2"
-                            >
+                            <button onClick=${() => setPage('profile')} className="relative -mt-8 mb-2">
                                 <div className="w-16 h-16 rounded-full bg-white p-1 mx-auto shadow-md">
-                                    <div className="w-full h-full rounded-full bg-primary flex items-center justify-center text-white text-2xl font-bold">
-                                        ${user?.email?.charAt(0).toUpperCase()}
-                                    </div>
+                                    <div className="w-full h-full rounded-full bg-primary flex items-center justify-center text-white text-2xl font-bold">${user?.email?.charAt(0).toUpperCase()}</div>
                                 </div>
                             </button>
                             <h3 className="font-semibold text-text">${user?.user_metadata?.full_name || 'User'}</h3>
                             <p className="text-xs text-text-secondary mt-0.5 capitalize">${user?.user_metadata?.role || 'Member'}</p>
                         </div>
                     </div>
-                    
                     <div className="card p-3">
                         <p className="text-xs font-semibold text-text-muted mb-2 px-1">Quick Links</p>
-                        <button onClick=${() => setPage('reports')} className="w-full text-left px-3 py-2 rounded-lg text-sm hover:bg-gray-100 flex items-center gap-2">
-                            <${Icon} name="network" size=${16}/> Submit Report
-                        </button>
-                        <button onClick=${() => setPage('add_job')} className="w-full text-left px-3 py-2 rounded-lg text-sm hover:bg-gray-100 flex items-center gap-2">
-                            <${Icon} name="plus" size=${16}/> Post a Job
-                        </button>
+                        <button onClick=${() => setPage('reports')} className="w-full text-left px-3 py-2 rounded-lg text-sm hover:bg-gray-100 flex items-center gap-2"><${Icon} name="network" size=${16}/> Submit Report</button>
+                        <button onClick=${() => setPage('add_job')} className="w-full text-left px-3 py-2 rounded-lg text-sm hover:bg-gray-100 flex items-center gap-2"><${Icon} name="plus" size=${16}/> Post a Job</button>
+                        ${isAdmin && html`<button onClick=${() => setPage('admin')} className="w-full text-left px-3 py-2 rounded-lg text-sm hover:bg-gray-100 flex items-center gap-2 text-danger"><${Icon} name="admin" size=${16}/> Admin Panel</button>`}
                     </div>
                 </aside>
             `;
@@ -904,48 +855,248 @@
         // Right Sidebar
         const RightSidebar = ({ jobs }) => {
             const trendingJobs = jobs.filter(j => j.is_approved).slice(0, 3);
-            
             return html`
                 <aside className="desktop-only w-[300px] flex-shrink-0 space-y-3">
                     <div className="card p-4">
                         <h3 className="font-semibold text-sm text-text mb-3">Trending Jobs</h3>
-                        ${trendingJobs.length === 0 ? html`
-                            <p className="text-sm text-text-muted">No jobs available</p>
-                        ` : trendingJobs.map((job, i) => html`
-                            <div key=${job.id} className="py-2 ${i < trendingJobs.length - 1 ? 'border-b border-border' : ''}">
-                                <p className="font-medium text-sm text-text">${job.title}</p>
-                                <p className="text-xs text-text-secondary mt-0.5">${job.location}</p>
-                            </div>
-                        `)}
+                        ${trendingJobs.length === 0 ? html`<p className="text-sm text-text-muted">No jobs available</p>` : trendingJobs.map((job, i) => html`<div key=${job.id} className="py-2 ${i < trendingJobs.length - 1 ? 'border-b border-border' : ''}"><p className="font-medium text-sm text-text">${job.title}</p><p className="text-xs text-text-secondary mt-0.5">${job.location}</p></div>`)}
                     </div>
                 </aside>
             `;
         };
 
         // Bottom Nav
-        const BottomNav = ({ currentPage, setPage }) => {
+        const BottomNav = ({ currentPage, setPage, user }) => {
+            const isAdmin = user?.email === ADMIN_EMAIL;
             const items = [
                 { id: 'dash', icon: 'home', label: 'Home' },
                 { id: 'feed', icon: 'network', label: 'Feed' },
                 { id: 'jobs', icon: 'jobs', label: 'Jobs' },
-                { id: 'notifications', icon: 'notifications', label: 'Alerts' },
                 { id: 'profile', icon: 'profile', label: 'Profile' },
             ];
             
             return html`
                 <div className="mobile-only bottom-nav">
                     <div className="flex">
-                        ${items.map(item => html`
-                            <button 
-                                key=${item.id}
-                                onClick=${() => setPage(item.id)} 
-                                className="bottom-nav-item ${currentPage === item.id ? 'active' : ''}"
-                            >
-                                <${Icon} name=${item.icon} size=${22}/>
-                                <span>${item.label}</span>
-                            </button>
-                        `)}
+                        ${items.map(item => html`<button key=${item.id} onClick=${() => setPage(item.id)} className="bottom-nav-item ${currentPage === item.id ? 'active' : ''}"><${Icon} name=${item.icon} size=${22}/><span>${item.label}</span></button>`)}
+                        ${isAdmin && html`<button onClick=${() => setPage('admin')} className="bottom-nav-item ${currentPage === 'admin' ? 'active' : ''}"><${Icon} name="admin" size=${22}/><span>Admin</span></button>`}
                     </div>
+                </div>
+            `;
+        };
+
+        // Admin Panel
+        const AdminPanel = ({ user }) => {
+            const [activeTab, setActiveTab] = React.useState('dashboard');
+            const [stats, setStats] = React.useState({ users: 0, posts: 0, jobs: 0, reports: 0, pendingJobs: 0, pinnedPosts: 0 });
+            const [pendingJobs, setPendingJobs] = React.useState([]);
+            const [allJobs, setAllJobs] = React.useState([]);
+            const [allPosts, setAllPosts] = React.useState([]);
+            const [loading, setLoading] = React.useState(true);
+            const toast = useToast();
+
+            React.useEffect(() => {
+                fetchAllData();
+            }, []);
+
+            const fetchAllData = async () => {
+                setLoading(true);
+                try {
+                    const [usersRes, postsRes, jobsRes, reportsRes] = await Promise.all([
+                        supabase.from('profiles').select('id', { count: 'exact' }),
+                        supabase.from('feed_posts').select('*').order('created_at', { ascending: false }),
+                        supabase.from('jobs').select('*').order('created_at', { ascending: false }),
+                        supabase.from('hospital_reports').select('id', { count: 'exact' })
+                    ]);
+
+                    const postsData = postsRes.data || [];
+                    const jobsData = jobsRes.data || [];
+
+                    setStats({
+                        users: usersRes.count || 0,
+                        posts: postsData.length,
+                        jobs: jobsData.length,
+                        reports: reportsRes.count || 0,
+                        pendingJobs: jobsData.filter(j => !j.is_approved).length,
+                        pinnedPosts: postsData.filter(p => p.is_pinned).length
+                    });
+
+                    setPendingJobs(jobsData.filter(j => !j.is_approved));
+                    setAllJobs(jobsData);
+                    setAllPosts(postsData);
+                } catch (err) {
+                    console.error('Error fetching admin data:', err);
+                    toast('Failed to load data', 'error');
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            const handleApproveJob = async (id) => {
+                try {
+                    const { error } = await supabase.from('jobs').update({ is_approved: true }).eq('id', id);
+                    if (error) throw error;
+                    toast('Job approved!');
+                    fetchAllData();
+                } catch (err) {
+                    toast('Failed to approve job', 'error');
+                }
+            };
+
+            const handleDeleteJob = async (id) => {
+                if (confirm('Delete this job?')) {
+                    try {
+                        const { error } = await supabase.from('jobs').delete().eq('id', id);
+                        if (error) throw error;
+                        toast('Job deleted');
+                        fetchAllData();
+                    } catch (err) {
+                        toast('Failed to delete job', 'error');
+                    }
+                }
+            };
+
+            const handleTogglePin = async (post) => {
+                const pinnedCount = allPosts.filter(p => p.is_pinned).length;
+                if (!post.is_pinned && pinnedCount >= 3) {
+                    toast('Maximum 3 pinned posts allowed', 'error');
+                    return;
+                }
+                try {
+                    const { error } = await supabase.from('feed_posts').update({ is_pinned: !post.is_pinned }).eq('id', post.id);
+                    if (error) throw error;
+                    toast(post.is_pinned ? 'Post unpinned' : 'Post pinned!');
+                    fetchAllData();
+                } catch (err) {
+                    toast('Failed to update', 'error');
+                }
+            };
+
+            const handleDeletePost = async (id) => {
+                if (confirm('Delete this post?')) {
+                    try {
+                        const { error } = await supabase.from('feed_posts').delete().eq('id', id);
+                        if (error) throw error;
+                        toast('Post deleted');
+                        fetchAllData();
+                    } catch (err) {
+                        toast('Failed to delete post', 'error');
+                    }
+                }
+            };
+
+            if (loading) {
+                return html`<div className="max-w-[900px] mx-auto pb-20 md:pb-4 fade-in"><div className="loader mx-auto mt-20"></div></div>`;
+            }
+
+            return html`
+                <div className="max-w-[900px] mx-auto pb-20 md:pb-4 fade-in">
+                    <div className="flex items-center justify-between mb-6">
+                        <h2 className="text-xl font-bold text-text">Admin Panel</h2>
+                        <button onClick=${fetchAllData} className="btn-secondary py-2 px-4"><${Icon} name="refresh" size=${18}/> Refresh</button>
+                    </div>
+                    
+                    <div className="grid grid-cols-3 md:grid-cols-6 gap-3 mb-6">
+                        <div className="stat-card"><div className="stat-number">${stats.users}</div><div className="stat-label">Users</div></div>
+                        <div className="stat-card"><div className="stat-number">${stats.posts}</div><div className="stat-label">Posts</div></div>
+                        <div className="stat-card"><div className="stat-number">${stats.jobs}</div><div className="stat-label">Jobs</div></div>
+                        <div className="stat-card"><div className="stat-number text-danger">${stats.pendingJobs}</div><div className="stat-label">Pending Jobs</div></div>
+                        <div className="stat-card"><div className="stat-number">${stats.pinnedPosts}</div><div className="stat-label">Pinned</div></div>
+                        <div className="stat-card"><div className="stat-number">${stats.reports}</div><div className="stat-label">Reports</div></div>
+                    </div>
+                    
+                    <div className="card mb-4">
+                        <div className="border-b border-border flex overflow-x-auto">
+                            <button onClick=${() => setActiveTab('dashboard')} className="admin-tab ${activeTab === 'dashboard' ? 'active' : ''}">Dashboard</button>
+                            <button onClick=${() => setActiveTab('pending')} className="admin-tab ${activeTab === 'pending' ? 'active' : ''}">Pending Jobs (${stats.pendingJobs})</button>
+                            <button onClick=${() => setActiveTab('jobs')} className="admin-tab ${activeTab === 'jobs' ? 'active' : ''}">All Jobs</button>
+                            <button onClick=${() => setActiveTab('posts')} className="admin-tab ${activeTab === 'posts' ? 'active' : ''}">All Posts</button>
+                        </div>
+                    </div>
+                    
+                    ${activeTab === 'dashboard' && html`
+                        <div className="grid md:grid-cols-2 gap-4">
+                            ${stats.pendingJobs > 0 && html`
+                                <div className="card p-5">
+                                    <h3 className="font-semibold text-text mb-3 flex items-center gap-2"><${Icon} name="jobs" size=${18}/> Pending Approvals</h3>
+                                    <p className="text-2xl font-bold text-danger">${stats.pendingJobs}</p>
+                                    <p className="text-sm text-text-secondary mt-1">Jobs waiting for approval</p>
+                                    <button onClick=${() => setActiveTab('pending')} className="btn-primary w-full mt-4">Review Jobs</button>
+                                </div>
+                            `}
+                            <div className="card p-5">
+                                <h3 className="font-semibold text-text mb-3 flex items-center gap-2"><${Icon} name="pin" size=${18}/> Pinned Posts</h3>
+                                <p className="text-2xl font-bold text-primary">${stats.pinnedPosts}/3</p>
+                                <p className="text-sm text-text-secondary mt-1">Posts pinned to top</p>
+                                <button onClick=${() => setActiveTab('posts')} className="btn-secondary w-full mt-4">Manage Posts</button>
+                            </div>
+                        </div>
+                    `}
+                    
+                    ${activeTab === 'pending' && html`
+                        <div className="space-y-4">
+                            ${pendingJobs.length === 0 ? html`<div className="card p-8 text-center"><p className="text-text-muted">No pending jobs</p></div>` :
+                                pendingJobs.map(job => html`
+                                    <div key=${job.id} className="card p-5">
+                                        <div className="flex justify-between items-start gap-3">
+                                            <div>
+                                                <h3 className="font-semibold text-text">${job.title}</h3>
+                                                <p className="text-sm text-text-secondary">${job.location} | ${job.contact_email}</p>
+                                                <p className="text-sm text-text-secondary mt-2 line-clamp-2">${job.description}</p>
+                                                <p className="text-xs text-text-muted mt-2">Posted: ${new Date(job.created_at).toLocaleDateString()}</p>
+                                            </div>
+                                            <div className="flex gap-2 flex-shrink-0">
+                                                <button onClick=${() => handleApproveJob(job.id)} className="btn-primary py-2 px-4 text-sm">Approve</button>
+                                                <button onClick=${() => handleDeleteJob(job.id)} className="btn-danger py-2 px-4 text-sm">Reject</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `)
+                            }
+                        </div>
+                    `}
+                    
+                    ${activeTab === 'jobs' && html`
+                        <div className="space-y-3">
+                            ${allJobs.length === 0 ? html`<div className="card p-8 text-center"><p className="text-text-muted">No jobs found</p></div>` :
+                                allJobs.map(job => html`
+                                    <div key=${job.id} className="card p-4 flex justify-between items-center">
+                                        <div>
+                                            <div className="flex items-center gap-2">
+                                                <h3 className="font-semibold text-text">${job.title}</h3>
+                                                <span className="text-xs px-2 py-0.5 rounded ${job.is_approved ? 'bg-green-100 text-success' : 'bg-yellow-100 text-yellow-700'}">${job.is_approved ? 'Approved' : 'Pending'}</span>
+                                            </div>
+                                            <p className="text-sm text-text-secondary">${job.location}</p>
+                                        </div>
+                                        <button onClick=${() => handleDeleteJob(job.id)} className="p-2 hover:bg-red-50 rounded text-danger"><${Icon} name="delete" size=${18}/></button>
+                                    </div>
+                                `)
+                            }
+                        </div>
+                    `}
+                    
+                    ${activeTab === 'posts' && html`
+                        <div className="space-y-3">
+                            ${allPosts.length === 0 ? html`<div className="card p-8 text-center"><p className="text-text-muted">No posts found</p></div>` :
+                                allPosts.map(post => html`
+                                    <div key=${post.id} className="card p-4 flex justify-between items-start gap-3">
+                                        <div className="flex-1 min-w-0">
+                                            <div className="flex items-center gap-2">
+                                                <h3 className="font-semibold text-text truncate">${post.poster_email}</h3>
+                                                ${post.is_pinned && html`<span className="pin-badge">Pinned</span>`}
+                                            </div>
+                                            <p className="text-sm text-text-secondary mt-1 line-clamp-2">${post.content}</p>
+                                            <p className="text-xs text-text-muted mt-2">${new Date(post.created_at).toLocaleDateString()}</p>
+                                        </div>
+                                        <div className="flex gap-1 flex-shrink-0">
+                                            <button onClick=${() => handleTogglePin(post)} className="p-2 hover:bg-gray-100 rounded ${post.is_pinned ? 'text-primary' : 'text-text-muted'}"><${Icon} name="pin" size=${18}/></button>
+                                            <button onClick=${() => handleDeletePost(post.id)} className="p-2 hover:bg-red-50 rounded text-danger"><${Icon} name="delete" size=${18}/></button>
+                                        </div>
+                                    </div>
+                                `)
+                            }
+                        </div>
+                    `}
                 </div>
             `;
         };
@@ -960,20 +1111,26 @@
             const [editContent, setEditContent] = React.useState('');
             const [charCount, setCharCount] = React.useState(0);
             const [showMenu, setShowMenu] = React.useState(null);
+            const [commentModal, setCommentModal] = React.useState(null);
+            const [shareModal, setShareModal] = React.useState(null);
+            const [likedPosts, setLikedPosts] = React.useState(new Set());
             const isAdmin = user?.email === ADMIN_EMAIL;
             const toast = useToast();
             const MAX_CHARS = 2000;
 
             const fetchPosts = async () => {
                 try {
-                    const { data, error } = await supabase
-                        .from('feed_posts')
-                        .select('*')
-                        .order('created_at', { ascending: false })
-                        .limit(30);
+                    const [postsRes, likesRes] = await Promise.all([
+                        supabase.from('feed_posts').select('*').order('created_at', { ascending: false }).limit(30),
+                        supabase.from('post_likes').select('post_id').eq('user_email', user.email)
+                    ]);
                     
-                    if (error) throw error;
-                    setPosts(data || []);
+                    if (postsRes.error) throw postsRes.error;
+                    setPosts(postsRes.data || []);
+                    
+                    if (likesRes.data) {
+                        setLikedPosts(new Set(likesRes.data.map(l => l.post_id)));
+                    }
                 } catch (err) {
                     console.error('Error fetching posts:', err);
                     toast('Failed to load posts', 'error');
@@ -982,31 +1139,26 @@
                 }
             };
             
-            React.useEffect(() => { 
-                fetchPosts(); 
-            }, []);
+            React.useEffect(() => { fetchPosts(); }, []);
 
             const handleSubmit = async (ev) => {
                 ev.preventDefault();
                 if (!content.trim() && !image) return;
-                
                 try {
                     const { error } = await supabase.from('feed_posts').insert([{
                         content: content.trim(),
                         image_url: image,
                         poster_email: user.email,
+                        poster_id: user.id,
                         is_pinned: false
                     }]);
-                    
                     if (error) throw error;
-                    
                     setContent('');
                     setImage(null);
                     setCharCount(0);
                     fetchPosts();
-                    toast('Post published successfully!');
+                    toast('Post published!');
                 } catch (err) {
-                    console.error('Error posting:', err);
                     toast('Failed to post', 'error');
                 }
             };
@@ -1024,11 +1176,7 @@
                 }
             };
 
-            const handleEdit = (post) => {
-                setEditId(post.id);
-                setEditContent(post.content);
-                setShowMenu(null);
-            };
+            const handleEdit = (post) => { setEditId(post.id); setEditContent(post.content); setShowMenu(null); };
 
             const handleUpdate = async (id) => {
                 try {
@@ -1043,42 +1191,46 @@
             };
 
             const handleTogglePin = async (post) => {
-                const newPinStatus = !post.is_pinned;
                 const pinnedCount = posts.filter(p => p.is_pinned).length;
-                
-                if (newPinStatus && pinnedCount >= 3) {
+                if (!post.is_pinned && pinnedCount >= 3) {
                     toast('Maximum 3 pinned posts allowed', 'error');
                     return;
                 }
-                
                 try {
-                    const { error } = await supabase.from('feed_posts').update({ is_pinned: newPinStatus }).eq('id', post.id);
+                    const { error } = await supabase.from('feed_posts').update({ is_pinned: !post.is_pinned }).eq('id', post.id);
                     if (error) throw error;
                     fetchPosts();
-                    toast(newPinStatus ? 'Post pinned!' : 'Post unpinned');
+                    toast(post.is_pinned ? 'Post unpinned' : 'Post pinned!');
                 } catch (err) {
                     toast('Failed to update', 'error');
+                }
+            };
+
+            const handleLike = async (post) => {
+                const isLiked = likedPosts.has(post.id);
+                try {
+                    if (isLiked) {
+                        await supabase.from('post_likes').delete().match({ post_id: post.id, user_email: user.email });
+                        await supabase.from('feed_posts').update({ likes_count: Math.max(0, (post.likes_count || 0) - 1) }).eq('id', post.id);
+                        setLikedPosts(prev => { const newSet = new Set(prev); newSet.delete(post.id); return newSet; });
+                    } else {
+                        await supabase.from('post_likes').insert([{ post_id: post.id, user_email: user.email }]);
+                        await supabase.from('feed_posts').update({ likes_count: (post.likes_count || 0) + 1 }).eq('id', post.id);
+                        setLikedPosts(prev => new Set([...prev, post.id]));
+                    }
+                    fetchPosts();
+                } catch (err) {
+                    toast('Failed to update like', 'error');
                 }
             };
 
             const handleImage = (e) => {
                 const file = e.target.files[0];
                 if (file) {
-                    if (file.size > 5 * 1024 * 1024) {
-                        toast('Image must be less than 5MB', 'error');
-                        return;
-                    }
+                    if (file.size > 5 * 1024 * 1024) { toast('Image must be less than 5MB', 'error'); return; }
                     const reader = new FileReader();
                     reader.onloadend = () => setImage(reader.result);
                     reader.readAsDataURL(file);
-                }
-            };
-
-            const handleContentChange = (e) => {
-                const value = e.target.value;
-                if (value.length <= MAX_CHARS) {
-                    setContent(value);
-                    setCharCount(value.length);
                 }
             };
 
@@ -1088,203 +1240,94 @@
                 return new Date(b.created_at) - new Date(a.created_at);
             });
 
-            if (loading) {
-                return html`
-                    <div className="max-w-[600px] mx-auto space-y-4 pb-20 md:pb-4">
-                        <div className="card p-4">
-                            <div className="animate-pulse flex gap-3">
-                                <div className="w-11 h-11 bg-gray-200 rounded-full"></div>
-                                <div className="flex-1 space-y-2">
-                                    <div className="h-4 bg-gray-200 rounded w-1/3"></div>
-                                    <div className="h-3 bg-gray-200 rounded w-1/4"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="card p-4">
-                            <div className="animate-pulse space-y-3">
-                                <div className="h-4 bg-gray-200 rounded w-full"></div>
-                                <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-                                <div className="h-32 bg-gray-200 rounded"></div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
+            if (loading) return html`<div className="max-w-[600px] mx-auto space-y-4 pb-20 md:pb-4"><div className="card p-4"><div className="animate-pulse flex gap-3"><div className="w-11 h-11 bg-gray-200 rounded-full"></div><div className="flex-1 space-y-2"><div className="h-4 bg-gray-200 rounded w-1/3"></div><div className="h-3 bg-gray-200 rounded w-1/4"></div></div></div></div></div>`;
 
             return html`
                 <div className="max-w-[600px] mx-auto space-y-4 pb-20 md:pb-4">
-                    ${isAdmin && html`
-                        <div className="card p-4 fade-in">
-                            <form onSubmit=${handleSubmit}>
-                                <div className="flex items-start gap-3">
-                                    <div className="w-11 h-11 rounded-full bg-primary flex items-center justify-center text-white font-bold flex-shrink-0">
-                                        ${user?.email?.charAt(0).toUpperCase()}
-                                    </div>
-                                    <div className="flex-1">
-                                        <textarea 
-                                            placeholder="Share an announcement with the network..."
-                                            value=${content}
-                                            onChange=${handleContentChange}
-                                            className="input-pro resize-none min-h-[100px] text-base"
-                                            rows="3"
-                                        />
-                                        <div className="flex justify-between items-center mt-2">
-                                            <span className="text-xs text-text-muted">Add image (optional)</span>
-                                            <span className="char-counter ${charCount > MAX_CHARS * 0.9 ? 'warning' : ''}">
-                                                ${charCount}/${MAX_CHARS}
-                                            </span>
-                                        </div>
+                    <div className="card p-4 fade-in">
+                        <form onSubmit=${handleSubmit}>
+                            <div className="flex items-start gap-3">
+                                <div className="w-11 h-11 rounded-full bg-primary flex items-center justify-center text-white font-bold flex-shrink-0">${user?.email?.charAt(0).toUpperCase()}</div>
+                                <div className="flex-1">
+                                    <textarea placeholder="Share something with the network..." value=${content} onChange=${(e) => { const v = e.target.value; if (v.length <= MAX_CHARS) { setContent(v); setCharCount(v.length); }}} className="input-pro resize-none min-h-[100px] text-base" rows="3"/>
+                                    <div className="flex justify-between items-center mt-2">
+                                        <span className="text-xs text-text-muted">Add image (optional)</span>
+                                        <span className="char-counter ${charCount > MAX_CHARS * 0.9 ? 'warning' : ''}">${charCount}/${MAX_CHARS}</span>
                                     </div>
                                 </div>
-                                
-                                ${image && html`
-                                    <div className="relative mt-3 inline-block ml-14">
-                                        <img src=${image} className="max-h-48 rounded-lg shadow-md" alt="Preview"/>
-                                        <button 
-                                            type="button" 
-                                            onClick=${() => setImage(null)}
-                                            className="absolute -top-2 -right-2 w-7 h-7 bg-danger text-white rounded-full flex items-center justify-center shadow-md hover:bg-red-700 transition-colors"
-                                        >
-                                            <${Icon} name="close" size=${14}/>
-                                        </button>
-                                    </div>
-                                `}
-                                
-                                <div className="flex items-center justify-between mt-3 pt-3 border-t border-border">
-                                    <div className="flex items-center gap-2">
-                                        <label className="p-2.5 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors">
-                                            <${Icon} name="image" size=${20} className="text-primary"/>
-                                            <input type="file" onChange=${handleImage} accept="image/*" className="hidden"/>
-                                        </label>
-                                    </div>
-                                    <button type="submit" className="btn-primary py-2 px-6" disabled=${!content.trim() && !image}>
-                                        Post
-                                    </button>
+                            </div>
+                            ${image && html`<div className="relative mt-3 inline-block ml-14"><img src=${image} className="max-h-48 rounded-lg shadow-md" alt="Preview"/><button type="button" onClick=${() => setImage(null)} className="absolute -top-2 -right-2 w-7 h-7 bg-danger text-white rounded-full flex items-center justify-center shadow-md"><${Icon} name="close" size=${14}/></button></div>`}
+                            <div className="flex items-center justify-between mt-3 pt-3 border-t border-border">
+                                <div className="flex items-center gap-2">
+                                    <label className="p-2.5 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors"><${Icon} name="image" size=${20} className="text-primary"/><input type="file" onChange=${handleImage} accept="image/*" className="hidden"/></label>
                                 </div>
-                            </form>
-                        </div>
-                    `}
+                                <button type="submit" className="btn-primary py-2 px-6" disabled=${!content.trim() && !image}>Post</button>
+                            </div>
+                        </form>
+                    </div>
                     
-                    ${sortedPosts.length === 0 ? html`
-                        <div className="card p-12 text-center">
-                            <div className="text-5xl mb-4 opacity-50">📰</div>
-                            <p className="text-text-secondary font-medium">No posts yet</p>
-                            <p className="text-text-muted text-sm mt-1">Be the first to share!</p>
-                        </div>
-                    ` : html`
-                        ${sortedPosts.map((post, i) => {
+                    ${sortedPosts.length === 0 ? html`<div className="card p-12 text-center"><div className="text-5xl mb-4 opacity-50">📰</div><p className="text-text-secondary font-medium">No posts yet</p><p className="text-text-muted text-sm mt-1">Be the first to share!</p></div>` :
+                        sortedPosts.map((post, i) => {
                             const isAdminPost = post.poster_email === ADMIN_EMAIL;
                             const displayName = isAdminPost ? 'Bangladesh Radiology & Imaging Technologist Network' : post.poster_email.split('@')[0];
+                            const isLiked = likedPosts.has(post.id);
                             const cardClass = post.is_pinned ? 'pinned-post p-4 fade-in' : 'card p-4 fade-in';
                             
                             return html`
                                 <div key=${post.id} className=${cardClass} style=${{ animationDelay: `${i * 0.03}s` }}>
                                     <div className="flex items-start justify-between">
                                         <div className="flex items-start gap-3 flex-1">
-                                            ${isAdminPost ? html`
-                                                <img src=${BRITN_LOGO_URL} className="w-12 h-12 rounded-full object-cover ring-2 ring-highlight shadow-md flex-shrink-0" alt="BRITN"/>
-                                            ` : html`
-                                                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
-                                                    ${displayName.charAt(0).toUpperCase()}
-                                                </div>
-                                            `}
+                                            ${isAdminPost ? html`<img src=${BRITN_LOGO_URL} className="w-12 h-12 rounded-full object-cover ring-2 ring-highlight shadow-md flex-shrink-0" alt="BRITN"/>` : html`<div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg flex-shrink-0">${displayName.charAt(0).toUpperCase()}</div>`}
                                             <div className="min-w-0 flex-1">
                                                 <div className="flex items-center gap-2 flex-wrap">
                                                     <h3 className="font-semibold text-text truncate">${displayName}</h3>
                                                     ${isAdminPost && html`<span className="verified-badge">Verified</span>`}
                                                     ${post.is_pinned && html`<span className="pin-badge">Pinned</span>`}
                                                 </div>
-                                                <p className="text-xs text-text-muted mt-0.5">
-                                                    ${new Date(post.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
-                                                </p>
+                                                <p className="text-xs text-text-muted mt-0.5">${new Date(post.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
                                             </div>
                                         </div>
-                                        
-                                        ${isAdmin && html`
+                                        ${(isAdmin || post.poster_email === user.email) && html`
                                             <div className="relative flex-shrink-0 ml-2">
-                                                <button 
-                                                    onClick=${() => setShowMenu(showMenu === post.id ? null : post.id)}
-                                                    className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-                                                >
-                                                    <${Icon} name="more" size=${18}/>
-                                                </button>
-                                                
+                                                <button onClick=${() => setShowMenu(showMenu === post.id ? null : post.id)} className="p-2 rounded-lg hover:bg-gray-100"><${Icon} name="more" size=${18}/></button>
                                                 ${showMenu === post.id && html`
                                                     <div className="absolute right-0 top-full mt-1 bg-white rounded-xl shadow-lg border border-border py-2 min-w-[160px] z-10 fade-in">
-                                                        <button 
-                                                            onClick=${() => handleTogglePin(post)}
-                                                            className="w-full px-4 py-2.5 text-left text-sm hover:bg-gray-50 flex items-center gap-3"
-                                                        >
-                                                            <${Icon} name="pin" size=${16}/>
-                                                            ${post.is_pinned ? 'Unpin Post' : 'Pin Post'}
-                                                        </button>
-                                                        <button 
-                                                            onClick=${() => handleEdit(post)}
-                                                            className="w-full px-4 py-2.5 text-left text-sm hover:bg-gray-50 flex items-center gap-3"
-                                                        >
-                                                            <${Icon} name="edit" size=${16}/>
-                                                            Edit Post
-                                                        </button>
-                                                        <button 
-                                                            onClick=${() => handleDelete(post.id)}
-                                                            className="w-full px-4 py-2.5 text-left text-sm hover:bg-red-50 text-danger flex items-center gap-3"
-                                                        >
-                                                            <${Icon} name="delete" size=${16}/>
-                                                            Delete Post
-                                                        </button>
+                                                        ${isAdmin && html`<button onClick=${() => handleTogglePin(post)} className="w-full px-4 py-2.5 text-left text-sm hover:bg-gray-50 flex items-center gap-3"><${Icon} name="pin" size=${16}/>${post.is_pinned ? 'Unpin Post' : 'Pin Post'}</button>`}
+                                                        <button onClick=${() => handleEdit(post)} className="w-full px-4 py-2.5 text-left text-sm hover:bg-gray-50 flex items-center gap-3"><${Icon} name="edit" size=${16}/> Edit Post</button>
+                                                        <button onClick=${() => handleDelete(post.id)} className="w-full px-4 py-2.5 text-left text-sm hover:bg-red-50 text-danger flex items-center gap-3"><${Icon} name="delete" size=${16}/> Delete Post</button>
                                                     </div>
                                                 `}
                                             </div>
                                         `}
                                     </div>
-                                    
                                     ${editId === post.id ? html`
                                         <div className="mt-4">
-                                            <textarea 
-                                                value=${editContent}
-                                                onChange=${(e) => setEditContent(e.target.value)}
-                                                className="input-pro resize-none min-h-[120px]"
-                                            />
+                                            <textarea value=${editContent} onChange=${(e) => setEditContent(e.target.value)} className="input-pro resize-none min-h-[120px]"/>
                                             <div className="flex gap-2 mt-3 justify-end">
                                                 <button onClick=${() => setEditId(null)} className="btn-secondary text-sm py-2 px-4">Cancel</button>
                                                 <button onClick=${() => handleUpdate(post.id)} className="btn-primary text-sm py-2 px-4">Save</button>
                                             </div>
                                         </div>
-                                    ` : html`
-                                        <p className="text-text mt-3 leading-relaxed whitespace-pre-wrap report-text">${post.content}</p>
-                                    `}
-                                    
-                                    ${post.image_url && html`
-                                        <img src=${post.image_url} className="w-full mt-3 rounded-xl border border-border" alt="Post image"/>
-                                    `}
-                                    
+                                    ` : html`<p className="text-text mt-3 leading-relaxed whitespace-pre-wrap report-text">${post.content}</p>`}
+                                    ${post.image_url && html`<img src=${post.image_url} className="w-full mt-3 rounded-xl border border-border" alt="Post image"/>`}
                                     <div className="flex items-center mt-4 pt-3 border-t border-border gap-1">
-                                        <button className="post-action hover:text-primary hover:bg-blue-50">
-                                            <${Icon} name="like" size=${18}/>
-                                            <span>Like</span>
-                                        </button>
-                                        <button className="post-action hover:text-primary hover:bg-blue-50">
-                                            <${Icon} name="comment" size=${18}/>
-                                            <span>Comment</span>
-                                        </button>
-                                        <button className="post-action hover:text-primary hover:bg-blue-50">
-                                            <${Icon} name="share" size=${18}/>
-                                            <span>Share</span>
-                                        </button>
+                                        <button onClick=${() => handleLike(post)} className="post-action ${isLiked ? 'liked' : ''}"><${Icon} name=${isLiked ? 'likeFilled' : 'like'} size=${18}/><span>${post.likes_count || 0}</span></button>
+                                        <button onClick=${() => setCommentModal(post)} className="post-action"><${Icon} name="comment" size=${18}/><span>${post.comments_count || 0}</span></button>
+                                        <button onClick=${() => setShareModal(post)} className="post-action"><${Icon} name="share" size=${18}/><span>Share</span></button>
                                     </div>
                                 </div>
                             `;
-                        })}
-                    `}
+                        })
+                    }
+                    
+                    ${commentModal && html`<${CommentModal} post=${commentModal} onClose=${() => setCommentModal(null)} user=${user} onRefresh=${fetchPosts}/>`}
+                    ${shareModal && html`<${ShareModal} post=${shareModal} onClose=${() => setShareModal(null)}/>`}
                 </div>
             `;
         };
 
         // Job Card
         const JobCard = ({ job, onApprove, onDelete, isAdmin, onShowDetail, onApply }) => {
-            const [expanded, setExpanded] = React.useState(false);
-            const isLongDesc = job.description && job.description.length > 200;
-            
             return html`
                 <div className="card p-5 fade-in">
                     <div className="flex justify-between items-start gap-3">
@@ -1293,61 +1336,18 @@
                                 <h3 className="font-semibold text-text text-lg">${job.title}</h3>
                                 ${!job.is_approved && html`<span className="text-xs bg-highlight text-primary-dark px-2 py-0.5 rounded font-semibold">Pending</span>`}
                             </div>
-                            <p className="text-sm text-text-secondary">
-                                <span>${job.location || 'Location not specified'}</span>
-                                ${job.salary && html`<span className="mx-2">|</span><span className="text-success font-medium">${job.salary}</span>`}
-                            </p>
+                            <p className="text-sm text-text-secondary"><span>${job.location || 'Location not specified'}</span>${job.salary && html`<span className="mx-2">|</span><span className="text-success font-medium">${job.salary}</span>`}</p>
                         </div>
-                        <button className="p-2 rounded-lg hover:bg-gray-100 text-text-muted flex-shrink-0">
-                            <${Icon} name="bookmark" size=${20}/>
-                        </button>
+                        <button className="p-2 rounded-lg hover:bg-gray-100 text-text-muted flex-shrink-0"><${Icon} name="bookmark" size=${20}/></button>
                     </div>
-                    
-                    <div className="mt-3">
-                        <p className="text-sm text-text-secondary leading-relaxed job-description">
-                            ${expanded || !isLongDesc ? job.description : job.description.substring(0, 200) + '...'}
-                        </p>
-                        ${isLongDesc && html`
-                            <button 
-                                onClick=${() => setExpanded(!expanded)}
-                                className="text-primary text-sm font-medium mt-2 flex items-center gap-1"
-                            >
-                                ${expanded ? 'Show less' : 'Show more'}
-                                <${Icon} name=${expanded ? 'collapse' : 'expand'} size=${16}/>
-                            </button>
-                        `}
-                    </div>
-                    
-                    ${(job.contact_email || job.whatsapp_number) && html`
-                        <div className="mt-3 p-3 bg-surface rounded-lg">
-                            <div className="flex items-center gap-4 text-xs text-text-secondary">
-                                ${job.contact_email && html`<span className="flex items-center gap-1"><${Icon} name="email" size=${14}/> ${job.contact_email}</span>`}
-                                ${job.whatsapp_number && html`<span className="flex items-center gap-1"><${Icon} name="phone" size=${14}/> ${job.whatsapp_number}</span>`}
-                            </div>
-                        </div>
-                    `}
-                    
+                    <div className="mt-3"><p className="text-sm text-text-secondary leading-relaxed job-description">${job.description}</p></div>
+                    ${(job.contact_email || job.whatsapp_number) && html`<div className="mt-3 p-3 bg-surface rounded-lg"><div className="flex items-center gap-4 text-xs text-text-secondary flex-wrap">${job.contact_email && html`<span className="flex items-center gap-1"><${Icon} name="email" size=${14}/> ${job.contact_email}</span>`}${job.whatsapp_number && html`<span className="flex items-center gap-1"><${Icon} name="phone" size=${14}/> ${job.whatsapp_number}</span>`}</div></div>`}
                     <div className="flex items-center gap-2 mt-4 pt-4 border-t border-border flex-wrap">
                         ${job.is_approved ? html`
-                            <button onClick=${() => onApply(job)} className="btn-primary flex-1 min-w-[120px]">
-                                Apply Now
-                            </button>
-                            <button onClick=${() => onShowDetail(job)} className="btn-secondary flex-1 min-w-[120px]">
-                                View Details
-                            </button>
-                        ` : html`
-                            ${isAdmin && html`
-                                <button onClick=${() => onApprove(job.id)} className="btn-primary flex-1">
-                                    <${Icon} name="check" size=${16}/>
-                                    Approve
-                                </button>
-                            `}
-                        `}
-                        ${isAdmin && html`
-                            <button onClick=${() => onDelete(job.id)} className="p-3 rounded-full border border-danger text-danger hover:bg-red-50">
-                                <${Icon} name="delete" size=${18}/>
-                            </button>
-                        `}
+                            <button onClick=${() => onApply(job)} className="btn-primary flex-1 min-w-[120px]">Apply Now</button>
+                            <button onClick=${() => onShowDetail(job)} className="btn-secondary flex-1 min-w-[120px]">View Details</button>
+                        ` : isAdmin && html`<button onClick=${() => onApprove(job.id)} className="btn-primary flex-1"><${Icon} name="check" size=${16}/> Approve</button>`}
+                        ${isAdmin && html`<button onClick=${() => onDelete(job.id)} className="p-3 rounded-full border border-danger text-danger hover:bg-red-50"><${Icon} name="delete" size=${18}/></button>`}
                     </div>
                 </div>
             `;
@@ -1366,13 +1366,10 @@
             const fetchJobs = async () => {
                 try {
                     let query = supabase.from('jobs').select('*');
-                    
                     if (filter === 'pending') query = query.eq('is_approved', false);
                     else if (filter === 'approved') query = query.eq('is_approved', true);
                     else if (filter === 'my_posts') query = query.eq('poster_id', user.id);
-                    
                     const { data, error } = await query.order('created_at', { ascending: false }).limit(30);
-                    
                     if (error) throw error;
                     setJobs(data || []);
                 } catch (err) {
@@ -1385,112 +1382,40 @@
             React.useEffect(() => { fetchJobs(); }, [filter]);
 
             const handleApprove = async (id) => {
-                try {
-                    const { error } = await supabase.from('jobs').update({ is_approved: true }).eq('id', id);
-                    if (error) throw error;
-                    fetchJobs();
-                } catch (err) {
-                    console.error('Error approving:', err);
-                }
+                try { await supabase.from('jobs').update({ is_approved: true }).eq('id', id); fetchJobs(); } catch (err) { console.error(err); }
             };
 
             const handleDelete = async (id) => {
                 if (confirm('Delete this job?')) {
-                    try {
-                        const { error } = await supabase.from('jobs').delete().eq('id', id);
-                        if (error) throw error;
-                        fetchJobs();
-                    } catch (err) {
-                        console.error('Error deleting:', err);
-                    }
+                    try { await supabase.from('jobs').delete().eq('id', id); fetchJobs(); } catch (err) { console.error(err); }
                 }
             };
 
-            const filteredJobs = jobs.filter(j => 
-                j.title.toLowerCase().includes(search.toLowerCase()) ||
-                (j.location && j.location.toLowerCase().includes(search.toLowerCase()))
-            );
+            const filteredJobs = jobs.filter(j => j.title.toLowerCase().includes(search.toLowerCase()) || (j.location && j.location.toLowerCase().includes(search.toLowerCase())));
 
-            if (loading) {
-                return html`
-                    <div className="max-w-[600px] mx-auto space-y-4 pb-20 md:pb-4">
-                        ${[1,2,3].map(i => html`
-                            <div key=${i} className="card p-5">
-                                <div className="animate-pulse space-y-3">
-                                    <div className="h-5 bg-gray-200 rounded w-2/3"></div>
-                                    <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-                                    <div className="h-20 bg-gray-200 rounded"></div>
-                                </div>
-                            </div>
-                        `)}
-                    </div>
-                `;
-            }
+            if (loading) return html`<div className="max-w-[600px] mx-auto space-y-4 pb-20 md:pb-4">${[1,2,3].map(i => html`<div key=${i} className="card p-5"><div className="animate-pulse space-y-3"><div className="h-5 bg-gray-200 rounded w-2/3"></div><div className="h-4 bg-gray-200 rounded w-1/2"></div><div className="h-20 bg-gray-200 rounded"></div></div></div>`)}</div>`;
 
             return html`
                 <div className="max-w-[600px] mx-auto space-y-4 pb-20 md:pb-4 fade-in">
                     <div className="flex items-center justify-between gap-3 flex-wrap">
                         <h2 className="text-xl font-bold text-text">${title}</h2>
                         <div className="relative w-full sm:w-auto">
-                            <input 
-                                placeholder="Search jobs..." 
-                                value=${search}
-                                onChange=${(e) => setSearch(e.target.value)}
-                                className="input-pro py-2 pl-9 pr-4 text-sm w-full sm:w-48"
-                            />
-                            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted">
-                                <${Icon} name="search" size=${16}/>
-                            </div>
+                            <input placeholder="Search jobs..." value=${search} onChange=${(e) => setSearch(e.target.value)} className="input-pro py-2 pl-9 pr-4 text-sm w-full sm:w-48"/>
+                            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted"><${Icon} name="search" size=${16}/></div>
                         </div>
                     </div>
-                    
-                    ${filteredJobs.length === 0 ? html`
-                        <div className="card p-12 text-center">
-                            <div className="text-5xl mb-4 opacity-50">💼</div>
-                            <p className="text-text-secondary font-medium">No jobs found</p>
-                            <p className="text-text-muted text-sm mt-1">Check back later for new opportunities</p>
-                        </div>
-                    ` : html`
-                        <div className="space-y-4">
-                            ${filteredJobs.map(job => html`
-                                <${JobCard} 
-                                    key=${job.id} 
-                                    job=${job} 
-                                    onApprove=${handleApprove}
-                                    onDelete=${handleDelete}
-                                    isAdmin=${isAdmin}
-                                    onShowDetail=${(job) => { setSelectedJob(job); setShowDetailModal(true); }}
-                                    onApply=${(job) => { setSelectedJob(job); setShowApplyModal(true); }}
-                                />
-                            `)}
-                        </div>
-                    `}
-                    
-                    ${showApplyModal && selectedJob && html`
-                        <${ApplyModal} job=${selectedJob} onClose=${() => setShowApplyModal(false)}/>
-                    `}
-                    
-                    ${showDetailModal && selectedJob && html`
-                        <${JobDetailModal} 
-                            job=${selectedJob} 
-                            onClose=${() => setShowDetailModal(false)}
-                            onApply=${() => { setShowDetailModal(false); setShowApplyModal(true); }}
-                        />
-                    `}
+                    ${filteredJobs.length === 0 ? html`<div className="card p-12 text-center"><div className="text-5xl mb-4 opacity-50">💼</div><p className="text-text-secondary font-medium">No jobs found</p><p className="text-text-muted text-sm mt-1">Check back later for new opportunities</p></div>` :
+                        html`<div className="space-y-4">${filteredJobs.map(job => html`<${JobCard} key=${job.id} job=${job} onApprove=${handleApprove} onDelete=${handleDelete} isAdmin=${isAdmin} onShowDetail=${(job) => { setSelectedJob(job); setShowDetailModal(true); }} onApply=${(job) => { setSelectedJob(job); setShowApplyModal(true); }}/>`)}</div>`
+                    }
+                    ${showApplyModal && selectedJob && html`<${ApplyModal} job=${selectedJob} onClose=${() => setShowApplyModal(false)}/>`}
+                    ${showDetailModal && selectedJob && html`<${JobDetailModal} job=${selectedJob} onClose=${() => setShowDetailModal(false)} onApply=${() => { setShowDetailModal(false); setShowApplyModal(true); }}/>`}
                 </div>
             `;
         };
 
         // Add Job Form
         const AddJobForm = ({ user }) => {
-            const [form, setForm] = React.useState({ 
-                title: '', 
-                location: '', 
-                salary: '', 
-                description: '',
-                contact_email: '',
-                whatsapp_number: ''
-            });
+            const [form, setForm] = React.useState({ title: '', location: '', salary: '', description: '', contact_email: '', whatsapp_number: '' });
             const [charCount, setCharCount] = React.useState(0);
             const [loading, setLoading] = React.useState(false);
             const [errors, setErrors] = React.useState({});
@@ -1498,36 +1423,19 @@
             const toast = useToast();
             const MAX_CHARS = 3000;
 
-            const validateEmail = (email) => {
-                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-            };
-
-            const validatePhone = (phone) => {
-                const cleaned = phone.replace(/[^0-9]/g, '');
-                return cleaned.length >= 10 && cleaned.length <= 15;
-            };
-
             const handleSubmit = async (ev) => {
                 ev.preventDefault();
-                
                 const newErrors = {};
-                if (!form.title.trim()) newErrors.title = 'Job title is required';
-                if (!form.location.trim()) newErrors.location = 'Location is required';
-                if (!form.description.trim()) newErrors.description = 'Description is required';
-                if (!form.contact_email.trim()) newErrors.contact_email = 'Email is required';
-                else if (!validateEmail(form.contact_email)) newErrors.contact_email = 'Invalid email format';
-                if (!form.whatsapp_number.trim()) newErrors.whatsapp_number = 'WhatsApp number is required';
-                else if (!validatePhone(form.whatsapp_number)) newErrors.whatsapp_number = 'Invalid phone number';
-                
-                if (Object.keys(newErrors).length > 0) {
-                    setErrors(newErrors);
-                    toast('Please fix the errors', 'error');
-                    return;
-                }
-                
+                if (!form.title.trim()) newErrors.title = 'Required';
+                if (!form.location.trim()) newErrors.location = 'Required';
+                if (!form.description.trim()) newErrors.description = 'Required';
+                if (!form.contact_email.trim()) newErrors.contact_email = 'Required';
+                else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.contact_email)) newErrors.contact_email = 'Invalid email';
+                if (!form.whatsapp_number.trim()) newErrors.whatsapp_number = 'Required';
+                else if (!/^\+?[0-9]{10,15}$/.test(form.whatsapp_number.replace(/[\s-]/g, ''))) newErrors.whatsapp_number = 'Invalid phone';
+                if (Object.keys(newErrors).length > 0) { setErrors(newErrors); toast('Please fix the errors', 'error'); return; }
                 setErrors({});
                 setLoading(true);
-                
                 try {
                     const { error } = await supabase.from('jobs').insert([{
                         title: form.title.trim(),
@@ -1537,129 +1445,36 @@
                         contact_email: form.contact_email.trim(),
                         whatsapp_number: form.whatsapp_number.trim(),
                         poster_id: user.id,
+                        poster_email: user.email,
                         is_approved: isAdmin
                     }]);
-                    
                     if (error) throw error;
-                    
                     setForm({ title: '', location: '', salary: '', description: '', contact_email: '', whatsapp_number: '' });
                     setCharCount(0);
                     toast('Job posted successfully!');
                 } catch (err) {
-                    console.error('Error posting job:', err);
                     toast('Failed to post job', 'error');
                 } finally {
                     setLoading(false);
                 }
             };
 
-            const handleDescChange = (e) => {
-                const value = e.target.value;
-                if (value.length <= MAX_CHARS) {
-                    setForm({ ...form, description: value });
-                    setCharCount(value.length);
-                }
-            };
-
             return html`
                 <div className="max-w-[600px] mx-auto pb-20 md:pb-4 fade-in">
                     <h2 className="text-xl font-bold text-text mb-4">Post a New Job</h2>
-                    
                     <div className="card p-5 md:p-6">
                         <form onSubmit=${handleSubmit} className="space-y-5">
-                            <div>
-                                <label className="form-label">Job Title *</label>
-                                <input 
-                                    placeholder="e.g., Senior Radiographer"
-                                    value=${form.title}
-                                    onChange=${(e) => setForm({ ...form, title: e.target.value })}
-                                    className="input-pro ${errors.title ? 'border-danger' : ''}"
-                                />
-                                ${errors.title && html`<p className="text-danger text-xs mt-1">${errors.title}</p>`}
-                            </div>
-                            
+                            <div><label className="form-label">Job Title *</label><input placeholder="e.g., Senior Radiographer" value=${form.title} onChange=${(e) => setForm({ ...form, title: e.target.value })} className="input-pro ${errors.title ? 'border-danger' : ''}"/>${errors.title && html`<p className="text-danger text-xs mt-1">${errors.title}</p>`}</div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label className="form-label">Location *</label>
-                                    <input 
-                                        placeholder="e.g., Dhaka, Bangladesh"
-                                        value=${form.location}
-                                        onChange=${(e) => setForm({ ...form, location: e.target.value })}
-                                        className="input-pro ${errors.location ? 'border-danger' : ''}"
-                                    />
-                                    ${errors.location && html`<p className="text-danger text-xs mt-1">${errors.location}</p>`}
-                                </div>
-                                <div>
-                                    <label className="form-label">Salary (Optional)</label>
-                                    <input 
-                                        placeholder="e.g., BDT 50,000 - 70,000"
-                                        value=${form.salary}
-                                        onChange=${(e) => setForm({ ...form, salary: e.target.value })}
-                                        className="input-pro"
-                                    />
-                                </div>
+                                <div><label className="form-label">Location *</label><input placeholder="e.g., Dhaka, Bangladesh" value=${form.location} onChange=${(e) => setForm({ ...form, location: e.target.value })} className="input-pro ${errors.location ? 'border-danger' : ''}"/>${errors.location && html`<p className="text-danger text-xs mt-1">${errors.location}</p>`}</div>
+                                <div><label className="form-label">Salary (Optional)</label><input placeholder="e.g., BDT 50,000 - 70,000" value=${form.salary} onChange=${(e) => setForm({ ...form, salary: e.target.value })} className="input-pro"/></div>
                             </div>
-                            
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label className="form-label">Contact Email *</label>
-                                    <input 
-                                        type="email"
-                                        placeholder="e.g., hr@hospital.com"
-                                        value=${form.contact_email}
-                                        onChange=${(e) => setForm({ ...form, contact_email: e.target.value })}
-                                        className="input-pro ${errors.contact_email ? 'border-danger' : ''}"
-                                    />
-                                    ${errors.contact_email && html`<p className="text-danger text-xs mt-1">${errors.contact_email}</p>`}
-                                </div>
-                                <div>
-                                    <label className="form-label">WhatsApp Number *</label>
-                                    <input 
-                                        type="tel"
-                                        placeholder="e.g., +88018XXXXXXXX"
-                                        value=${form.whatsapp_number}
-                                        onChange=${(e) => setForm({ ...form, whatsapp_number: e.target.value })}
-                                        className="input-pro ${errors.whatsapp_number ? 'border-danger' : ''}"
-                                    />
-                                    ${errors.whatsapp_number && html`<p className="text-danger text-xs mt-1">${errors.whatsapp_number}</p>`}
-                                </div>
+                                <div><label className="form-label">Contact Email *</label><input type="email" placeholder="e.g., hr@hospital.com" value=${form.contact_email} onChange=${(e) => setForm({ ...form, contact_email: e.target.value })} className="input-pro ${errors.contact_email ? 'border-danger' : ''}"/>${errors.contact_email && html`<p className="text-danger text-xs mt-1">${errors.contact_email}</p>`}</div>
+                                <div><label className="form-label">WhatsApp Number *</label><input type="tel" placeholder="e.g., +88018XXXXXXXX" value=${form.whatsapp_number} onChange=${(e) => setForm({ ...form, whatsapp_number: e.target.value })} className="input-pro ${errors.whatsapp_number ? 'border-danger' : ''}"/>${errors.whatsapp_number && html`<p className="text-danger text-xs mt-1">${errors.whatsapp_number}</p>`}</div>
                             </div>
-                            
-                            <div>
-                                <label className="form-label">Job Description *</label>
-                                <div className="format-toolbar rounded-t-lg">
-                                    <button type="button" className="format-btn font-bold">B</button>
-                                    <button type="button" className="format-btn italic">I</button>
-                                    <button type="button" className="format-btn underline">U</button>
-                                    <span className="w-px bg-border mx-1"></span>
-                                    <button type="button" className="format-btn text-xs">List</button>
-                                </div>
-                                <textarea 
-                                    placeholder="Describe the role, requirements, responsibilities, and any other relevant details..."
-                                    value=${form.description}
-                                    onChange=${handleDescChange}
-                                    className="input-pro textarea-xl rounded-t-none ${errors.description ? 'border-danger' : ''}"
-                                />
-                                <div className="flex justify-between items-center mt-1">
-                                    ${errors.description && html`<p className="text-danger text-xs">${errors.description}</p>`}
-                                    <span className="char-counter ${charCount > MAX_CHARS * 0.9 ? 'warning' : ''} ml-auto">
-                                        ${charCount}/${MAX_CHARS}
-                                    </span>
-                                </div>
-                            </div>
-                            
-                            <div className="pt-4">
-                                <button 
-                                    type="submit" 
-                                    disabled=${loading}
-                                    className="btn-primary w-full ripple"
-                                >
-                                    ${loading ? html`<div className="loader loader-sm mx-auto border-white border-t-transparent"></div>` : 'Post Job'}
-                                </button>
-                                ${!isAdmin && html`
-                                    <p className="text-xs text-text-muted text-center mt-3">Your post will be reviewed before publishing</p>
-                                `}
-                            </div>
+                            <div><label className="form-label">Job Description *</label><textarea placeholder="Describe the role, requirements, responsibilities..." value=${form.description} onChange=${(e) => { const v = e.target.value; if (v.length <= MAX_CHARS) { setForm({ ...form, description: v }); setCharCount(v.length); }}} className="input-pro textarea-xl ${errors.description ? 'border-danger' : ''}"/><div className="flex justify-between items-center mt-1">${errors.description && html`<p className="text-danger text-xs">${errors.description}</p>`}<span className="char-counter ${charCount > MAX_CHARS * 0.9 ? 'warning' : ''} ml-auto">${charCount}/${MAX_CHARS}</span></div></div>
+                            <div className="pt-4"><button type="submit" disabled=${loading} className="btn-primary w-full">${loading ? html`<div className="loader loader-sm mx-auto border-white border-t-transparent"></div>` : 'Post Job'}</button>${!isAdmin && html`<p className="text-xs text-text-muted text-center mt-3">Your post will be reviewed before publishing</p>`}</div>
                         </form>
                     </div>
                 </div>
@@ -1680,12 +1495,7 @@
 
             const fetchReports = async () => {
                 try {
-                    const { data, error } = await supabase
-                        .from('hospital_reports')
-                        .select('*')
-                        .order('created_at', { ascending: false })
-                        .limit(50);
-                    
+                    const { data, error } = await supabase.from('hospital_reports').select('*').order('created_at', { ascending: false }).limit(50);
                     if (error) throw error;
                     setReports(data || []);
                 } catch (err) {
@@ -1699,175 +1509,67 @@
 
             const handleSubmit = async (ev) => {
                 ev.preventDefault();
-                
-                if (!form.hospital_name.trim() || !form.details.trim()) {
-                    toast('Please fill all required fields', 'error');
-                    return;
-                }
-                
+                if (!form.hospital_name.trim() || !form.details.trim()) { toast('Please fill all required fields', 'error'); return; }
                 try {
-                    const { error } = await supabase.from('hospital_reports').insert([{
-                        hospital_name: form.hospital_name.trim(),
-                        category: form.category,
-                        details: form.details.trim(),
-                        reporter_email: user?.email
-                    }]);
-                    
+                    const { error } = await supabase.from('hospital_reports').insert([{ hospital_name: form.hospital_name.trim(), category: form.category, details: form.details.trim(), reporter_email: user?.email }]);
                     if (error) throw error;
-                    
                     setForm({ hospital_name: '', category: 'Bad Behavior', details: '' });
                     setCharCount(0);
                     fetchReports();
                     toast('Report submitted successfully');
                 } catch (err) {
-                    console.error('Error submitting report:', err);
                     toast('Failed to submit report', 'error');
                 }
             };
 
             const handleDelete = async (id) => {
                 if (confirm('Delete this report?')) {
-                    try {
-                        const { error } = await supabase.from('hospital_reports').delete().eq('id', id);
-                        if (error) throw error;
-                        fetchReports();
-                    } catch (err) {
-                        console.error('Error deleting report:', err);
-                    }
+                    try { await supabase.from('hospital_reports').delete().eq('id', id); fetchReports(); } catch (err) { console.error(err); }
                 }
             };
 
-            const handleDetailsChange = (e) => {
-                const value = e.target.value;
-                if (value.length <= MAX_CHARS) {
-                    setForm({ ...form, details: value });
-                    setCharCount(value.length);
-                }
-            };
-
-            const filtered = reports.filter(r => 
-                r.hospital_name.toLowerCase().includes(search.toLowerCase())
-            );
+            const filtered = reports.filter(r => r.hospital_name.toLowerCase().includes(search.toLowerCase()));
 
             return html`
                 <div className="max-w-[600px] mx-auto space-y-4 pb-20 md:pb-4 fade-in">
                     <h2 className="text-xl font-bold text-text">Submit Report</h2>
-                    
                     <div className="card p-5 md:p-6">
                         <form onSubmit=${handleSubmit} className="space-y-5">
-                            <div>
-                                <label className="form-label">Hospital Name *</label>
-                                <input 
-                                    placeholder="Enter hospital or institution name"
-                                    value=${form.hospital_name}
-                                    onChange=${(e) => setForm({ ...form, hospital_name: e.target.value })}
-                                    className="input-pro"
-                                    required
-                                />
-                            </div>
-                            
-                            <div>
-                                <label className="form-label">Category</label>
-                                <select 
-                                    value=${form.category}
-                                    onChange=${(e) => setForm({ ...form, category: e.target.value })}
-                                    className="input-pro"
-                                >
-                                    <option value="Bad Behavior">Bad Behavior</option>
-                                    <option value="Salary Issue">Salary Issue</option>
-                                    <option value="Workplace Safety">Workplace Safety</option>
-                                    <option value="Equipment Issue">Equipment Issue</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
-                            
-                            <div>
-                                <label className="form-label">Report Details *</label>
-                                <textarea 
-                                    placeholder="Provide detailed information about the incident..."
-                                    value=${form.details}
-                                    onChange=${handleDetailsChange}
-                                    className="input-pro textarea-lg"
-                                    required
-                                />
-                                <span className="char-counter ${charCount > MAX_CHARS * 0.9 ? 'warning' : ''}">
-                                    ${charCount}/${MAX_CHARS}
-                                </span>
-                            </div>
-                            
-                            <button type="submit" className="btn-primary w-full ripple">Submit Report</button>
+                            <div><label className="form-label">Hospital Name *</label><input placeholder="Enter hospital or institution name" value=${form.hospital_name} onChange=${(e) => setForm({ ...form, hospital_name: e.target.value })} className="input-pro" required/></div>
+                            <div><label className="form-label">Category</label><select value=${form.category} onChange=${(e) => setForm({ ...form, category: e.target.value })} className="input-pro"><option>Bad Behavior</option><option>Salary Issue</option><option>Workplace Safety</option><option>Equipment Issue</option><option>Other</option></select></div>
+                            <div><label className="form-label">Report Details *</label><textarea placeholder="Provide detailed information about the incident..." value=${form.details} onChange=${(e) => { const v = e.target.value; if (v.length <= MAX_CHARS) { setForm({ ...form, details: v }); setCharCount(v.length); }}} className="input-pro textarea-lg" required/><span className="char-counter ${charCount > MAX_CHARS * 0.9 ? 'warning' : ''}">${charCount}/${MAX_CHARS}</span></div>
+                            <button type="submit" className="btn-primary w-full">Submit Report</button>
                         </form>
                     </div>
-                    
                     <div className="flex items-center justify-between mt-6 mb-2">
                         <h3 className="font-semibold text-text">Recent Reports</h3>
-                        <input 
-                            placeholder="Search..."
-                            value=${search}
-                            onChange=${(e) => setSearch(e.target.value)}
-                            className="input-pro py-2 px-3 text-sm w-32 md:w-40"
-                        />
+                        <input placeholder="Search..." value=${search} onChange=${(e) => setSearch(e.target.value)} className="input-pro py-2 px-3 text-sm w-32 md:w-40"/>
                     </div>
-                    
-                    ${loading ? html`
-                        <div className="space-y-3">
-                            ${[1,2,3].map(i => html`
-                                <div key=${i} className="card p-4">
-                                    <div className="animate-pulse space-y-2">
-                                        <div className="h-4 bg-gray-200 rounded w-1/3"></div>
-                                        <div className="h-3 bg-gray-200 rounded w-full"></div>
+                    ${loading ? html`<div className="space-y-3">${[1,2,3].map(i => html`<div key=${i} className="card p-4"><div className="animate-pulse space-y-2"><div className="h-4 bg-gray-200 rounded w-1/3"></div><div className="h-3 bg-gray-200 rounded w-full"></div></div></div>`)}</div>` :
+                        html`<div className="space-y-3">${filtered.length === 0 ? html`<div className="card p-8 text-center"><p className="text-text-muted">No reports found</p></div>` : filtered.map(r => html`
+                            <div key=${r.id} className="card p-4">
+                                <div className="flex justify-between items-start gap-3">
+                                    <div className="flex-1 min-w-0">
+                                        <div className="flex items-center gap-2 flex-wrap"><span className="font-semibold text-text">${r.hospital_name}</span><span className="text-xs bg-gray-100 text-text-secondary px-2 py-0.5 rounded">${r.category}</span></div>
+                                        <p className="text-sm text-text-secondary mt-2 report-text">${r.details}</p>
+                                        <p className="text-xs text-text-muted mt-2">${new Date(r.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+                                    </div>
+                                    <div className="flex items-center gap-1 flex-shrink-0">
+                                        <button onClick=${() => setSelectedReport(r)} className="p-2 rounded-lg hover:bg-gray-100 text-text-muted"><${Icon} name="search" size=${16}/></button>
+                                        ${isAdmin && html`<button onClick=${() => handleDelete(r.id)} className="p-2 rounded-lg hover:bg-red-50 text-text-muted hover:text-danger"><${Icon} name="delete" size=${16}/></button>`}
                                     </div>
                                 </div>
-                            `)}
-                        </div>
-                    ` : html`
-                        <div className="space-y-3">
-                            ${filtered.length === 0 ? html`
-                                <div className="card p-8 text-center">
-                                    <p className="text-text-muted">No reports found</p>
-                                </div>
-                            ` : filtered.map(r => html`
-                                <div key=${r.id} className="card p-4">
-                                    <div className="flex justify-between items-start gap-3">
-                                        <div className="flex-1 min-w-0">
-                                            <div className="flex items-center gap-2 flex-wrap">
-                                                <span className="font-semibold text-text">${r.hospital_name}</span>
-                                                <span className="text-xs bg-gray-100 text-text-secondary px-2 py-0.5 rounded">${r.category}</span>
-                                            </div>
-                                            <p className="text-sm text-text-secondary mt-2 report-text">${r.details}</p>
-                                            <p className="text-xs text-text-muted mt-2">${new Date(r.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
-                                        </div>
-                                        <div className="flex items-center gap-1 flex-shrink-0">
-                                            <button 
-                                                onClick=${() => setSelectedReport(r)}
-                                                className="p-2 rounded-lg hover:bg-gray-100 text-text-muted"
-                                            >
-                                                <${Icon} name="expand" size=${16}/>
-                                            </button>
-                                            ${isAdmin && html`
-                                                <button 
-                                                    onClick=${() => handleDelete(r.id)}
-                                                    className="p-2 rounded-lg hover:bg-red-50 text-text-muted hover:text-danger"
-                                                >
-                                                    <${Icon} name="delete" size=${16}/>
-                                                </button>
-                                            `}
-                                        </div>
-                                    </div>
-                                </div>
-                            `)}
-                        </div>
-                    `}
-                    
-                    ${selectedReport && html`
-                        <${ReportModal} report=${selectedReport} onClose=${() => setSelectedReport(null)}/>
-                    `}
+                            </div>
+                        `)}</div>`
+                    }
+                    ${selectedReport && html`<${ReportModal} report=${selectedReport} onClose=${() => setSelectedReport(null)}/>`}
                 </div>
             `;
         };
 
         // Profile Page
         const ProfilePage = ({ user }) => {
+            const isAdmin = user?.email === ADMIN_EMAIL;
             return html`
                 <div className="max-w-[800px] mx-auto pb-20 md:pb-4 fade-in">
                     <div className="card overflow-hidden">
@@ -1875,65 +1577,32 @@
                         <div className="px-5 md:px-6 pb-6">
                             <div className="-mt-14 md:-mt-16 mb-4">
                                 <div className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-white p-1 shadow-lg mx-auto md:mx-0">
-                                    <div className="w-full h-full rounded-full bg-primary flex items-center justify-center text-white text-3xl md:text-4xl font-bold">
-                                        ${user?.email?.charAt(0).toUpperCase()}
-                                    </div>
+                                    <div className="w-full h-full rounded-full bg-primary flex items-center justify-center text-white text-3xl md:text-4xl font-bold">${user?.email?.charAt(0).toUpperCase()}</div>
                                 </div>
                             </div>
-                            
                             <div class="md:flex md:justify-between md:items-start">
                                 <div class="text-center md:text-left">
                                     <h1 class="text-xl md:text-2xl font-bold text-text">${user?.user_metadata?.full_name || 'User'}</h1>
                                     <p class="text-text-secondary mt-1 text-sm">${user?.email}</p>
-                                    <div class="mt-2">
-                                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold capitalize
-                                            ${user?.user_metadata?.role === 'hospital' ? 'bg-purple-100 text-purple-700' : 
-                                            user?.user_metadata?.role === 'technologist' ? 'bg-green-100 text-green-700' : 
-                                            'bg-blue-100 text-blue-700'}">
-                                            ${user?.user_metadata?.role || 'Member'}
-                                        </span>
-                                    </div>
+                                    <div class="mt-2"><span class="inline-block px-3 py-1 rounded-full text-xs font-semibold capitalize ${user?.user_metadata?.role === 'hospital' ? 'bg-purple-100 text-purple-700' : user?.user_metadata?.role === 'technologist' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'}">${user?.user_metadata?.role || 'Member'}</span></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
                     <div class="grid md:grid-cols-2 gap-4 mt-4">
                         <div class="card p-5">
                             <h3 class="font-semibold text-text mb-3">Account Details</h3>
                             <div class="space-y-3">
-                                <div>
-                                    <p class="text-xs text-text-muted">Email</p>
-                                    <p class="text-sm text-text">${user?.email}</p>
-                                </div>
-                                <div>
-                                    <p class="text-xs text-text-muted">Member Since</p>
-                                    <p class="text-sm text-text">${new Date(user?.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
-                                </div>
-                                <div>
-                                    <p class="text-xs text-text-muted">Account Status</p>
-                                    <span class="inline-flex items-center gap-1 text-sm text-success font-medium">
-                                        <span class="w-2 h-2 rounded-full bg-success"></span>
-                                        Active
-                                    </span>
-                                </div>
+                                <div><p class="text-xs text-text-muted">Email</p><p class="text-sm text-text">${user?.email}</p></div>
+                                <div><p class="text-xs text-text-muted">Member Since</p><p class="text-sm text-text">${new Date(user?.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p></div>
+                                <div><p class="text-xs text-text-muted">Account Status</p><span class="inline-flex items-center gap-1 text-sm text-success font-medium"><span class="w-2 h-2 rounded-full bg-success"></span>Active</span></div>
                             </div>
                         </div>
-                        
                         <div class="card p-5">
                             <h3 class="font-semibold text-text mb-3">Quick Actions</h3>
                             <div class="space-y-2">
-                                <button class="w-full text-left px-3 py-3 rounded-lg hover:bg-gray-100 flex items-center gap-3 text-sm">
-                                    <${Icon} name="edit" size=${18}/>
-                                    Edit Profile
-                                </button>
-                                <button 
-                                    onClick=${() => supabase.auth.signOut()}
-                                    class="w-full text-left px-3 py-3 rounded-lg hover:bg-red-50 flex items-center gap-3 text-sm text-danger"
-                                >
-                                    <${Icon} name="logout" size=${18}/>
-                                    Sign Out
-                                </button>
+                                ${isAdmin && html`<button onClick=${() => window.location.reload()} class="w-full text-left px-3 py-3 rounded-lg hover:bg-gray-100 flex items-center gap-3 text-sm"><${Icon} name="admin" size=${18}/> Admin Panel</button>`}
+                                <button onClick=${() => supabase.auth.signOut()} class="w-full text-left px-3 py-3 rounded-lg hover:bg-red-50 flex items-center gap-3 text-sm text-danger"><${Icon} name="logout" size=${18}/> Sign Out</button>
                             </div>
                         </div>
                     </div>
@@ -1947,37 +1616,18 @@
                 <div class="max-w-[600px] mx-auto space-y-4 pb-20 md:pb-4 fade-in">
                     <div class="card p-5 md:p-6">
                         <div class="flex items-center gap-4">
-                            <div class="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-white text-2xl flex-shrink-0">
-                                ${user?.email?.charAt(0).toUpperCase()}
-                            </div>
+                            <div class="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-white text-2xl flex-shrink-0">${user?.email?.charAt(0).toUpperCase()}</div>
                             <div class="min-w-0">
                                 <h1 class="text-lg font-semibold text-text">Assalamu Alaikum!</h1>
                                 <p class="text-text-secondary truncate">${user?.user_metadata?.full_name || 'Welcome back'}</p>
                             </div>
                         </div>
                     </div>
-                    
                     <div class="grid grid-cols-2 gap-3">
-                        <button onClick=${() => setPage('feed')} class="card p-5 text-left hover:shadow-md transition-shadow">
-                            <span class="text-2xl">📰</span>
-                            <p class="font-semibold text-text mt-2">News Feed</p>
-                            <p class="text-xs text-text-muted mt-1">Latest updates</p>
-                        </button>
-                        <button onClick=${() => setPage('jobs')} class="card p-5 text-left hover:shadow-md transition-shadow">
-                            <span class="text-2xl">💼</span>
-                            <p class="font-semibold text-text mt-2">Jobs</p>
-                            <p class="text-xs text-text-muted mt-1">Find opportunities</p>
-                        </button>
-                        <button onClick=${() => setPage('reports')} class="card p-5 text-left hover:shadow-md transition-shadow">
-                            <span class="text-2xl">🚩</span>
-                            <p class="font-semibold text-text mt-2">Reports</p>
-                            <p class="text-xs text-text-muted mt-1">Submit feedback</p>
-                        </button>
-                        <button onClick=${() => setPage('add_job')} class="card p-5 text-left hover:shadow-md transition-shadow">
-                            <span class="text-2xl">➕</span>
-                            <p class="font-semibold text-text mt-2">Post Job</p>
-                            <p class="text-xs text-text-muted mt-1">Hire talent</p>
-                        </button>
+                        <button onClick=${() => setPage('feed')} class="card p-5 text-left hover:shadow-md transition-shadow"><span class="text-2xl">📰</span><p class="font-semibold text-text mt-2">News Feed</p><p class="text-xs text-text-muted mt-1">Latest updates</p></button>
+                        <button onClick=${() => setPage('jobs')} class="card p-5 text-left hover:shadow-md transition-shadow"><span class="text-2xl">💼</span><p class="font-semibold text-text mt-2">Jobs</p><p class="text-xs text-text-muted mt-1">Find opportunities</p></button>
+                        <button onClick=${() => setPage('reports')} class="card p-5 text-left hover:shadow-md transition-shadow"><span class="text-2xl">🚩</span><p class="font-semibold text-text mt-2">Reports</p><p class="text-xs text-text-muted mt-1">Submit feedback</p></button>
+                        <button onClick=${() => setPage('add_job')} class="card p-5 text-left hover:shadow-md transition-shadow"><span class="text-2xl">➕</span><p class="font-semibold text-text mt-2">Post Job</p><p class="text-xs text-text-muted mt-1">Hire talent</p></button>
                     </div>
                 </div>
             `;
@@ -1994,76 +1644,40 @@
 
             React.useEffect(() => {
                 let mounted = true;
-                
                 const getSession = async () => {
                     try {
                         const { data: { session } } = await supabase.auth.getSession();
-                        if (mounted) {
-                            setUser(session?.user);
-                            setView(session ? 'app' : 'login');
-                        }
-                    } catch (err) {
-                        console.error('Session error:', err);
-                        if (mounted) setView('login');
-                    }
+                        if (mounted) { setUser(session?.user); setView(session ? 'app' : 'login'); }
+                    } catch (err) { console.error('Session error:', err); if (mounted) setView('login'); }
                 };
-                
                 getSession();
-                
                 const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-                    if (mounted) {
-                        setUser(session?.user);
-                        setView(session?.user ? 'app' : 'login');
-                    }
+                    if (mounted) { setUser(session?.user); setView(session?.user ? 'app' : 'login'); }
                 });
-                
-                return () => {
-                    mounted = false;
-                    subscription?.unsubscribe();
-                };
+                return () => { mounted = false; subscription?.unsubscribe(); };
             }, []);
 
             React.useEffect(() => {
-                if (view === 'app') {
-                    safeFetch(supabase.from('jobs').select('*').eq('is_approved', true).limit(5)).then(setJobs);
-                }
+                if (view === 'app') { supabase.from('jobs').select('*').eq('is_approved', true).limit(5).then(({ data }) => setJobs(data || [])); }
             }, [view]);
 
             React.useEffect(() => {
-                const handleClick = (e) => {
-                    if (!e.target.closest('.dropdown') && !e.target.closest('.nav-icon-btn')) {
-                        setShowDropdown(false);
-                    }
-                };
+                const handleClick = (e) => { if (!e.target.closest('.dropdown') && !e.target.closest('.nav-icon-btn')) setShowDropdown(false); };
                 document.addEventListener('click', handleClick);
                 return () => document.removeEventListener('click', handleClick);
             }, []);
 
             React.useEffect(() => {
-                const timeout = setTimeout(() => {
-                    if (view === 'loading') {
-                        console.warn('Auth timeout, showing login');
-                        setView('login');
-                    }
-                }, 5000);
+                const timeout = setTimeout(() => { if (view === 'loading') { console.warn('Auth timeout'); setView('login'); } }, 5000);
                 return () => clearTimeout(timeout);
             }, [view]);
 
-            if (view === 'loading') {
-                return html`
-                    <div class="min-h-screen flex items-center justify-center bg-surface">
-                        <div class="text-center">
-                            <div class="loader mx-auto mb-4"></div>
-                            <p class="text-text-secondary text-sm">Loading BRITN...</p>
-                        </div>
-                    </div>
-                `;
-            }
+            if (view === 'loading') return html`<div class="min-h-screen flex items-center justify-center bg-surface"><div class="text-center"><div class="loader mx-auto mb-4"></div><p class="text-text-secondary text-sm">Loading BRITN...</p></div></div>`;
+            if (view === 'login' || view === 'register') return html`<${AuthScreen} type=${view} onSwitch=${setView} onSuccess=${() => setView('app')}/>`;
+            if (view === 'register') return html`<${AuthScreen} type="register" onSwitch=${setView}/>`;
 
-            if (view === 'login' || view === 'register') {
-                return html`<${AuthScreen} type=${view} onSwitch=${setView} onSuccess=${() => setView('app')}/>`;
-            }
-
+            const isAdmin = user?.email === ADMIN_EMAIL;
+            
             const renderContent = () => {
                 switch (page) {
                     case 'dash': return html`<${Dashboard} user=${user} setPage=${setPage}/>`;
@@ -2073,15 +1687,7 @@
                     case 'profile': return html`<${ProfilePage} user=${user}/>`;
                     case 'add_job': return html`<${AddJobForm} user=${user}/>`;
                     case 'my_jobs': return html`<${JobsPage} user=${user} title="My Posts" filter="my_posts"/>`;
-                    case 'notifications': return html`
-                        <div class="max-w-[600px] mx-auto pb-20 md:pb-4 fade-in">
-                            <h2 class="text-xl font-bold text-text mb-4">Notifications</h2>
-                            <div class="card p-8 text-center">
-                                <div class="text-4xl mb-3 opacity-50">🔔</div>
-                                <p class="text-text-muted">No new notifications</p>
-                            </div>
-                        </div>
-                    `;
+                    case 'admin': return isAdmin ? html`<${AdminPanel} user=${user}/>` : html`<${Dashboard} user=${user} setPage=${setPage}/>`;
                     default: return html`<${Dashboard} user=${user} setPage=${setPage}/>`;
                 }
             };
@@ -2089,39 +1695,19 @@
             return html`
                 <${ToastProvider}>
                     <div class="app-container bg-surface">
-                        <${TopNavbar} 
-                            user=${user} 
-                            search=${search} 
-                            setSearch=${setSearch}
-                            currentPage=${page}
-                            setPage=${setPage}
-                            showDropdown=${showDropdown}
-                            setShowDropdown=${setShowDropdown}
-                        />
-                        
+                        <${TopNavbar} user=${user} search=${search} setSearch=${setSearch} currentPage=${page} setPage=${setPage} showDropdown=${showDropdown} setShowDropdown=${setShowDropdown}/>
                         <div class="flex-1 flex">
-                            <div class="hidden md:block">
-                                <${LeftSidebar} user=${user} setPage=${setPage}/>
-                            </div>
-                            
-                            <main class="flex-1 overflow-auto p-4 md:py-6">
-                                ${renderContent()}
-                            </main>
-                            
-                            <div class="hidden md:block">
-                                <${RightSidebar} jobs=${jobs}/>
-                            </div>
+                            <div class="hidden md:block"><${LeftSidebar} user=${user} setPage=${setPage}/></div>
+                            <main class="flex-1 overflow-auto p-4 md:py-6">${renderContent()}</main>
+                            <div class="hidden md:block"><${RightSidebar} jobs=${jobs}/></div>
                         </div>
-                        
-                        <${BottomNav} currentPage=${page} setPage=${setPage}/>
+                        <${BottomNav} currentPage=${page} setPage=${setPage} user=${user}/>
                     </div>
                 <//>
             `;
         };
 
-        // Render
-        const root = document.getElementById('root');
-        ReactDOM.createRoot(root).render(html`<${App}/>`);
+        ReactDOM.createRoot(document.getElementById('root')).render(html`<${App}/>`);
     </script>
 </body>
 </html>
