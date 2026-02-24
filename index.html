@@ -11,1129 +11,679 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#0A66C2',
+                        primary: '#0A66C2', // LinkedIn Blue
                         'primary-dark': '#004182',
-                        'primary-light': '#70B5F9',
-                        surface: '#F3F2EF',
-                        card: '#FFFFFF',
-                        text: '#1D1D1D',
-                        'text-secondary': '#666666',
-                        'text-muted': '#8D8D8D',
-                        highlight: '#FFD700',
-                        success: '#057642',
-                        danger: '#D11124',
-                        border: '#E0E0E0',
-                        'pinned-bg': '#E8F4FD',
-                        whatsapp: '#25D366',
+                        'bg-grey': '#F3F2EF',
+                        'text-dark': '#1D1D1D',
+                        'text-grey': '#666666',
+                        'border-grey': '#E0E0E0',
+                        'gold': '#FFD700',
+                        'success': '#057642',
+                        'danger': '#D11124',
                     }
                 }
             }
         }
     </script>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body { 
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
-            background: #F3F2EF;
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #F3F2EF;
+            margin: 0; 
             color: #1D1D1D;
-            min-height: 100vh;
-            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
         .font-bangla { font-family: 'Hind Siliguri', sans-serif; }
-        
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #C4C4C4; border-radius: 10px; }
-        
-        .card {
-            background: #FFFFFF;
-            border-radius: 12px;
-            box-shadow: 0 0 0 1px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a1a1a1; }
+
+        /* Skeleton Loading Animation */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
         }
-        
-        .input-pro {
-            width: 100%; 
-            padding: 14px 16px; 
-            background: #FFFFFF;
-            border: 1px solid #E0E0E0; 
-            border-radius: 8px; 
-            outline: none; 
-            font-size: 16px;
-            color: #1D1D1D;
-            transition: all 0.2s ease;
-            line-height: 1.5;
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
         }
-        .input-pro:focus { 
-            border-color: #0A66C2; 
-            box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.15); 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .input-pro::placeholder { color: #8D8D8D; }
+        .fade-in { animation: fadeIn 0.3s ease-out forwards; }
         
-        .textarea-lg { min-height: 200px; resize: vertical; line-height: 1.7; padding: 20px; font-size: 16px; }
-        
-        .btn-primary {
-            background: #0A66C2;
-            color: white;
-            padding: 14px 24px;
-            border-radius: 24px;
-            font-weight: 600;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.15s ease;
+        /* Input Focus Glow */
+        .input-focus:focus {
+            border-color: #0A66C2;
+            box-shadow: 0 0 0 1px #0A66C2;
+        }
+
+        /* Verified Badge */
+        .verified-badge { 
+            background: linear-gradient(135deg, #FFD700, #FFA500); 
+            color: #1D1D1D; 
+            padding: 2px 6px; 
+            border-radius: 4px; 
+            font-size: 9px; 
+            font-weight: 800; 
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 8px;
-            min-height: 48px;
-        }
-        .btn-primary:hover { background: #004182; }
-        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
-        
-        .btn-secondary {
-            background: white;
-            color: #0A66C2;
-            padding: 14px 24px;
-            border-radius: 24px;
-            font-weight: 600;
-            font-size: 16px;
-            border: 2px solid #0A66C2;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            min-height: 48px;
+            gap: 3px;
+            margin-left: 6px;
         }
         
-        .btn-whatsapp {
-            background: #25D366;
-            color: white;
-            padding: 14px 24px;
-            border-radius: 24px;
-            font-weight: 600;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-            min-height: 48px;
-        }
-        
-        .btn-danger {
-            background: #D11124;
-            color: white;
-            padding: 14px 24px;
-            border-radius: 24px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            min-height: 48px;
-        }
-        
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes modalIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-        .fade-in { animation: fadeIn 0.35s ease-out forwards; }
-        .modal-in { animation: modalIn 0.25s ease-out forwards; }
-        
-        .loader { 
-            border: 3px solid #E0E0E0; 
-            border-top: 3px solid #0A66C2; 
-            border-radius: 50%; 
-            width: 32px; 
-            height: 32px; 
-            animation: spin 0.8s linear infinite; 
-        }
-        .loader-sm { width: 20px; height: 20px; border-width: 2px; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
-        .toast-container { 
-            position: fixed; 
-            top: 70px; 
-            right: 16px; 
-            left: 16px;
-            z-index: 9999; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 10px; 
-            pointer-events: none;
-        }
-        .toast { 
-            padding: 14px 20px; 
-            border-radius: 10px; 
-            background: #FFFFFF;
-            color: #1D1D1D;
-            font-size: 14px; 
-            font-weight: 500;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.15); 
-            animation: fadeIn 0.3s ease-out;
-            border-left: 4px solid;
-            max-width: 400px;
-            margin: 0 auto;
-            pointer-events: auto;
-        }
-        .toast-success { border-left-color: #057642; }
-        .toast-error { border-left-color: #D11124; }
-        
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-        }
-        .modal-content {
-            background: white;
-            border-radius: 16px;
-            max-width: 500px;
-            width: 100%;
-            max-height: 85vh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .verified-badge { 
-            background: linear-gradient(135deg, #FFD700, #FFB800); 
-            color: #1D1D1D; 
-            padding: 3px 10px; 
-            border-radius: 4px; 
-            font-size: 10px; 
-            font-weight: 700; 
-        }
-        
-        .pinned-post {
-            background: linear-gradient(135deg, #E8F4FD 0%, #F0F7FF 100%);
+        /* Pinned Post Style */
+        .pinned-card {
             border-left: 4px solid #0A66C2;
+            background-color: #EFF8FF; /* Light blue tint */
         }
-        .pin-badge {
-            background: #0A66C2;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-        
-        .char-counter { font-size: 12px; color: #8D8D8D; text-align: right; margin-top: 6px; }
-        .char-counter.warning { color: #D11124; font-weight: 500; }
-        
-        .nav-icon-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 0 12px;
-            height: 52px;
-            justify-content: center;
-            color: #666666;
-            position: relative;
-            cursor: pointer;
-            border: none;
-            background: transparent;
-        }
-        .nav-icon-btn:hover { color: #1D1D1D; }
-        .nav-icon-btn.active { color: #0A66C2; }
-        .nav-icon-btn.active::after {
-            content: '';
+
+        /* Ripple Effect */
+        .ripple { position: relative; overflow: hidden; }
+        .ripple:after {
+            content: "";
+            display: block;
             position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 52px;
-            height: 3px;
-            background: #0A66C2;
-            border-radius: 3px 3px 0 0;
-        }
-        .nav-icon-btn span { font-size: 11px; margin-top: 2px; font-weight: 500; }
-        
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
+            width: 100%;
+            height: 100%;
+            top: 0;
             left: 0;
-            right: 0;
-            background: white;
-            border-top: 1px solid #E0E0E0;
-            z-index: 50;
-            padding-bottom: env(safe-area-inset-bottom);
+            pointer-events: none;
+            background-image: radial-gradient(circle, #000 10%, transparent 10.01%);
+            background-repeat: no-repeat;
+            background-position: 50%;
+            transform: scale(10, 10);
+            opacity: 0;
+            transition: transform .4s, opacity .8s;
         }
-        .bottom-nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 0;
-            color: #666666;
-            cursor: pointer;
-            border: none;
-            background: transparent;
-            flex: 1;
-            min-height: 56px;
+        .ripple:active:after {
+            transform: scale(0, 0);
+            opacity: .1;
+            transition: 0s;
         }
-        .bottom-nav-item.active { color: #0A66C2; }
-        .bottom-nav-item span { font-size: 10px; margin-top: 3px; font-weight: 600; }
-        
-        .dropdown {
-            position: absolute;
-            top: calc(100% + 8px);
-            right: 0;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.15);
-            min-width: 280px;
-            z-index: 100;
-            border: 1px solid #E0E0E0;
-        }
-        
-        .post-action {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 12px 8px;
-            border-radius: 6px;
-            color: #666666;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            border: none;
-            background: transparent;
-            flex: 1;
-            min-height: 44px;
-        }
-        .post-action:hover { background: rgba(0,0,0,0.06); }
-        .post-action.liked { color: #D11124; }
-        
-        .form-label { display: block; font-size: 14px; font-weight: 600; color: #1D1D1D; margin-bottom: 8px; }
-        
-        .report-text, .job-description { white-space: normal; word-wrap: break-word; overflow-wrap: break-word; line-height: 1.7; }
-        
-        .admin-tab {
-            padding: 10px 16px;
-            font-size: 14px;
-            font-weight: 500;
-            color: #666666;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-        }
-        .admin-tab.active { color: #0A66C2; border-bottom-color: #0A66C2; }
-        
-        .stat-card { background: white; border-radius: 12px; padding: 20px; text-align: center; border: 1px solid #E0E0E0; }
-        .stat-number { font-size: 32px; font-weight: 700; color: #0A66C2; }
-        .stat-label { font-size: 12px; color: #666666; margin-top: 4px; }
-        
-        @media (max-width: 768px) {
-            .desktop-only { display: none !important; }
-            .input-pro { font-size: 16px; }
-        }
-        @media (min-width: 769px) {
-            .mobile-only { display: none !important; }
-        }
-        
-        #root { min-height: 100vh; }
-        .app-container { min-height: 100vh; display: flex; flex-direction: column; }
     </style>
 </head>
 <body>
-    <div id="root"></div>
+    <div id="root" style="height: 100vh; display: flex; align-items: center; justify-content: center; background: #F3F2EF;">
+        <div class="skeleton w-12 h-12 rounded-full"></div>
+    </div>
 
     <script type="module">
         import React from 'https://esm.sh/react@18.2.0';
         import ReactDOM from 'https://esm.sh/react-dom@18.2.0/client';
-        import htm from 'https://esm.sh/htm@3.1.1';
         import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-        const html = htm.bind(React.createElement);
-
-        // Configuration
+        // --- CONFIGURATION ---
         const BRITN_LOGO_URL = 'https://z-cdn-media.chatglm.cn/files/947017d9-2ded-4447-ab50-1dfd8ce35fcd.jpg?auth_key=1871748799-320010bf4fcc40a98d5d6172607e7c73-0-134513578fae2800da62ba56df7d4c44';
         const SUPABASE_URL = 'https://hosiwwylofzjtweclycv.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhvc2l3d3lsb2Z6anR3ZWNseWN2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2NTc3ODgsImV4cCI6MjA4NzIzMzc4OH0.DkCioDXAQQYZm9NOhfsyuXvArR1TQjMMRf7OFv8FClA';
         const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+        
         const ADMIN_EMAIL = 'admin@britn.com';
+        const e = React.createElement;
 
-        // Toast Context
-        const ToastContext = React.createContext(null);
+        // --- Helpers ---
+        const safeFetch = async (query) => {
+            try { const { data, error } = await query; if (error) throw error; return data || []; } 
+            catch (err) { console.error("Fetch Error:", err); return []; }
+        };
+
+        // --- Toast Context ---
+        const ToastContext = React.createContext();
+        const useToast = () => React.useContext(ToastContext);
         
         const ToastProvider = ({ children }) => {
             const [toasts, setToasts] = React.useState([]);
             const addToast = (message, type = 'success') => {
                 const id = Date.now();
                 setToasts(prev => [...prev, { id, message, type }]);
-                setTimeout(() => setToasts(prev => prev.filter(t => t.id !== id)), 4000);
+                setTimeout(() => setToasts(prev => prev.filter(t => t.id !== id)), 3000);
             };
-            return html`
-                <${ToastContext.Provider} value=${addToast}>
-                    ${children}
-                    <div className="toast-container">
-                        ${toasts.map(t => html`<div key=${t.id} className="toast toast-${t.type}">${t.message}</div>`)}
-                    </div>
-                <//>
-            `;
-        };
-        
-        const useToast = () => React.useContext(ToastContext);
-
-        // Icons
-        const Icon = ({ name, size = 20, className = "" }) => {
-            const icons = {
-                home: html`<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="9,22 9,12 15,12 15,22" fill="none" stroke="currentColor" stroke-width="2"/>`,
-                network: html`<path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" fill="currentColor"/>`,
-                jobs: html`<path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z" fill="currentColor"/>`,
-                profile: html`<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" fill="currentColor"/>`,
-                more: html`<circle cx="12" cy="6" r="2" fill="currentColor"/><circle cx="12" cy="12" r="2" fill="currentColor"/><circle cx="12" cy="18" r="2" fill="currentColor"/>`,
-                like: html`<path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3" fill="none" stroke="currentColor" stroke-width="2"/>`,
-                likeFilled: html`<path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14z" fill="currentColor"/><path d="M7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3" fill="currentColor"/>`,
-                pin: html`<path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2" fill="none" stroke="currentColor" stroke-width="2"/><line x1="12" y1="11" x2="12" y2="17" stroke="currentColor" stroke-width="2"/><line x1="9" y1="14" x2="15" y2="14" stroke="currentColor" stroke-width="2"/>`,
-                close: html`<line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2"/><line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2"/>`,
-                edit: html`<path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" fill="none" stroke="currentColor" stroke-width="2"/>`,
-                delete: html`<polyline points="3,6 5,6 21,6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" fill="none" stroke="currentColor" stroke-width="2"/>`,
-                plus: html`<line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2"/><line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2"/>`,
-                check: html`<polyline points="20,6 9,17 4,12" fill="none" stroke="currentColor" stroke-width="2"/>`,
-                email: html`<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="22,6 12,13 2,6" fill="none" stroke="currentColor" stroke-width="2"/>`,
-                whatsapp: html`<path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" fill="none" stroke="currentColor" stroke-width="2"/>`,
-                phone: html`<path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" fill="none" stroke="currentColor" stroke-width="2"/>`,
-                logout: html`<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="16,17 21,12 16,7" fill="none" stroke="currentColor" stroke-width="2"/><line x1="21" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="2"/>`,
-                admin: html`<path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" fill="none" stroke="currentColor" stroke-width="2"/>`,
-                image: html`<rect x="3" y="3" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/><polyline points="21,15 16,10 5,21" fill="none" stroke="currentColor" stroke-width="2"/>`,
-                refresh: html`<polyline points="23 4 23 10 17 10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" fill="none" stroke="currentColor" stroke-width="2"/>`,
-            };
-            return html`<svg width=${size} height=${size} viewBox="0 0 24 24" fill="none" className=${className}>${icons[name] || ''}</svg>`;
+            return e(ToastContext.Provider, { value: addToast }, 
+                children,
+                e('div', { className: "fixed top-5 right-5 z-[9999] flex flex-col gap-2" }, 
+                    toasts.map(t => e('div', { 
+                        key: t.id, 
+                        className: `px-4 py-2 rounded-lg shadow-lg text-white text-sm font-medium fade-in ${t.type === 'success' ? 'bg-success' : 'bg-danger'}`
+                    }, t.message))
+                )
+            );
         };
 
-        // Apply Modal
-        const ApplyModal = ({ job, onClose }) => {
-            const handleEmailApply = () => {
-                const subject = encodeURIComponent(`Job Application: ${job.title}`);
-                window.location.href = `mailto:${job.contact_email}?subject=${subject}`;
-            };
-            
-            const handleWhatsAppApply = () => {
-                const phone = job.whatsapp_number.replace(/[^0-9]/g, '');
-                window.open(`https://wa.me/${phone}?text=${encodeURIComponent('Hello! I am interested in the ' + job.title + ' position.')}`, '_blank');
-            };
+        // --- Skeleton Components ---
+        const CardSkeleton = () => e('div', { className: "bg-white rounded-lg border border-border-grey p-4 space-y-3" },
+            e('div', { className: "flex gap-3" },
+                e('div', { className: "w-12 h-12 rounded-full skeleton" }),
+                e('div', { className: "flex-1 space-y-2" },
+                    e('div', { className: "h-4 w-3/4 rounded skeleton" }),
+                    e('div', { className: "h-3 w-1/2 rounded skeleton" })
+                )
+            ),
+            e('div', { className: "space-y-2 pt-2" },
+                e('div', { className: "h-3 w-full rounded skeleton" }),
+                e('div', { className: "h-3 w-5/6 rounded skeleton" })
+            )
+        );
 
-            return html`
-                <div className="modal-overlay" onClick=${onClose}>
-                    <div className="modal-content modal-in" onClick=${(e) => e.stopPropagation()}>
-                        <div className="p-5 border-b border-border flex items-center justify-between">
-                            <h3 className="text-lg font-bold text-text">Apply for Job</h3>
-                            <button onClick=${onClose} className="p-2 rounded-lg hover:bg-gray-100"><${Icon} name="close" size=${20}/></button>
-                        </div>
-                        <div className="p-5">
-                            <div className="mb-5 p-4 bg-surface rounded-lg">
-                                <h4 className="font-semibold text-text">${job.title}</h4>
-                                <p className="text-sm text-text-secondary mt-1">${job.location}</p>
-                            </div>
-                            <p className="text-text-secondary mb-5 text-center">Choose how to apply:</p>
-                            <div className="space-y-3">
-                                ${job.contact_email && html`<button onClick=${handleEmailApply} className="btn-primary w-full"><${Icon} name="email" size=${20}/> Apply via Email</button>`}
-                                ${job.whatsapp_number && html`<button onClick=${handleWhatsAppApply} className="btn-whatsapp w-full"><${Icon} name="whatsapp" size=${20}/> Apply via WhatsApp</button>`}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
+        // --- Modern Input Component ---
+        const SmartInput = ({ label, textarea, ...props }) => {
+            return e('div', { className: "w-full" },
+                label && e('label', { className: "block text-sm font-semibold text-text-dark mb-1" }, label),
+                textarea ? 
+                    e('textarea', { 
+                        className: "w-full p-3 border border-border-grey rounded-lg input-focus outline-none transition-all min-h-[100px] text-sm text-text-dark bg-white resize-y",
+                        ...props 
+                    }) :
+                    e('input', { 
+                        className: "w-full p-3 border border-border-grey rounded-lg input-focus outline-none transition-all text-sm text-text-dark bg-white",
+                        ...props 
+                    })
+            );
         };
 
-        // Auth Screen
+        // --- Auth Screen ---
         const AuthScreen = ({ type, onSwitch, onSuccess }) => {
             const [form, setForm] = React.useState({ email: '', pass: '', name: '', role: 'student' });
             const [error, setError] = React.useState('');
             const [loading, setLoading] = React.useState(false);
             
             const handleAuth = async (ev) => {
-                ev.preventDefault(); 
-                setError(''); 
-                setLoading(true);
+                ev.preventDefault(); setError(''); setLoading(true);
                 try {
                     if (type === 'login') {
-                        const { error } = await supabase.auth.signInWithPassword({ email: form.email.trim().toLowerCase(), password: form.pass });
-                        if (error) throw error; 
-                        onSuccess();
+                        const { error } = await supabase.auth.signInWithPassword({ email: form.email, password: form.pass });
+                        if (error) throw error; onSuccess();
                     } else {
-                        if (form.pass.length < 6) throw new Error("Password must be at least 6 characters.");
+                        if (form.email === ADMIN_EMAIL) throw new Error("Admin email reserved.");
                         const { error } = await supabase.auth.signUp({
-                            email: form.email.trim().toLowerCase(), 
-                            password: form.pass,
-                            options: { data: { full_name: form.name.trim(), role: form.role } }
+                            email: form.email, password: form.pass,
+                            options: { data: { full_name: form.name, role: form.role } }
                         });
                         if (error) throw error;
-                        alert("Registered successfully! Please login."); 
-                        onSwitch('login');
+                        alert("Registered! Please login."); onSwitch('login');
                     }
                 } catch (err) { setError(err.message); } finally { setLoading(false); }
             };
 
-            return html`
-                <div className="min-h-screen flex items-center justify-center p-4 bg-surface">
-                    <div className="w-full max-w-md fade-in">
-                        <div className="text-center mb-6">
-                            <div className="flex items-center justify-center gap-3 mb-4">
-                                <img src=${BRITN_LOGO_URL} className="w-14 h-14 rounded-xl shadow-md" alt="BRITN"/>
-                                <span className="text-3xl font-bold text-text">BRITN</span>
-                            </div>
-                            <p className="text-text-secondary text-sm font-bangla">Bangladesh Radiology and Imaging Technologist Network</p>
-                        </div>
-                        <div className="card p-6 md:p-8">
-                            ${error && html`<div className="bg-red-50 text-danger border border-red-200 p-3 rounded-lg mb-4 text-sm font-medium">${error}</div>`}
-                            <form onSubmit=${handleAuth} className="space-y-5">
-                                ${type === 'register' && html`<div><label className="form-label">Full Name</label><input placeholder="Enter your full name" value=${form.name} onChange=${(ev) => setForm({...form, name: ev.target.value})} className="input-pro" required/></div>`}
-                                <div><label className="form-label">Email</label><input type="email" placeholder="Enter your email" value=${form.email} onChange=${(ev) => setForm({...form, email: ev.target.value})} className="input-pro" required/></div>
-                                <div><label className="form-label">Password</label><input type="password" placeholder="Min 6 characters" value=${form.pass} onChange=${(ev) => setForm({...form, pass: ev.target.value})} className="input-pro" required minLength="6"/></div>
-                                ${type === 'register' && html`<div><label className="form-label">I am a</label><div className="grid grid-cols-3 gap-2">${['student', 'technologist', 'hospital'].map(r => html`<button type="button" key=${r} onClick=${() => setForm({...form, role: r})} className="py-3 rounded-lg text-sm font-semibold border ${form.role === r ? 'bg-primary text-white border-primary' : 'bg-white border-border text-text-secondary'}">${r.charAt(0).toUpperCase() + r.slice(1)}</button>`)}</div></div>`}
-                                <button type="submit" disabled=${loading} className="btn-primary w-full">${loading ? html`<div className="loader loader-sm mx-auto border-white border-t-transparent"></div>` : (type === 'login' ? 'Sign In' : 'Join Now')}</button>
-                            </form>
-                        </div>
-                        <p className="text-center text-sm text-text-secondary mt-6">${type === 'login' ? 'New to BRITN? ' : 'Already have an account? '}<button onClick=${() => onSwitch(type === 'login' ? 'register' : 'login')} className="text-primary font-semibold hover:underline">${type === 'login' ? 'Join now' : 'Sign in'}</button></p>
-                    </div>
-                </div>
-            `;
+            return e('div', { className: "min-h-screen flex items-center justify-center bg-bg-grey p-4" },
+                e('div', { className: "w-full max-w-md fade-in" },
+                    e('div', { className: "bg-white rounded-xl shadow-md border border-border-grey overflow-hidden" },
+                        // Header
+                        e('div', { className: "bg-primary p-6 text-center" },
+                            e('img', { src: BRITN_LOGO_URL, className: "w-16 h-16 mx-auto rounded-full border-4 border-white/20 mb-2" }),
+                            e('h1', { className: "text-xl font-bold text-white" }, "BRITN"),
+                            e('p', { className: "text-xs text-white/80 font-bangla" }, "Bangladesh Radiology & Imaging Technologist Network")
+                        ),
+                        // Form
+                        e('div', { className: "p-6" },
+                            error && e('div', { className: "bg-red-50 text-danger p-3 rounded-lg mb-4 text-xs text-center font-medium" }, error),
+                            e('form', { onSubmit: handleAuth, className: "space-y-4" },
+                                type === 'register' && e(SmartInput, { label: "Full Name", onChange: (ev) => setForm({...form, name: ev.target.value}), required: true }),
+                                e(SmartInput, { label: "Email", type: "email", value: form.email, onChange: (ev) => setForm({...form, email: ev.target.value}), required: true }),
+                                e(SmartInput, { label: "Password", type: "password", value: form.pass, onChange: (ev) => setForm({...form, pass: ev.target.value}), required: true }),
+                                
+                                type === 'register' && e('div', { className: "grid grid-cols-3 gap-2" }, 
+                                    ['student', 'technologist', 'hospital'].map(r => 
+                                        e('button', { type: "button", key: r, onClick: () => setForm({...form, role: r}), 
+                                            className: `py-2 rounded-lg text-xs font-semibold transition border ${form.role === r ? 'bg-primary text-white border-primary' : 'bg-white border-border-grey text-text-grey hover:border-primary hover:text-primary'}` 
+                                        }, r.charAt(0).toUpperCase() + r.slice(1))
+                                    )
+                                ),
+                                e('button', { type: "submit", disabled: loading, className: "w-full py-3 bg-primary text-white rounded-lg font-bold text-sm hover:bg-primary-dark transition ripple" }, 
+                                    loading ? "Please wait..." : (type === 'login' ? "Sign In" : "Join Network")
+                                )
+                            ),
+                            e('div', { className: "mt-4 text-center text-xs text-text-grey" },
+                                type === 'login' ? "New to BRITN? " : "Already a member? ",
+                                e('button', { onClick: () => onSwitch(type === 'login' ? 'register' : 'login'), className: "text-primary font-bold hover:underline" }, type === 'login' ? "Join now" : "Sign in")
+                            )
+                        )
+                    ),
+                    e('p', { className: "text-center text-[10px] text-text-grey mt-4 opacity-60" }, "© SRP SOFT LTD")
+                )
+            );
         };
 
-        // Top Navbar (Cleaned)
-        const TopNavbar = ({ user, currentPage, setPage, showDropdown, setShowDropdown }) => {
-            const isAdmin = user?.email === ADMIN_EMAIL;
-            const navItems = [
-                { id: 'dash', icon: 'home', label: 'Home' },
-                { id: 'feed', icon: 'network', label: 'Feed' },
-                { id: 'jobs', icon: 'jobs', label: 'Jobs' },
+        // --- Top Navbar ---
+        const TopNav = ({ user, onLogout }) => {
+            return e('header', { className: "sticky top-0 z-50 bg-white border-b border-border-grey shadow-sm hidden md:block" },
+                e('div', { className: "max-w-6xl mx-auto px-4 h-16 flex items-center justify-between" },
+                    e('div', { className: "flex items-center gap-2" },
+                        e('img', { src: BRITN_LOGO_URL, className: "w-9 h-9 rounded-lg" }),
+                        e('span', { className: "font-bold text-lg text-primary" }, "BRITN")
+                    ),
+                    e('div', { className: "flex items-center gap-2" },
+                        e('span', { className: "text-xs text-text-grey font-medium" }, user?.email),
+                        e('button', { onClick: onLogout, className: "p-2 rounded-full hover:bg-bg-grey text-text-grey hover:text-danger transition" }, "🚪")
+                    )
+                )
+            );
+        };
+
+        // --- Bottom Nav (Mobile) ---
+        const BottomNav = ({ page, setPage }) => {
+            const items = [ 
+                { id: 'dash', icon: '🏠', label: 'Home' }, 
+                { id: 'feed', icon: '📰', label: 'Feed' }, 
+                { id: 'jobs', icon: '💼', label: 'Jobs' }, 
+                { id: 'reports', icon: '🚩', label: 'Reports' } 
             ];
-
-            return html`
-                <nav className="sticky top-0 z-40 bg-white border-b border-border">
-                    <div className="max-w-[1128px] mx-auto px-4 h-[52px] flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                            <button onClick=${() => setPage('dash')} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                                <img src=${BRITN_LOGO_URL} className="w-9 h-9 md:w-10 md:h-10 rounded-lg shadow-sm" alt="BRITN"/>
-                                <span className="text-xl font-bold text-primary hidden sm:block">BRITN</span>
-                            </button>
-                        </div>
-                        
-                        <div className="desktop-only flex items-center h-full">
-                            ${navItems.map(item => html`<button key=${item.id} onClick=${() => setPage(item.id)} className="nav-icon-btn ${currentPage === item.id ? 'active' : ''}"><${Icon} name=${item.icon} size=${22}/><span>${item.label}</span></button>`)}
-                            <div className="relative ml-2">
-                                <button onClick=${() => setShowDropdown(!showDropdown)} className="nav-icon-btn ${currentPage === 'profile' ? 'active' : ''}">
-                                    <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold">${user?.email?.charAt(0).toUpperCase()}</div>
-                                    <span>Me</span>
-                                </button>
-                                ${showDropdown && html`
-                                    <div className="dropdown">
-                                        <div className="p-4 border-b border-border">
-                                            <p className="font-semibold text-text">${user?.user_metadata?.full_name || 'User'}</p>
-                                            <p className="text-sm text-text-secondary">${user?.email}</p>
-                                            <button onClick=${() => { setPage('profile'); setShowDropdown(false); }} className="w-full mt-3 btn-secondary text-sm py-2">View Profile</button>
-                                        </div>
-                                        <div className="py-2">
-                                            ${isAdmin && html`<button onClick=${() => { setPage('admin'); setShowDropdown(false); }} className="w-full px-4 py-2.5 text-left text-sm hover:bg-gray-50 flex items-center gap-3"><${Icon} name="admin" size=${18}/><span>Admin Panel</span></button>`}
-                                            <button onClick=${() => { setPage('add_job'); setShowDropdown(false); }} className="w-full px-4 py-2.5 text-left text-sm hover:bg-gray-50 flex items-center gap-3"><${Icon} name="plus" size=${18}/><span>Post a Job</span></button>
-                                            <button onClick=${() => { setPage('reports'); setShowDropdown(false); }} className="w-full px-4 py-2.5 text-left text-sm hover:bg-gray-50 flex items-center gap-3"><${Icon} name="admin" size=${18}/><span>Submit Report</span></button>
-                                            <button onClick=${() => { supabase.auth.signOut(); setShowDropdown(false); }} className="w-full px-4 py-2.5 text-left text-sm hover:bg-red-50 text-danger flex items-center gap-3"><${Icon} name="logout" size=${18}/><span>Sign Out</span></button>
-                                        </div>
-                                    </div>
-                                `}
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-            `;
+            return e('nav', { className: "md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-border-grey z-50" },
+                e('div', { className: "flex justify-around items-center h-16" },
+                    items.map(item => 
+                        e('button', { key: item.id, onClick: () => setPage(item.id), className: `flex flex-col items-center justify-center w-full h-full ${page === item.id ? 'text-primary' : 'text-text-grey'}` },
+                            e('span', { className: "text-xl" }, item.icon),
+                            e('span', { className: "text-[10px] font-medium mt-0.5" }, item.label)
+                        )
+                    )
+                )
+            );
         };
 
-        // Left Sidebar
-        const LeftSidebar = ({ user, setPage }) => {
+        // --- Left Sidebar (Profile) ---
+        const LeftSidebar = ({ user }) => {
             const isAdmin = user?.email === ADMIN_EMAIL;
-            return html`
-                <aside className="desktop-only w-[220px] flex-shrink-0 space-y-3">
-                    <div className="card overflow-hidden">
-                        <div className="h-14 bg-gradient-to-r from-primary to-primary-dark"></div>
-                        <div className="px-4 pb-4 text-center">
-                            <button onClick=${() => setPage('profile')} className="relative -mt-8 mb-2">
-                                <div className="w-16 h-16 rounded-full bg-white p-1 mx-auto shadow-md">
-                                    <div className="w-full h-full rounded-full bg-primary flex items-center justify-center text-white text-2xl font-bold">${user?.email?.charAt(0).toUpperCase()}</div>
-                                </div>
-                            </button>
-                            <h3 className="font-semibold text-text">${user?.user_metadata?.full_name || 'User'}</h3>
-                            <p className="text-xs text-text-secondary mt-0.5 capitalize">${user?.user_metadata?.role || 'Member'}</p>
-                        </div>
-                    </div>
-                    <div className="card p-3">
-                        <button onClick=${() => setPage('reports')} className="w-full text-left px-3 py-2 rounded-lg text-sm hover:bg-gray-100 flex items-center gap-2"><${Icon} name="admin" size=${16}/> Submit Report</button>
-                        <button onClick=${() => setPage('add_job')} className="w-full text-left px-3 py-2 rounded-lg text-sm hover:bg-gray-100 flex items-center gap-2"><${Icon} name="plus" size=${16}/> Post a Job</button>
-                        ${isAdmin && html`<button onClick=${() => setPage('admin')} className="w-full text-left px-3 py-2 rounded-lg text-sm hover:bg-gray-100 flex items-center gap-2 text-danger"><${Icon} name="admin" size=${16}/> Admin Panel</button>`}
-                    </div>
-                </aside>
-            `;
+            return e('div', { className: "hidden md:flex flex-col gap-4 w-64 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto" },
+                e('div', { className: "bg-white rounded-lg border border-border-grey overflow-hidden text-center shadow-sm" },
+                    e('div', { className: "h-12 bg-primary" }, null),
+                    e('div', { className: "p-4 pt-0" },
+                        e('div', { className: "w-14 h-14 mx-auto bg-white rounded-full border-2 border-white -mt-7 flex items-center justify-center text-2xl text-primary font-bold shadow-sm" }, 
+                            user?.user_metadata?.full_name?.charAt(0) || "U"
+                        ),
+                        e('h3', { className: "font-bold text-sm text-text-dark mt-1" }, user?.user_metadata?.full_name || "User"),
+                        e('p', { className: "text-xs text-text-grey mt-0.5" }, user?.user_metadata?.role || "Member"),
+                        isAdmin && e('span', { className: "inline-block mt-1 text-[9px] bg-gold text-text-dark px-2 py-0.5 rounded font-bold" }, "ADMIN")
+                    ),
+                    e('div', { className: "border-t border-border-grey p-3 grid grid-cols-2 divide-x divide-border-grey" },
+                        e('div', { className: "text-center" }, e('p', {className: "text-[10px] text-text-grey"}, "Posts"), e('p', {className: "font-bold text-sm"}, "0")),
+                        e('div', { className: "text-center" }, e('p', {className: "text-[10px] text-text-grey"}, "Views"), e('p', {className: "font-bold text-sm"}, "0"))
+                    )
+                )
+            );
         };
 
-        // Right Sidebar
+        // --- Right Sidebar (Jobs/Info) ---
         const RightSidebar = ({ jobs }) => {
-            const trendingJobs = jobs.filter(j => j.is_approved).slice(0, 3);
-            return html`
-                <aside className="desktop-only w-[300px] flex-shrink-0 space-y-3">
-                    <div className="card p-4">
-                        <h3 className="font-semibold text-sm text-text mb-3">Trending Jobs</h3>
-                        ${trendingJobs.length === 0 ? html`<p className="text-sm text-text-muted">No jobs available</p>` : trendingJobs.map((job, i) => html`<div key=${job.id} className="py-2 ${i < trendingJobs.length - 1 ? 'border-b border-border' : ''}"><p className="font-medium text-sm text-text">${job.title}</p><p className="text-xs text-text-secondary mt-0.5">${job.location}</p></div>`)}
-                    </div>
-                </aside>
-            `;
+            const recentJobs = jobs?.slice(0, 3) || [];
+            return e('div', { className: "hidden lg:block w-72 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto" },
+                e('div', { className: "bg-white rounded-lg border border-border-grey p-4 shadow-sm" },
+                    e('h3', { className: "font-bold text-sm text-text-dark mb-2 flex items-center justify-between" }, 
+                        "Latest Jobs", 
+                        e('span', { className: "text-[10px] text-primary cursor-pointer hover:underline" }, "See all")
+                    ),
+                    e('div', { className: "space-y-3" },
+                        recentJobs.length === 0 ? e('p', {className: "text-xs text-text-grey"}, "No jobs posted") :
+                        recentJobs.map(job => 
+                            e('div', { key: job.id, className: "p-2 rounded hover:bg-bg-grey cursor-pointer transition" },
+                                e('h4', { className: "text-xs font-semibold text-text-dark truncate" }, job.title),
+                                e('p', { className: "text-[10px] text-text-grey truncate" }, job.location)
+                            )
+                        )
+                    )
+                ),
+                e('div', { className: "mt-4 text-center text-[10px] text-text-grey p-4" },
+                    "BRITN © 2024"
+                )
+            );
         };
 
-        // Bottom Nav
-        const BottomNav = ({ currentPage, setPage, user }) => {
-            const isAdmin = user?.email === ADMIN_EMAIL;
-            const items = [
-                { id: 'dash', icon: 'home', label: 'Home' },
-                { id: 'feed', icon: 'network', label: 'Feed' },
-                { id: 'jobs', icon: 'jobs', label: 'Jobs' },
-                { id: 'profile', icon: 'profile', label: 'Profile' },
-            ];
-            
-            return html`
-                <div className="mobile-only bottom-nav">
-                    <div className="flex">
-                        ${items.map(item => html`<button key=${item.id} onClick=${() => setPage(item.id)} className="bottom-nav-item ${currentPage === item.id ? 'active' : ''}"><${Icon} name=${item.icon} size=${22}/><span>${item.label}</span></button>`)}
-                        ${isAdmin && html`<button onClick=${() => setPage('admin')} className="bottom-nav-item ${currentPage === 'admin' ? 'active' : ''}"><${Icon} name="admin" size=${22}/><span>Admin</span></button>`}
-                    </div>
-                </div>
-            `;
-        };
-
-        // Admin Panel
-        const AdminPanel = ({ user }) => {
-            const [activeTab, setActiveTab] = React.useState('dashboard');
-            const [stats, setStats] = React.useState({ posts: 0, jobs: 0, pendingJobs: 0, pinnedPosts: 0 });
-            const [pendingJobs, setPendingJobs] = React.useState([]);
-            const [allJobs, setAllJobs] = React.useState([]);
-            const [allPosts, setAllPosts] = React.useState([]);
-            const [loading, setLoading] = React.useState(true);
-            const toast = useToast();
-
-            React.useEffect(() => { fetchAllData(); }, []);
-
-            const fetchAllData = async () => {
-                setLoading(true);
-                try {
-                    const [postsRes, jobsRes] = await Promise.all([
-                        supabase.from('feed_posts').select('*').order('created_at', { ascending: false }),
-                        supabase.from('jobs').select('*').order('created_at', { ascending: false })
-                    ]);
-
-                    const postsData = postsRes.data || [];
-                    const jobsData = jobsRes.data || [];
-
-                    setStats({
-                        posts: postsData.length,
-                        jobs: jobsData.length,
-                        pendingJobs: jobsData.filter(j => !j.is_approved).length,
-                        pinnedPosts: postsData.filter(p => p.is_pinned).length
-                    });
-
-                    setPendingJobs(jobsData.filter(j => !j.is_approved));
-                    setAllJobs(jobsData);
-                    setAllPosts(postsData);
-                } catch (err) {
-                    toast('Failed to load data', 'error');
-                } finally {
-                    setLoading(false);
-                }
-            };
-
-            const handleApproveJob = async (id) => { await supabase.from('jobs').update({ is_approved: true }).eq('id', id); toast('Job approved!'); fetchAllData(); };
-            const handleDeleteJob = async (id) => { if(confirm('Delete?')) { await supabase.from('jobs').delete().eq('id', id); toast('Deleted'); fetchAllData(); } };
-            const handleTogglePin = async (post) => {
-                if (!post.is_pinned && stats.pinnedPosts >= 3) { toast('Max 3 pinned posts', 'error'); return; }
-                await supabase.from('feed_posts').update({ is_pinned: !post.is_pinned }).eq('id', post.id);
-                toast(post.is_pinned ? 'Unpinned' : 'Pinned!'); fetchAllData();
-            };
-            const handleDeletePost = async (id) => { if(confirm('Delete?')) { await supabase.from('feed_posts').delete().eq('id', id); toast('Deleted'); fetchAllData(); } };
-
-            if (loading) return html`<div className="max-w-[900px] mx-auto pb-20 md:pb-4 fade-in"><div className="loader mx-auto mt-20"></div></div>`;
-
-            return html`
-                <div className="max-w-[900px] mx-auto pb-20 md:pb-4 fade-in">
-                    <h2 className="text-xl font-bold text-text mb-4">Admin Panel</h2>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-                        <div className="stat-card"><div className="stat-number">${stats.posts}</div><div className="stat-label">Posts</div></div>
-                        <div className="stat-card"><div className="stat-number">${stats.jobs}</div><div className="stat-label">Jobs</div></div>
-                        <div className="stat-card"><div className="stat-number text-danger">${stats.pendingJobs}</div><div className="stat-label">Pending</div></div>
-                        <div className="stat-card"><div className="stat-number">${stats.pinnedPosts}</div><div className="stat-label">Pinned</div></div>
-                    </div>
-                    
-                    <div className="card mb-4">
-                        <div className="border-b border-border flex overflow-x-auto">
-                            <button onClick=${() => setActiveTab('dashboard')} className="admin-tab ${activeTab === 'dashboard' ? 'active' : ''}">Dashboard</button>
-                            <button onClick=${() => setActiveTab('pending')} className="admin-tab ${activeTab === 'pending' ? 'active' : ''}">Pending Jobs</button>
-                            <button onClick=${() => setActiveTab('posts')} className="admin-tab ${activeTab === 'posts' ? 'active' : ''}">Manage Posts</button>
-                            <button onClick=${() => setActiveTab('jobs')} className="admin-tab ${activeTab === 'jobs' ? 'active' : ''}">All Jobs</button>
-                        </div>
-                    </div>
-                    
-                    ${activeTab === 'dashboard' && html`<div className="grid md:grid-cols-2 gap-4">
-                        <div className="card p-5"><h3 className="font-semibold text-text mb-3">Pending Approvals</h3><p className="text-2xl font-bold text-danger">${stats.pendingJobs}</p><button onClick=${() => setActiveTab('pending')} className="btn-primary w-full mt-4">Review Jobs</button></div>
-                        <div className="card p-5"><h3 className="font-semibold text-text mb-3">Pinned Posts</h3><p className="text-2xl font-bold text-primary">${stats.pinnedPosts}/3</p><button onClick=${() => setActiveTab('posts')} className="btn-secondary w-full mt-4">Manage Posts</button></div>
-                    </div>`}
-                    
-                    ${activeTab === 'pending' && html`<div className="space-y-4">${pendingJobs.length === 0 ? html`<div className="card p-8 text-center text-text-muted">No pending jobs</div>` : pendingJobs.map(job => html`
-                        <div key=${job.id} className="card p-5 flex justify-between items-center">
-                            <div><h3 className="font-semibold text-text">${job.title}</h3><p className="text-sm text-text-secondary">${job.location}</p></div>
-                            <div className="flex gap-2"><button onClick=${() => handleApproveJob(job.id)} className="btn-primary py-2 px-4 text-sm">Approve</button><button onClick=${() => handleDeleteJob(job.id)} className="btn-danger py-2 px-4 text-sm">Reject</button></div>
-                        </div>
-                    `)}</div>`}
-                    
-                    ${activeTab === 'posts' && html`<div className="space-y-3">${allPosts.length === 0 ? html`<div className="card p-8 text-center text-text-muted">No posts</div>` : allPosts.map(post => html`
-                        <div key=${post.id} className="card p-4 flex justify-between items-center">
-                            <div class="flex-1 min-w-0 pr-2"><div className="flex items-center gap-2"><h3 className="font-semibold text-text truncate">${post.poster_email}</h3>${post.is_pinned && html`<span className="pin-badge">Pinned</span>`}</div><p className="text-sm text-text-secondary truncate">${post.content}</p></div>
-                            <div className="flex gap-1"><button onClick=${() => handleTogglePin(post)} className="p-2 hover:bg-gray-100 rounded ${post.is_pinned ? 'text-primary' : 'text-text-muted'}"><${Icon} name="pin" size=${18}/></button><button onClick=${() => handleDeletePost(post.id)} className="p-2 hover:bg-red-50 rounded text-danger"><${Icon} name="delete" size=${18}/></button></div>
-                        </div>
-                    `)}</div>`}
-                    
-                    ${activeTab === 'jobs' && html`<div className="space-y-3">${allJobs.length === 0 ? html`<div className="card p-8 text-center text-text-muted">No jobs</div>` : allJobs.map(job => html`
-                        <div key=${job.id} className="card p-4 flex justify-between items-center">
-                            <div><div className="flex items-center gap-2"><h3 className="font-semibold text-text">${job.title}</h3><span className="text-xs px-2 py-0.5 rounded ${job.is_approved ? 'bg-green-100 text-success' : 'bg-yellow-100 text-yellow-700'}">${job.is_approved ? 'Approved' : 'Pending'}</span></div><p className="text-sm text-text-secondary">${job.location}</p></div>
-                            <button onClick=${() => handleDeleteJob(job.id)} className="p-2 hover:bg-red-50 rounded text-danger"><${Icon} name="delete" size=${18}/></button>
-                        </div>
-                    `)}</div>`}
-                </div>
-            `;
-        };
-
-        // Post Card Component
-        const PostCard = ({ post, user, isAdmin, showMenu, setShowMenu, onLike, likedPosts, handleEdit, handleDelete, handleTogglePin, editId, editContent, setEditContent, handleUpdate, setEditId }) => {
-            const isAdminPost = post.poster_email === ADMIN_EMAIL;
-            const displayName = isAdminPost ? 'Bangladesh Radiology & Imaging Technologist Network' : post.poster_email.split('@')[0];
-            const isLiked = likedPosts.has(post.id);
-            const cardClass = post.is_pinned ? 'pinned-post p-4 fade-in' : 'card p-4 fade-in';
-
-            return html`
-                <div key=${post.id} className=${cardClass}>
-                    <div className="flex items-start justify-between">
-                        <div className="flex items-start gap-3 flex-1">
-                            ${isAdminPost ? html`<img src=${BRITN_LOGO_URL} className="w-12 h-12 rounded-full object-cover ring-2 ring-highlight shadow-md flex-shrink-0" alt="BRITN"/>` : html`<div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg flex-shrink-0">${displayName.charAt(0).toUpperCase()}</div>`}
-                            <div className="min-w-0 flex-1">
-                                <div className="flex items-center gap-2 flex-wrap">
-                                    <h3 className="font-semibold text-text truncate">${displayName}</h3>
-                                    ${isAdminPost && html`<span className="verified-badge">Verified</span>`}
-                                    ${post.is_pinned && html`<span className="pin-badge">Pinned</span>`}
-                                </div>
-                                <p className="text-xs text-text-muted mt-0.5">${new Date(post.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
-                            </div>
-                        </div>
-                        ${(isAdmin || post.poster_email === user.email) && html`
-                            <div className="relative flex-shrink-0 ml-2">
-                                <button onClick=${() => setShowMenu(showMenu === post.id ? null : post.id)} className="p-2 rounded-lg hover:bg-gray-100"><${Icon} name="more" size=${18}/></button>
-                                ${showMenu === post.id && html`
-                                    <div className="absolute right-0 top-full mt-1 bg-white rounded-xl shadow-lg border border-border py-2 min-w-[160px] z-10 fade-in">
-                                        ${isAdmin && html`<button onClick=${() => handleTogglePin(post)} className="w-full px-4 py-2.5 text-left text-sm hover:bg-gray-50 flex items-center gap-3"><${Icon} name="pin" size=${16}/>${post.is_pinned ? 'Unpin Post' : 'Pin Post'}</button>`}
-                                        <button onClick=${() => handleEdit(post)} className="w-full px-4 py-2.5 text-left text-sm hover:bg-gray-50 flex items-center gap-3"><${Icon} name="edit" size=${16}/> Edit Post</button>
-                                        <button onClick=${() => handleDelete(post.id)} className="w-full px-4 py-2.5 text-left text-sm hover:bg-red-50 text-danger flex items-center gap-3"><${Icon} name="delete" size=${16}/> Delete Post</button>
-                                    </div>
-                                `}
-                            </div>
-                        `}
-                    </div>
-                    ${editId === post.id ? html`
-                        <div className="mt-4">
-                            <textarea value=${editContent} onChange=${(e) => setEditContent(e.target.value)} className="input-pro resize-none min-h-[120px]"/>
-                            <div className="flex gap-2 mt-3 justify-end">
-                                <button onClick=${() => setEditId(null)} className="btn-secondary text-sm py-2 px-4">Cancel</button>
-                                <button onClick=${() => handleUpdate(post.id)} className="btn-primary text-sm py-2 px-4">Save</button>
-                            </div>
-                        </div>
-                    ` : html`<p className="text-text mt-3 leading-relaxed whitespace-pre-wrap report-text">${post.content}</p>`}
-                    ${post.image_url && html`<img src=${post.image_url} className="w-full mt-3 rounded-xl border border-border" alt="Post image"/>`}
-                    
-                    <div className="flex items-center mt-4 pt-3 border-t border-border gap-1">
-                        <button onClick=${() => onLike(post)} className="post-action ${isLiked ? 'liked' : ''}"><${Icon} name=${isLiked ? 'likeFilled' : 'like'} size=${18}/><span>${post.likes_count || 0}</span></button>
-                    </div>
-                </div>
-            `;
-        };
-
-        // Feed Page
-        const FeedPage = ({ user }) => {
+        // --- Feed Logic ---
+        const FeedPage = ({ user, allJobs }) => {
             const [posts, setPosts] = React.useState([]);
             const [loading, setLoading] = React.useState(true);
             const [content, setContent] = React.useState('');
             const [image, setImage] = React.useState(null);
-            const [editId, setEditId] = React.useState(null);
-            const [editContent, setEditContent] = React.useState('');
-            const [charCount, setCharCount] = React.useState(0);
-            const [showMenu, setShowMenu] = React.useState(null);
-            const [likedPosts, setLikedPosts] = React.useState(new Set());
             const isAdmin = user?.email === ADMIN_EMAIL;
             const toast = useToast();
-            const MAX_CHARS = 2000;
 
-            const fetchPosts = async () => {
-                try {
-                    const [postsRes, likesRes] = await Promise.all([
-                        supabase.from('feed_posts').select('*').order('created_at', { ascending: false }).limit(30),
-                        supabase.from('post_likes').select('post_id').eq('user_email', user.email)
-                    ]);
-                    setPosts(postsRes.data || []);
-                    if (likesRes.data) setLikedPosts(new Set(likesRes.data.map(l => l.post_id)));
-                } catch (err) { toast('Failed to load posts', 'error'); } finally { setLoading(false); }
+            const fetchPosts = async () => { 
+                setLoading(true);
+                const data = await safeFetch(supabase.from('feed_posts').select('*').order('created_at', { ascending: false }).limit(20));
+                // Sort: Pinned first, then date
+                const pinned = data.filter(p => p.is_pinned);
+                const others = data.filter(p => !p.is_pinned);
+                setPosts([...pinned, ...others]);
+                setLoading(false); 
             };
             
             React.useEffect(() => { fetchPosts(); }, []);
 
-            const handleSubmit = async (ev) => {
-                ev.preventDefault();
-                if (!content.trim() && !image) return;
-                try {
-                    await supabase.from('feed_posts').insert([{ content: content.trim(), image_url: image, poster_email: user.email, poster_id: user.id, is_pinned: false }]);
-                    setContent(''); setImage(null); setCharCount(0); fetchPosts(); toast('Post published!');
-                } catch (err) { toast('Failed to post', 'error'); }
+            const handleSubmit = async (ev) => { 
+                ev.preventDefault(); if(!content && !image) return; 
+                await supabase.from('feed_posts').insert([{ content, image_url: image, poster_email: user.email }]); 
+                setContent(''); setImage(null); 
+                fetchPosts(); 
+                toast("Post published!"); 
             };
 
-            const handleDelete = async (id) => { if(confirm('Delete?')) { await supabase.from('feed_posts').delete().eq('id', id); fetchPosts(); toast('Deleted', 'error'); } };
-            const handleEdit = (post) => { setEditId(post.id); setEditContent(post.content); setShowMenu(null); };
-            const handleUpdate = async (id) => { await supabase.from('feed_posts').update({ content: editContent }).eq('id', id); setEditId(null); fetchPosts(); toast('Updated!'); };
-            const handleTogglePin = async (post) => {
-                if (!post.is_pinned && posts.filter(p => p.is_pinned).length >= 3) { toast('Max 3 pinned posts', 'error'); return; }
-                await supabase.from('feed_posts').update({ is_pinned: !post.is_pinned }).eq('id', post.id); fetchPosts(); toast(post.is_pinned ? 'Unpinned' : 'Pinned!');
-            };
-
-            const handleLike = async (post) => {
-                const isLiked = likedPosts.has(post.id);
-                try {
-                    if (isLiked) {
-                        await supabase.from('post_likes').delete().match({ post_id: post.id, user_email: user.email });
-                        await supabase.from('feed_posts').update({ likes_count: Math.max(0, (post.likes_count || 0) - 1) }).eq('id', post.id);
-                        setLikedPosts(prev => { const newSet = new Set(prev); newSet.delete(post.id); return newSet; });
-                    } else {
-                        await supabase.from('post_likes').insert([{ post_id: post.id, user_email: user.email }]);
-                        await supabase.from('feed_posts').update({ likes_count: (post.likes_count || 0) + 1 }).eq('id', post.id);
-                        setLikedPosts(prev => new Set([...prev, post.id]));
-                    }
-                    fetchPosts();
-                } catch (err) { toast('Error', 'error'); }
-            };
-
-            const handleImage = (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    if (file.size > 5 * 1024 * 1024) { toast('Image < 5MB', 'error'); return; }
-                    const reader = new FileReader();
-                    reader.onloadend = () => setImage(reader.result);
-                    reader.readAsDataURL(file);
+            const handlePin = async (id, currentState) => {
+                const pinnedCount = posts.filter(p => p.is_pinned).length;
+                if (!currentState && pinnedCount >= 3) {
+                    toast("Maximum 3 pinned posts allowed", "error");
+                    return;
                 }
+                await supabase.from('feed_posts').update({ is_pinned: !currentState }).eq('id', id);
+                fetchPosts();
+                toast(currentState ? "Post unpinned" : "Post pinned");
             };
 
-            const sortedPosts = [...posts].sort((a, b) => {
-                if (a.is_pinned && !b.is_pinned) return -1;
-                if (!a.is_pinned && b.is_pinned) return 1;
-                return new Date(b.created_at) - new Date(a.created_at);
-            });
-
-            if (loading) return html`<div className="max-w-[600px] mx-auto space-y-4 pb-20 md:pb-4"><div className="loader mx-auto mt-10"></div></div>`;
-
-            return html`
-                <div className="max-w-[600px] mx-auto space-y-4 pb-20 md:pb-4">
-                    <div className="card p-4 fade-in">
-                        <form onSubmit=${handleSubmit}>
-                            <div className="flex items-start gap-3">
-                                <div className="w-11 h-11 rounded-full bg-primary flex items-center justify-center text-white font-bold flex-shrink-0">${user?.email?.charAt(0).toUpperCase()}</div>
-                                <div className="flex-1">
-                                    <textarea placeholder="Share something..." value=${content} onChange=${(e) => { const v = e.target.value; if (v.length <= MAX_CHARS) { setContent(v); setCharCount(v.length); }}} className="input-pro resize-none min-h-[100px] text-base" rows="3"/>
-                                    <div className="flex justify-between items-center mt-2">
-                                        <span className="text-xs text-text-muted">Add image</span>
-                                        <span className="char-counter ${charCount > MAX_CHARS * 0.9 ? 'warning' : ''}">${charCount}/${MAX_CHARS}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            ${image && html`<div className="relative mt-3 inline-block ml-14"><img src=${image} className="max-h-48 rounded-lg"/><button type="button" onClick=${() => setImage(null)} className="absolute -top-2 -right-2 w-7 h-7 bg-danger text-white rounded-full flex items-center justify-center"><${Icon} name="close" size=${14}/></button></div>`}
-                            <div className="flex items-center justify-between mt-3 pt-3 border-t border-border">
-                                <label className="p-2.5 rounded-lg hover:bg-gray-100 cursor-pointer"><${Icon} name="image" size=${20} className="text-primary"/><input type="file" onChange=${handleImage} accept="image/*" className="hidden"/></label>
-                                <button type="submit" className="btn-primary py-2 px-6" disabled=${!content.trim() && !image}>Post</button>
-                            </div>
-                        </form>
-                    </div>
-                    
-                    ${sortedPosts.length === 0 ? html`<div className="card p-12 text-center text-text-muted">No posts yet</div>` :
-                        sortedPosts.map((post, i) => html`<${PostCard} key=${post.id} post=${post} user=${user} isAdmin=${isAdmin} showMenu=${showMenu} setShowMenu=${setShowMenu} onLike=${handleLike} likedPosts=${likedPosts} handleEdit=${handleEdit} handleDelete=${handleDelete} handleTogglePin=${handleTogglePin} editId=${editId} editContent=${editContent} setEditContent=${setEditContent} handleUpdate=${handleUpdate} setEditId=${setEditId}/>`)
-                    }
-                </div>
-            `;
-        };
-
-        // Job Card
-        const JobCard = ({ job, onApprove, onDelete, isAdmin, onApply }) => {
-            return html`
-                <div className="card p-5 fade-in">
-                    <div className="flex justify-between items-start gap-3">
-                        <div className="flex-1 min-w-0">
-                            <h3 className="font-semibold text-text text-lg">${job.title}</h3>
-                            <p className="text-sm text-text-secondary">${job.location}${job.salary ? ` | ${job.salary}` : ''}</p>
-                        </div>
-                    </div>
-                    <div className="mt-3"><p className="text-sm text-text-secondary job-description">${job.description}</p></div>
-                    ${(job.contact_email || job.whatsapp_number) && html`<div className="mt-3 p-3 bg-surface rounded-lg text-xs text-text-secondary flex gap-4">${job.contact_email && html`<span><${Icon} name="email" size=${14}/> ${job.contact_email}</span>`}${job.whatsapp_number && html`<span><${Icon} name="phone" size=${14}/> ${job.whatsapp_number}</span>`}</div>`}
-                    <div className="flex items-center gap-2 mt-4 pt-4 border-t border-border">
-                        ${job.is_approved ? html`<button onClick=${() => onApply(job)} className="btn-primary flex-1">Apply Now</button>` : isAdmin && html`<button onClick=${() => onApprove(job.id)} className="btn-primary flex-1"><${Icon} name="check" size=${16}/> Approve</button>`}
-                        ${isAdmin && html`<button onClick=${() => onDelete(job.id)} className="p-3 rounded-full border border-danger text-danger"><${Icon} name="delete" size=${18}/></button>`}
-                    </div>
-                </div>
-            `;
-        };
-
-        // Jobs Page
-        const JobsPage = ({ user, title = "Jobs", filter = 'approved' }) => {
-            const [jobs, setJobs] = React.useState([]);
-            const [loading, setLoading] = React.useState(true);
-            const [selectedJob, setSelectedJob] = React.useState(null);
-            const isAdmin = user?.email === ADMIN_EMAIL;
+            const handleDelete = async (id) => { 
+                if(confirm("Delete this post?")) { 
+                    await supabase.from('feed_posts').delete().eq('id', id); 
+                    fetchPosts(); 
+                    toast("Post deleted", "error"); 
+                } 
+            };
             
-            React.useEffect(() => {
-                supabase.from('jobs').select('*').order('created_at', { ascending: false }).limit(30).then(({ data }) => {
-                    let filtered = data || [];
-                    if (filter === 'pending') filtered = filtered.filter(j => !j.is_approved);
-                    else if (filter === 'approved') filtered = filtered.filter(j => j.is_approved);
-                    setJobs(filtered); setLoading(false);
-                });
-            }, [filter]);
+            const handleImage = (e) => { const file = e.target.files[0]; if(file){ const r = new FileReader(); r.onloadend = () => setImage(r.result); r.readAsDataURL(file); }};
 
-            if (loading) return html`<div className="max-w-[600px] mx-auto pb-20 md:pb-4"><div className="loader mx-auto mt-10"></div></div>`;
+            return e('div', { className: "max-w-xl w-full mx-auto space-y-4 pb-20 md:pb-4" },
+                // Post Creator (Admin Only)
+                isAdmin && e('div', { className: "bg-white rounded-lg border border-border-grey p-4 shadow-sm fade-in" },
+                    e('form', { onSubmit: handleSubmit },
+                        e('textarea', { placeholder: "Write an announcement...", value: content, onChange: (e) => setContent(e.target.value), className: "w-full p-3 bg-bg-grey rounded-lg outline-none text-sm resize-none border border-transparent hover:border-border-grey focus:border-primary focus:bg-white transition", rows: 3 }),
+                        image && e('div', { className: "relative mt-2 inline-block" }, e('img', { src: image, className: "max-h-32 rounded-lg" }), e('button', { type: "button", onClick: () => setImage(null), className: "absolute top-1 right-1 bg-danger text-white rounded-full p-1 text-xs" }, "✕")),
+                        e('div', { className: "flex justify-between items-center pt-3 border-t border-border-grey mt-3" },
+                            e('label', { className: "cursor-pointer text-text-grey hover:text-primary transition" }, 
+                                e('span', {className: "text-xl"}, "🖼️"), 
+                                e('input', { type: "file", onChange: handleImage, className: "hidden" })
+                            ),
+                            e('button', { className: "px-4 py-1.5 bg-primary text-white rounded-full font-bold text-xs hover:bg-primary-dark transition" }, "Post")
+                        )
+                    )
+                ),
 
-            return html`
-                <div className="max-w-[600px] mx-auto space-y-4 pb-20 md:pb-4 fade-in">
-                    <h2 className="text-xl font-bold text-text">${title}</h2>
-                    ${jobs.length === 0 ? html`<div className="card p-12 text-center text-text-muted">No jobs found</div>` :
-                        jobs.map(job => html`<${JobCard} key=${job.id} job=${job} onApprove=${(id) => supabase.from('jobs').update({ is_approved: true }).eq('id', id).then(() => window.location.reload())} onDelete=${(id) => confirm('Delete?') && supabase.from('jobs').delete().eq('id', id).then(() => window.location.reload())} isAdmin=${isAdmin} onApply=${setSelectedJob}/>`)
-                    }
-                    ${selectedJob && html`<${ApplyModal} job=${selectedJob} onClose=${() => setSelectedJob(null)}/>`}
-                </div>
-            `;
+                // Feed List
+                loading ? e(React.Fragment, null, 
+                    e(CardSkeleton), e(CardSkeleton)
+                ) : 
+                posts.map((post, i) => {
+                    const isAdminPost = post.poster_email === ADMIN_EMAIL;
+                    const displayName = isAdminPost ? "Bangladesh Radiology & Imaging Technologist Network" : post.poster_email.split('@')[0];
+                    
+                    return e('div', { key: post.id, className: `bg-white rounded-lg border border-border-grey overflow-hidden shadow-sm fade-in hover:shadow-md transition-shadow ${post.is_pinned ? 'pinned-card' : ''}`, style: { animationDelay: `${i * 0.05}s` } },
+                        e('div', { className: "p-4" },
+                            e('div', { className: "flex justify-between items-start" },
+                                e('div', { className: "flex gap-3" },
+                                    e('div', { className: "w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden border" },
+                                        isAdminPost ? e('img', { src: BRITN_LOGO_URL, className: "w-full h-full object-cover" }) : 
+                                        e('span', { className: "font-bold text-primary text-lg" }, displayName.charAt(0))
+                                    ),
+                                    e('div', null,
+                                        e('h3', { className: "font-semibold text-sm text-text-dark leading-tight flex items-center gap-1" }, 
+                                            displayName, 
+                                            isAdminPost && e('span', { className: "verified-badge" }, "✓ VERIFIED")
+                                        ),
+                                        e('p', { className: "text-[10px] text-text-grey mt-0.5" }, new Date(post.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }))
+                                    )
+                                ),
+                                isAdmin && e('div', {className: "flex gap-1"},
+                                    e('button', { onClick: () => handlePin(post.id, post.is_pinned), className: `p-1.5 rounded-full transition ${post.is_pinned ? 'bg-primary text-white' : 'hover:bg-bg-grey text-text-grey'}`, title: "Pin Post" }, "📌"),
+                                    e('button', { onClick: () => handleDelete(post.id), className: "p-1.5 hover:bg-red-50 rounded-full text-text-grey hover:text-danger transition" }, "🗑️")
+                                )
+                            ),
+                            post.is_pinned && e('div', { className: "mt-2 inline-flex items-center gap-1 text-[10px] font-bold text-primary uppercase" }, 
+                                "📌 Pinned Post"
+                            ),
+                            e('p', { className: "text-sm text-text-dark mt-3 leading-relaxed whitespace-pre-wrap" }, post.content)
+                        ),
+                        post.image_url && e('img', { src: post.image_url, className: "w-full max-h-96 object-cover bg-slate-50 border-t" })
+                    );
+                })
+            );
         };
 
-        // Add Job Form
-        const AddJobForm = ({ user }) => {
-            const [form, setForm] = React.useState({ title: '', location: '', salary: '', description: '', contact_email: '', whatsapp_number: '' });
-            const [loading, setLoading] = React.useState(false);
-            const isAdmin = user?.email === ADMIN_EMAIL;
-            const toast = useToast();
-
-            const handleSubmit = async (ev) => {
-                ev.preventDefault();
-                if (!form.title || !form.location || !form.description || !form.contact_email || !form.whatsapp_number) { toast('Fill all fields', 'error'); return; }
-                setLoading(true);
-                await supabase.from('jobs').insert([{ ...form, poster_id: user.id, poster_email: user.email, is_approved: isAdmin }]);
-                setForm({ title: '', location: '', salary: '', description: '', contact_email: '', whatsapp_number: '' });
-                setLoading(false);
-                toast('Job posted!');
-            };
-
-            return html`
-                <div className="max-w-[600px] mx-auto pb-20 md:pb-4 fade-in">
-                    <h2 className="text-xl font-bold text-text mb-4">Post a New Job</h2>
-                    <div className="card p-5 md:p-6">
-                        <form onSubmit=${handleSubmit} className="space-y-5">
-                            <input placeholder="Job Title *" value=${form.title} onChange=${(e) => setForm({ ...form, title: e.target.value })} className="input-pro" required/>
-                            <div className="grid grid-cols-2 gap-4">
-                                <input placeholder="Location *" value=${form.location} onChange=${(e) => setForm({ ...form, location: e.target.value })} className="input-pro" required/>
-                                <input placeholder="Salary" value=${form.salary} onChange=${(e) => setForm({ ...form, salary: e.target.value })} className="input-pro"/>
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
-                                <input type="email" placeholder="Contact Email *" value=${form.contact_email} onChange=${(e) => setForm({ ...form, contact_email: e.target.value })} className="input-pro" required/>
-                                <input type="tel" placeholder="WhatsApp *" value=${form.whatsapp_number} onChange=${(e) => setForm({ ...form, whatsapp_number: e.target.value })} className="input-pro" required/>
-                            </div>
-                            <textarea placeholder="Description *" value=${form.description} onChange=${(e) => setForm({ ...form, description: e.target.value })} className="input-pro textarea-lg" required/>
-                            <button type="submit" disabled=${loading} className="btn-primary w-full">${loading ? html`<div className="loader loader-sm mx-auto border-white border-t-transparent"></div>` : 'Post Job'}</button>
-                        </form>
-                    </div>
-                </div>
-            `;
-        };
-
-        // Report Page
+        // --- Reports Page ---
         const ReportPage = ({ user }) => {
             const [reports, setReports] = React.useState([]);
-            const [form, setForm] = React.useState({ hospital_name: '', category: 'Bad Behavior', details: '' });
             const [loading, setLoading] = React.useState(true);
+            const [search, setSearch] = React.useState('');
+            const [form, setForm] = React.useState({ hospital_name: '', category: 'Bad Behavior', details: '' });
             const toast = useToast();
+            const isAdmin = user?.email === ADMIN_EMAIL;
 
-            React.useEffect(() => { supabase.from('hospital_reports').select('*').order('created_at', { ascending: false }).limit(20).then(({ data }) => { setReports(data || []); setLoading(false); }); }, []);
+            const fetch = async () => {
+                setLoading(true);
+                setReports(await safeFetch(supabase.from('hospital_reports').select('*').order('created_at', { ascending: false }).limit(50)));
+                setLoading(false);
+            };
+            React.useEffect(() => { fetch(); }, []);
 
             const handleSubmit = async (ev) => {
                 ev.preventDefault();
-                if (!form.hospital_name || !form.details) { toast('Fill fields', 'error'); return; }
-                await supabase.from('hospital_reports').insert([{ ...form, reporter_email: user.email }]);
+                if(!form.hospital_name || !form.details) return;
+                await supabase.from('hospital_reports').insert([{...form, reporter_email: user?.email}]); 
                 setForm({ hospital_name: '', category: 'Bad Behavior', details: '' });
-                toast('Report submitted');
+                fetch(); 
+                toast("Report Submitted Successfully");
             };
 
-            return html`
-                <div className="max-w-[600px] mx-auto space-y-4 pb-20 md:pb-4 fade-in">
-                    <h2 className="text-xl font-bold text-text">Submit Report</h2>
-                    <div className="card p-5 md:p-6">
-                        <form onSubmit=${handleSubmit} className="space-y-5">
-                            <input placeholder="Hospital Name *" value=${form.hospital_name} onChange=${(e) => setForm({ ...form, hospital_name: e.target.value })} className="input-pro" required/>
-                            <select value=${form.category} onChange=${(e) => setForm({ ...form, category: e.target.value })} className="input-pro"><option>Bad Behavior</option><option>Salary Issue</option><option>Other</option></select>
-                            <textarea placeholder="Details *" value=${form.details} onChange=${(e) => setForm({ ...form, details: e.target.value })} className="input-pro textarea-lg" required/>
-                            <button type="submit" className="btn-primary w-full">Submit</button>
-                        </form>
-                    </div>
-                    <h3 className="font-semibold text-text mt-6">Recent Reports</h3>
-                    ${loading ? html`<div className="loader mx-auto"></div>` : html`
-                        <div className="space-y-3">${reports.map(r => html`<div key=${r.id} className="card p-4"><span className="font-semibold text-text">${r.hospital_name}</span><span className="text-xs bg-gray-100 text-text-secondary px-2 py-0.5 rounded ml-2">${r.category}</span><p className="text-sm text-text-secondary mt-1">${r.details}</p></div>`)}</div>
-                    `}
-                </div>
-            `;
+            const filtered = reports.filter(r => 
+                r.hospital_name.toLowerCase().includes(search.toLowerCase()) ||
+                r.details.toLowerCase().includes(search.toLowerCase())
+            );
+
+            return e('div', { className: "max-w-3xl mx-auto pb-20 md:pb-4 fade-in" },
+                e('div', { className: "bg-white rounded-lg border border-border-grey p-4 mb-4 shadow-sm" },
+                    e('h2', { className: "font-bold text-lg text-text-dark mb-3 flex items-center gap-2" }, 
+                        "🚩 Submit New Report", 
+                        e('span', { className: "text-xs font-normal text-text-grey" }, "Confidential")
+                    ),
+                    e('form', { onSubmit: handleSubmit, className: "space-y-4" },
+                        e('div', { className: "grid md:grid-cols-2 gap-4" },
+                            e(SmartInput, { label: "Hospital / Institution Name", placeholder: "e.g. Dhaka Medical College", value: form.hospital_name, onChange: e => setForm({...form, hospital_name: e.target.value}), required: true }),
+                            e('div', { className: "w-full" },
+                                e('label', { className: "block text-sm font-semibold text-text-dark mb-1" }, "Category"),
+                                e('select', { value: form.category, onChange: e => setForm({...form, category: e.target.value}), className: "w-full p-3 border border-border-grey rounded-lg input-focus outline-none text-sm bg-white" },
+                                    e('option', { value: "Bad Behavior" }, "Bad Behavior"),
+                                    e('option', { value: "Salary Issue" }, "Salary Issue"),
+                                    e('option', { value: "Safety Concern" }, "Safety Concern"),
+                                    e('option', { value: "Other" }, "Other")
+                                )
+                            )
+                        ),
+                        e('div', { className: "relative" },
+                            e('textarea', { 
+                                placeholder: "Describe the issue in detail...", 
+                                value: form.details, 
+                                onChange: e => setForm({...form, details: e.target.value}), 
+                                className: "w-full p-3 border border-border-grey rounded-lg input-focus outline-none min-h-[200px] text-sm", // Large height
+                                required: true 
+                            }),
+                            e('div', { className: "absolute bottom-2 right-2 text-[10px] text-text-grey" }, `${form.details.length} chars`)
+                        ),
+                        e('button', { className: "w-full md:w-auto px-6 py-2.5 bg-primary text-white rounded-lg font-semibold text-sm hover:bg-primary-dark transition ripple" }, "Submit Report")
+                    )
+                ),
+
+                e('div', { className: "bg-white rounded-lg border border-border-grey p-4 shadow-sm" },
+                    e('div', { className: "flex justify-between items-center mb-4" },
+                        e('h3', { className: "font-bold text-text-dark" }, "Recent Reports"),
+                        e('input', { placeholder: "Search reports...", value: search, onChange: e => setSearch(e.target.value), className: "p-2 border border-border-grey rounded-lg text-xs w-40 outline-none input-focus" })
+                    ),
+                    loading ? e(CardSkeleton) :
+                    e('div', { className: "space-y-2" }, 
+                        filtered.length === 0 && e('p', {className: "text-center text-sm text-text-grey py-8"}, "No reports found."),
+                        filtered.map(r => 
+                            e('div', { key: r.id, className: "p-3 border border-border-grey rounded-lg hover:bg-bg-grey transition" },
+                                e('div', { className: "flex justify-between items-start" },
+                                    e('div', null,
+                                        e('span', { className: "font-bold text-sm" }, r.hospital_name),
+                                        e('span', { className: "ml-2 text-[9px] bg-danger/10 text-danger px-1.5 py-0.5 rounded font-medium uppercase" }, r.category)
+                                    ),
+                                    e('span', { className: "text-[10px] text-text-grey" }, new Date(r.created_at).toLocaleDateString())
+                                ),
+                                e('p', { className: "text-xs text-text-grey mt-1 line-clamp-2" }, r.details)
+                            )
+                        )
+                    )
+                )
+            );
         };
 
-        // Profile Page
-        const ProfilePage = ({ user }) => {
-            return html`
-                <div className="max-w-[600px] mx-auto pb-20 md:pb-4 fade-in">
-                    <div className="card p-6 text-center">
-                        <div className="w-20 h-20 rounded-full bg-primary flex items-center justify-center text-white text-3xl font-bold mx-auto mb-4">${user?.email?.charAt(0).toUpperCase()}</div>
-                        <h2 className="text-xl font-bold text-text">${user?.user_metadata?.full_name || 'User'}</h2>
-                        <p className="text-text-secondary text-sm">${user?.email}</p>
-                    </div>
-                    <button onClick=${() => supabase.auth.signOut()} className="btn-secondary w-full mt-4">Sign Out</button>
-                </div>
-            `;
-        };
-
-        // Dashboard (Home) - Shows Pinned Posts
-        const Dashboard = ({ user, setPage }) => {
-            const [pinnedPosts, setPinnedPosts] = React.useState([]);
-            const [likedPosts, setLikedPosts] = React.useState(new Set());
+        // --- Jobs Page ---
+        const JobsPage = ({ user }) => {
+            const [jobs, setJobs] = React.useState([]);
             const [loading, setLoading] = React.useState(true);
+            const [form, setForm] = React.useState({ title: '', location: '', salary: '', description: '' });
+            const isAdmin = user?.email === ADMIN_EMAIL || user?.user_metadata?.role === 'hospital' || user?.user_metadata?.role === 'technologist';
+            const toast = useToast();
 
-            React.useEffect(() => {
-                const fetchData = async () => {
-                    try {
-                        const [postsRes, likesRes] = await Promise.all([
-                            supabase.from('feed_posts').select('*').eq('is_pinned', true).order('created_at', { ascending: false }).limit(3),
-                            supabase.from('post_likes').select('post_id').eq('user_email', user.email)
-                        ]);
-                        setPinnedPosts(postsRes.data || []);
-                        if (likesRes.data) setLikedPosts(new Set(likesRes.data.map(l => l.post_id)));
-                    } catch (err) { console.error(err); } finally { setLoading(false); }
-                };
-                fetchData();
-            }, []);
+            const fetch = async () => { 
+                setLoading(true);
+                setJobs(await safeFetch(supabase.from('jobs').select('*').eq('is_approved', true).order('created_at', { ascending: false }).limit(20)));
+                setLoading(false);
+            };
+            React.useEffect(() => { fetch(); }, []);
 
-            const handleLike = async (post) => {
-                const isLiked = likedPosts.has(post.id);
-                try {
-                    if (isLiked) {
-                        await supabase.from('post_likes').delete().match({ post_id: post.id, user_email: user.email });
-                        await supabase.from('feed_posts').update({ likes_count: Math.max(0, (post.likes_count || 0) - 1) }).eq('id', post.id);
-                        setLikedPosts(prev => { const newSet = new Set(prev); newSet.delete(post.id); return newSet; });
-                    } else {
-                        await supabase.from('post_likes').insert([{ post_id: post.id, user_email: user.email }]);
-                        await supabase.from('feed_posts').update({ likes_count: (post.likes_count || 0) + 1 }).eq('id', post.id);
-                        setLikedPosts(prev => new Set([...prev, post.id]));
-                    }
-                    const { data } = await supabase.from('feed_posts').select('*').eq('is_pinned', true).order('created_at', { ascending: false }).limit(3);
-                    setPinnedPosts(data || []);
-                } catch (err) { console.error(err); }
+            const handleSubmit = async (ev) => {
+                ev.preventDefault();
+                await supabase.from('jobs').insert([{...form, poster_id: user.id, is_approved: isAdmin}]);
+                setForm({});
+                toast("Job Posted Successfully");
+                fetch();
             };
 
-            return html`
-                <div className="max-w-[600px] mx-auto space-y-4 pb-20 md:pb-4 fade-in">
-                    <div className="card p-5 md:p-6">
-                        <div className="flex items-center gap-4">
-                            <div className="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-white text-2xl flex-shrink-0">${user?.email?.charAt(0).toUpperCase()}</div>
-                            <div className="min-w-0">
-                                <h1 className="text-lg font-semibold text-text">Assalamu Alaikum!</h1>
-                                <p className="text-text-secondary truncate">${user?.user_metadata?.full_name || 'Welcome back'}</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div className="grid grid-cols-2 gap-3">
-                        <button onClick=${() => setPage('feed')} className="card p-5 text-left hover:shadow-md transition-shadow"><span className="text-2xl">📰</span><p className="font-semibold text-text mt-2">News Feed</p><p className="text-xs text-text-muted mt-1">See all posts</p></button>
-                        <button onClick=${() => setPage('jobs')} className="card p-5 text-left hover:shadow-md transition-shadow"><span className="text-2xl">💼</span><p className="font-semibold text-text mt-2">Jobs</p><p className="text-xs text-text-muted mt-1">Find work</p></button>
-                        <button onClick=${() => setPage('reports')} className="card p-5 text-left hover:shadow-md transition-shadow"><span className="text-2xl">🚩</span><p className="font-semibold text-text mt-2">Reports</p><p className="text-xs text-text-muted mt-1">Submit issue</p></button>
-                        <button onClick=${() => setPage('add_job')} className="card p-5 text-left hover:shadow-md transition-shadow"><span className="text-2xl">➕</span><p className="font-semibold text-text mt-2">Post Job</p><p className="text-xs text-text-muted mt-1">Hire talent</p></button>
-                    </div>
+            return e('div', { className: "max-w-3xl mx-auto pb-20 md:pb-4 fade-in" },
+                isAdmin && e('div', { className: "bg-white rounded-lg border border-border-grey p-4 mb-4 shadow-sm" },
+                    e('h2', { className: "font-bold text-lg text-text-dark mb-3" }, "➕ Post a New Job"),
+                    e('form', { onSubmit: handleSubmit, className: "space-y-3" },
+                        e('div', { className: "grid md:grid-cols-2 gap-3" },
+                            e(SmartInput, { label: "Job Title", value: form.title, onChange: e => setForm({...form, title: e.target.value}), required: true }),
+                            e(SmartInput, { label: "Location", value: form.location, onChange: e => setForm({...form, location: e.target.value}), required: true })
+                        ),
+                        e(SmartInput, { label: "Salary (Optional)", value: form.salary, onChange: e => setForm({...form, salary: e.target.value}) }),
+                        e('div', { className: "relative" },
+                            e('label', { className: "block text-sm font-semibold text-text-dark mb-1" }, "Description"),
+                            e('div', { className: "flex gap-1 mb-1" }, // Toolbar UI
+                                e('button', { type: "button", className: "p-1.5 border rounded text-xs hover:bg-bg-grey" }, "B"),
+                                e('button', { type: "button", className: "p-1.5 border rounded text-xs hover:bg-bg-grey" }, "I"),
+                                e('button', { type: "button", className: "p-1.5 border rounded text-xs hover:bg-bg-grey" }, "• List")
+                            ),
+                            e('textarea', { 
+                                value: form.description, 
+                                onChange: e => setForm({...form, description: e.target.value}), 
+                                className: "w-full p-3 border border-border-grey rounded-lg input-focus outline-none min-h-[250px] text-sm", // Large height
+                                required: true 
+                            })
+                        ),
+                        e('button', { className: "w-full py-2.5 bg-primary text-white rounded-lg font-semibold text-sm hover:bg-primary-dark transition ripple" }, "Post Job")
+                    )
+                ),
 
-                    ${!loading && pinnedPosts.length > 0 && html`
-                        <div className="mt-6">
-                            <h3 className="font-bold text-text mb-3 flex items-center gap-2"><${Icon} name="pin" size=${18}/> Announcements</h3>
-                            ${pinnedPosts.map((post, i) => {
-                                const isAdminPost = post.poster_email === ADMIN_EMAIL;
-                                const displayName = isAdminPost ? 'BRITN Admin' : post.poster_email.split('@')[0];
-                                const isLiked = likedPosts.has(post.id);
-                                
-                                return html`
-                                    <div key=${post.id} className="pinned-post p-4 mb-3 fade-in">
-                                        <div className="flex items-start gap-3">
-                                            ${isAdminPost ? html`<img src=${BRITN_LOGO_URL} className="w-10 h-10 rounded-full object-cover ring-2 ring-highlight shadow-md flex-shrink-0"/>` : html`<div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold flex-shrink-0">${displayName.charAt(0).toUpperCase()}</div>`}
-                                            <div className="flex-1 min-w-0">
-                                                <div className="flex items-center gap-2 flex-wrap">
-                                                    <h3 className="font-semibold text-text text-sm">${displayName}</h3>
-                                                    ${isAdminPost && html`<span className="verified-badge">Verified</span>`}
-                                                </div>
-                                                <p className="text-text text-sm mt-1 leading-relaxed whitespace-pre-wrap">${post.content}</p>
-                                                ${post.image_url && html`<img src=${post.image_url} className="w-full mt-2 rounded-lg border border-border"/>`}
-                                                <div className="flex items-center mt-3 pt-2 border-t border-primary/20 gap-1">
-                                                    <button onClick=${() => handleLike(post)} className="post-action ${isLiked ? 'liked' : ''}"><${Icon} name=${isLiked ? 'likeFilled' : 'like'} size=${16}/><span>${post.likes_count || 0}</span></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                `;
-                            })}
-                        </div>
-                    `}
-                </div>
-            `;
+                loading ? e(React.Fragment, null, e(CardSkeleton), e(CardSkeleton)) :
+                e('div', { className: "space-y-3" },
+                    jobs.map(job => 
+                        e('div', { key: job.id, className: "bg-white rounded-lg border border-border-grey p-4 shadow-sm hover:shadow-md transition" },
+                            e('div', { className: "flex justify-between items-start" },
+                                e('div', null,
+                                    e('h3', { className: "font-bold text-text-dark" }, job.title),
+                                    e('p', { className: "text-xs text-text-grey mt-1" }, `📍 ${job.location}`),
+                                    job.salary && e('p', { className: "text-xs text-success font-medium mt-0.5" }, `💰 ${job.salary}`)
+                                ),
+                                e('button', { className: "p-2 text-text-grey hover:text-primary rounded-full hover:bg-bg-grey" }, "🔖")
+                            ),
+                            e('p', { className: "text-sm text-text-grey mt-3 line-clamp-2" }, job.description),
+                            e('button', { className: "mt-3 w-full py-2 border border-primary text-primary rounded-full font-semibold text-xs hover:bg-primary hover:text-white transition" }, "Apply Now")
+                        )
+                    )
+                )
+            );
         };
 
-        // Main App
+        // --- Dashboard ---
+        const Dashboard = ({ user, setPage, jobs }) => {
+            return e('div', { className: "max-w-xl w-full mx-auto pb-20 md:pb-4 fade-in" },
+                e('div', { className: "bg-white rounded-lg border border-border-grey p-4 mb-4 shadow-sm text-center" },
+                    e('div', { className: "w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center text-3xl mb-2" }, "👋"),
+                    e('h2', { className: "font-bold text-text-dark" }, "Welcome, " + (user?.user_metadata?.full_name || "User")),
+                    e('p', { className: "text-xs text-text-grey" }, "Stay connected with the community")
+                ),
+                e('div', { className: "grid grid-cols-2 gap-3" },
+                    e('div', { onClick: () => setPage('feed'), className: "bg-white p-4 rounded-lg border border-border-grey cursor-pointer hover:shadow-md transition" },
+                        e('div', { className: "text-2xl mb-1" }, "📰"),
+                        e('h3', { className: "font-bold text-sm text-text-dark" }, "News Feed"),
+                        e('p', { className: "text-xs text-text-grey" }, "Latest updates")
+                    ),
+                    e('div', { onClick: () => setPage('jobs'), className: "bg-white p-4 rounded-lg border border-border-grey cursor-pointer hover:shadow-md transition" },
+                        e('div', { className: "text-2xl mb-1" }, "💼"),
+                        e('h3', { className: "font-bold text-sm text-text-dark" }, "Jobs"),
+                        e('p', { className: "text-xs text-text-grey" }, `${jobs?.length || 0} Openings`)
+                    ),
+                    e('div', { onClick: () => setPage('reports'), className: "bg-white p-4 rounded-lg border border-border-grey cursor-pointer hover:shadow-md transition" },
+                        e('div', { className: "text-2xl mb-1" }, "🚩"),
+                        e('h3', { className: "font-bold text-sm text-text-dark" }, "Reports"),
+                        e('p', { className: "text-xs text-text-grey" }, "Submit issues")
+                    )
+                )
+            );
+        };
+
+        // --- Main Layout Logic ---
+        const ContentArea = ({ page, user, setPage, jobs }) => {
+            const isAdmin = user?.email === ADMIN_EMAIL;
+            const pages = {
+                'dash': e(Dashboard, { user, setPage, jobs }),
+                'feed': e(FeedPage, { user, allJobs: jobs }),
+                'jobs': e(JobsPage, { user }),
+                'reports': e(ReportPage, { user }),
+            };
+            // Admin Routing
+            if (isAdmin && page === 'approvals') return e('div', {className: "text-center p-10 text-text-grey"}, "Admin Panel - Approvals (Coming Soon)");
+            return pages[page] || pages['dash'];
+        };
+
+        // --- App Root ---
         const App = () => {
             const [user, setUser] = React.useState(null);
             const [view, setView] = React.useState('loading');
             const [page, setPage] = React.useState('dash');
-            const [showDropdown, setShowDropdown] = React.useState(false);
             const [jobs, setJobs] = React.useState([]);
 
             React.useEffect(() => {
-                supabase.auth.getSession().then(({ data: { session } }) => { setUser(session?.user); setView(session ? 'app' : 'login'); });
-                const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => { setUser(session?.user); setView(session?.user ? 'app' : 'login'); });
-                return () => subscription?.unsubscribe();
+                supabase.auth.getSession().then(({ data: { session } }) => {
+                    setUser(session?.user);
+                    setView(session ? 'app' : 'login');
+                });
+                supabase.auth.onAuthStateChange((e, s) => {
+                    setUser(s?.user);
+                    setView(s?.user ? 'app' : 'login');
+                });
             }, []);
 
-            React.useEffect(() => { if (view === 'app') supabase.from('jobs').select('*').eq('is_approved', true).limit(5).then(({ data }) => setJobs(data || [])); }, [view]);
-            React.useEffect(() => { const t = setTimeout(() => { if (view === 'loading') setView('login'); }, 5000); return () => clearTimeout(t); }, [view]);
+            React.useEffect(() => {
+                if(view === 'app') safeFetch(supabase.from('jobs').select('*').limit(3)).then(setJobs);
+            }, [view]);
 
-            if (view === 'loading') return html`<div class="min-h-screen flex items-center justify-center bg-surface"><div class="loader"></div></div>`;
-            if (view === 'login' || view === 'register') return html`<${AuthScreen} type=${view} onSwitch=${setView} onSuccess=${() => setView('app')}/>`;
-            
-            const isAdmin = user?.email === ADMIN_EMAIL;
-            
-            const renderContent = () => {
-                switch (page) {
-                    case 'dash': return html`<${Dashboard} user=${user} setPage=${setPage}/>`;
-                    case 'feed': return html`<${FeedPage} user=${user}/>`;
-                    case 'jobs': return html`<${JobsPage} user=${user}/>`;
-                    case 'reports': return html`<${ReportPage} user=${user}/>`;
-                    case 'profile': return html`<${ProfilePage} user=${user}/>`;
-                    case 'add_job': return html`<${AddJobForm} user=${user}/>`;
-                    case 'admin': return isAdmin ? html`<${AdminPanel} user=${user}/>` : html`<${Dashboard} user=${user} setPage=${setPage}/>`;
-                    default: return html`<${Dashboard} user=${user} setPage=${setPage}/>`;
-                }
-            };
+            if (view === 'loading') return e('div', { className: "flex h-screen items-center justify-center bg-bg-grey" }, e('div', { className: "loader" }));
+            if (view === 'login') return e(AuthScreen, { type: 'login', onSwitch: setView, onSuccess: () => setView('app') });
+            if (view === 'register') return e(AuthScreen, { type: 'register', onSwitch: setView });
 
-            return html`
-                <${ToastProvider}>
-                    <div class="app-container bg-surface">
-                        <${TopNavbar} user=${user} currentPage=${page} setPage=${setPage} showDropdown=${showDropdown} setShowDropdown=${setShowDropdown}/>
-                        <div class="flex-1 flex">
-                            <div class="hidden md:block"><${LeftSidebar} user=${user} setPage=${setPage}/></div>
-                            <main class="flex-1 overflow-auto p-4 md:py-6">${renderContent()}</main>
-                            <div class="hidden md:block"><${RightSidebar} jobs=${jobs}/></div>
-                        </div>
-                        <${BottomNav} currentPage=${page} setPage=${setPage} user=${user}/>
-                    </div>
-                <//>
-            `;
+            return e(ToastProvider, null,
+                e('div', { className: "min-h-screen bg-bg-grey" },
+                    e(TopNav, { user, onLogout: () => supabase.auth.signOut() }),
+                    
+                    // Desktop Layout
+                    e('div', { className: "max-w-6xl mx-auto md:flex gap-6 p-4 pt-6" },
+                        e(LeftSidebar, { user }),
+                        e('main', { className: "flex-1 w-full min-w-0" }, 
+                            e(ContentArea, { page, user, setPage, jobs })
+                        ),
+                        e(RightSidebar, { jobs })
+                    ),
+                    
+                    // Mobile Navigation
+                    e(BottomNav, { page, setPage })
+                )
+            );
         };
 
-        ReactDOM.createRoot(document.getElementById('root')).render(html`<${App}/>`);
+        ReactDOM.createRoot(document.getElementById('root')).render(e(App));
     </script>
 </body>
 </html>
