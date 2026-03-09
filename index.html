@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BRITN - Smart Radiology Network</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -13,19 +13,13 @@
                     colors: {
                         primary: '#0891b2',
                         'primary-dark': '#0e7490',
-                        'primary-light': '#22d3ee',
-                        surface: '#f0fdfa',
+                        surface: '#f8fafc',
                         card: '#FFFFFF',
-                        text: '#134e4a',
+                        text: '#0f172a',
                         'text-secondary': '#475569',
-                        'text-muted': '#94a3b8',
-                        highlight: '#facc15',
+                        border: '#e2e8f0',
                         success: '#10b981',
                         danger: '#ef4444',
-                        border: '#e2e8f0',
-                        'pinned-bg': '#ecfeff',
-                        whatsapp: '#25D366',
-                        xray: '#06b6d4',
                     }
                 }
             }
@@ -35,184 +29,92 @@
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         html, body { 
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
-            background: #f0fdfa;
-            color: #134e4a;
+            background: #f1f5f9;
+            color: #0f172a;
             min-height: 100vh;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
-        .font-bangla { font-family: 'Hind Siliguri', sans-serif; }
         
-        ::-webkit-scrollbar { width: 4px; height: 4px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
         
         .card {
             background: #FFFFFF;
             border-radius: 16px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
             border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
         }
-        
+        .card:active { transform: scale(0.99); }
+
         .input-pro {
             width: 100%; 
-            padding: 14px 16px; 
-            background: #FFFFFF;
+            padding: 12px 16px; 
+            background: #f8fafc;
             border: 1px solid #e2e8f0; 
             border-radius: 12px; 
             outline: none; 
             font-size: 16px;
-            color: #134e4a;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
         }
-        .input-pro:focus { border-color: #0891b2; box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.1); }
-        .input-pro::placeholder { color: #94a3b8; }
+        .input-pro:focus { border-color: #0891b2; background: #fff; box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.1); }
         
         .btn-primary {
-            background: linear-gradient(135deg, #0891b2, #0e7490);
+            background: #0891b2;
             color: white;
-            padding: 12px 20px;
-            border-radius: 12px;
+            padding: 10px 24px;
+            border-radius: 10px;
             font-weight: 600;
-            font-size: 16px;
             border: none;
             cursor: pointer;
-            transition: all 0.2s ease;
             display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            min-height: 48px;
-        }
-        .btn-primary:active { transform: scale(0.98); }
-        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
-        
-        .btn-secondary {
-            background: white;
-            color: #0891b2;
-            padding: 12px 20px;
-            border-radius: 12px;
-            font-weight: 600;
-            border: 2px solid #0891b2;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            min-height: 48px;
-            width: 100%;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .fade-in { animation: fadeIn 0.3s ease-out forwards; }
-        
-        .loader { 
-            border: 3px solid #e2e8f0; 
-            border-top: 3px solid #0891b2; 
-            border-radius: 50%; 
-            width: 32px; 
-            height: 32px; 
-            animation: spin 0.8s linear infinite; 
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
-        .toast-container { position: fixed; top: 70px; right: 16px; left: 16px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
-        .toast { padding: 14px 20px; border-radius: 12px; background: #FFFFFF; font-size: 14px; font-weight: 500; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); animation: fadeIn 0.3s ease-out; border-left: 4px solid; margin: 0 auto; pointer-events: auto; }
-        .toast-success { border-left-color: #10b981; }
-        .toast-error { border-left-color: #ef4444; }
-        
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 16px; }
-        .modal-content { background: white; border-radius: 20px; max-width: 400px; width: 100%; max-height: 85vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
-
-        .verified-badge { background: linear-gradient(135deg, #facc15, #eab308); color: #1D1D1D; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; }
-        .pin-badge { background: #0891b2; color: white; padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 600; }
-        
-        .pinned-post { background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%); border-left: 4px solid #0891b2; }
-
-        /* Header Styling */
-        .app-header { 
-            position: sticky; 
-            top: 0; 
-            z-index: 40; 
-            background: rgba(255, 255, 255, 0.9); 
-            backdrop-filter: blur(10px); 
-            border-bottom: 1px solid #e2e8f0;
-            padding: 10px 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        /* X-Ray Expose Button Styling */
-        .expose-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
             gap: 6px;
-            padding: 8px 16px;
-            border-radius: 20px;
-            color: #64748b;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            border: 1px solid #e2e8f0;
-            background: white;
-            flex: 1;
-            transition: all 0.2s ease;
-        }
-        .expose-btn:active { transform: scale(0.96); }
-        
-        .expose-btn.exposed {
-            background: linear-gradient(135deg, #0891b2, #06b6d4);
-            border-color: transparent;
-            color: white;
-            box-shadow: 0 4px 12px rgba(8, 145, 178, 0.4);
-        }
-        
-        .expose-btn.exposed svg { animation: pulse 1s infinite; }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        /* Bottom Nav Styling */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            border-top: 1px solid #e2e8f0;
-            z-index: 50;
-            padding-bottom: env(safe-area-inset-bottom);
-            display: flex;
-            justify-content: space-around;
-        }
-        .bottom-nav-item {
-            display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 8px 12px;
-            color: #94a3b8;
-            cursor: pointer;
-            border: none;
-            background: transparent;
-            flex: 1;
-            min-height: 56px;
-            transition: color 0.2s;
+            transition: all 0.15s;
         }
-        .bottom-nav-item.active { color: #0891b2; }
-        .bottom-nav-item span { font-size: 11px; margin-top: 4px; font-weight: 600; }
-
-        @media (max-width: 768px) {
-            .desktop-only { display: none !important; }
-        }
-        @media (min-width: 769px) {
-            .mobile-only { display: none !important; }
+        .btn-primary:active { transform: scale(0.97); background: #0e7490; }
+        
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-up { animation: fadeUp 0.3s ease-out forwards; }
+        
+        /* Header Style */
+        .header-main { 
+            position: sticky; top: 0; z-index: 100; 
+            background: rgba(255,255,255,0.9); 
+            backdrop-filter: blur(12px); 
+            border-bottom: 1px solid #e2e8f0; 
         }
         
-        #root { min-height: 100vh; padding-bottom: 70px; } /* Padding for bottom nav */
-        .app-container { background: #f0fdfa; min-height: 100vh; }
+        /* Action Buttons in Post */
+        .action-btn {
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            padding: 10px; border-radius: 8px; 
+            color: #64748b; font-size: 13px; font-weight: 600;
+            background: transparent; border: none; cursor: pointer;
+            transition: all 0.2s; flex: 1;
+        }
+        .action-btn:hover { background: #f1f5f9; color: #0f172a; }
+        .action-btn.active { color: #0891b2; }
+        .action-btn.active svg { animation: pulse 0.3s; }
+        
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+        /* Image Container */
+        .post-image { width: 100%; max-height: 400px; object-fit: cover; border-radius: 12px; margin-top: 12px; background: #f1f5f9; }
+
+        /* Bottom Nav */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e2e8f0; z-index: 100; padding-bottom: env(safe-area-inset-bottom); }
+        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px 0; color: #94a3b8; cursor: pointer; flex: 1; height: 56px; transition: color 0.2s; }
+        .nav-item.active { color: #0891b2; }
+        .nav-item span { font-size: 11px; font-weight: 500; margin-top: 2px; }
+
+        .toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: #1e293b; color: white; padding: 12px 20px; border-radius: 50px; font-size: 14px; font-weight: 500; z-index: 2000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        
+        .skeleton { background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        .badge { background: #0891b2; color: white; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; }
     </style>
 </head>
 <body>
@@ -226,455 +128,371 @@
 
         const html = htm.bind(React.createElement);
 
-        // Configuration
-        const BRITN_LOGO_URL = 'https://z-cdn-media.chatglm.cn/files/947017d9-2ded-4447-ab50-1dfd8ce35fcd.jpg?auth_key=1871748799-320010bf4fcc40a98d5d6172607e7c73-0-134513578fae2800da62ba56df7d4c44';
+        // --- Configuration & Supabase Setup ---
+        const BRITN_LOGO = 'https://z-cdn-media.chatglm.cn/files/947017d9-2ded-4447-ab50-1dfd8ce35fcd.jpg?auth_key=1871748799-320010bf4fcc40a98d5d6172607e7c73-0-134513578fae2800da62ba56df7d4c44';
         const SUPABASE_URL = 'https://hosiwwylofzjtweclycv.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhvc2l3d3lsb2Z6anR3ZWNseWN2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2NTc3ODgsImV4cCI6MjA4NzIzMzc4OH0.DkCioDXAQQYZm9NOhfsyuXvArR1TQjMMRf7OFv8FClA';
         const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
         const ADMIN_EMAIL = 'admin@britn.com';
 
-        // Toast Context
-        const ToastContext = React.createContext(null);
-        const ToastProvider = ({ children }) => {
-            const [toasts, setToasts] = React.useState([]);
-            const addToast = (message, type = 'success') => {
-                const id = Date.now();
-                setToasts(prev => [...prev, { id, message, type }]);
-                setTimeout(() => setToasts(prev => prev.filter(t => t.id !== id)), 3000);
-            };
-            return html`<${ToastContext.Provider} value=${addToast}>${children}<div className="toast-container">${toasts.map(t => html`<div key=${t.id} className="toast toast-${t.type}">${t.message}</div>`)}</div><//>`;
-        };
-        const useToast = () => React.useContext(ToastContext);
-
-        // Icons
+        // --- Helper Components ---
         const Icon = ({ name, size = 20 }) => {
             const icons = {
-                home: html`<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="9,22 9,12 15,12 15,22" fill="none" stroke="currentColor" stroke-width="2"/>`,
-                network: html`<path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" fill="currentColor"/>`,
-                jobs: html`<path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z" fill="currentColor"/>`,
-                profile: html`<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" fill="currentColor"/>`,
-                radiation: html`<circle cx="12" cy="12" r="2" fill="currentColor"/><path d="M12 2a2 2 0 012 2 2 2 0 01-2 2 2 2 0 01-2-2 2 2 0 012-2M4.93 4.93c.78-.78 2.05-.78 2.83 0 .78.78.78 2.05 0 2.83-.78.78-2.05.78-2.83 0-.78-.78-.78-2.05 0-2.83m14.14 0c.78.78.78 2.05 0 2.83-.78.78-2.05.78-2.83 0-.78-.78-.78-2.05 0-2.83.78-.78 2.05-.78 2.83 0" fill="currentColor"/>`, // Simplified radiation
-                pin: html`<path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2" fill="none" stroke="currentColor" stroke-width="2"/>`,
-                plus: html`<line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2"/><line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2"/>`,
-                edit: html`<path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" fill="none" stroke="currentColor" stroke-width="2"/>`,
-                delete: html`<polyline points="3,6 5,6 21,6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" fill="none" stroke="currentColor" stroke-width="2"/>`,
-                menu: html`<circle cx="12" cy="6" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="18" r="1.5" fill="currentColor"/>`,
-                close: html`<line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2"/><line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2"/>`,
-                check: html`<polyline points="20,6 9,17 4,12" fill="none" stroke="currentColor" stroke-width="2"/>`,
-                email: html`<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="22,6 12,13 2,6" fill="none" stroke="currentColor" stroke-width="2"/>`,
-                whatsapp: html`<path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" fill="none" stroke="currentColor" stroke-width="2"/>`,
-                logout: html`<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="16,17 21,12 16,7" fill="none" stroke="currentColor" stroke-width="2"/><line x1="21" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="2"/>`,
-                admin: html`<path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" fill="none" stroke="currentColor" stroke-width="2"/>`,
+                home: `<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="9,22 9,12 15,12 15,22" fill="none" stroke="currentColor" stroke-width="2"/>`,
+                network: `<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M23 21v-2a4 4 0 00-3-3.87" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 3.13a4 4 0 010 7.75" fill="none" stroke="currentColor" stroke-width="2"/>`,
+                jobs: `<rect x="2" y="7" width="20" height="14" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16" fill="none" stroke="currentColor" stroke-width="2"/>`,
+                user: `<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="2"/>`,
+                radiation: `<circle cx="12" cy="12" r="2" fill="currentColor"/><path d="M12 2L4.5 20.5l15-1L12 2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`, // Generic icon replaced with simple shape
+                refresh: `<polyline points="23 4 23 10 17 10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10" fill="none" stroke="currentColor" stroke-width="2"/>`,
+                image: `<rect x="3" y="3" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/><polyline points="21 15 16 10 5 21" fill="none" stroke="currentColor" stroke-width="2"/>`,
+                send: `<line x1="22" y1="2" x2="11" y2="13" stroke="currentColor" stroke-width="2"/><polygon points="22 2 15 22 11 13 2 9 22 2" fill="none" stroke="currentColor" stroke-width="2"/>`,
+                menu: `<circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/>`,
+                plus: `<line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2"/><line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2"/>`,
+                check: `<polyline points="20 6 9 17 4 12" fill="none" stroke="currentColor" stroke-width="2"/>`,
+                x: `<line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2"/><line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2"/>`,
+                logout: `<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="16 17 21 12 16 7" fill="none" stroke="currentColor" stroke-width="2"/><line x1="21" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="2"/>`
             };
-            return html`<svg width=${size} height=${size} viewBox="0 0 24 24" fill="none">${icons[name] || ''}</svg>`;
+            return React.createElement('svg', { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round", dangerouslySetInnerHTML: { __html: icons[name] || '' } });
         };
 
-        // Components
-        const Header = ({ user, setPage, showMenu, setShowMenu }) => {
-            const isAdmin = user?.email === ADMIN_EMAIL;
-            const menuRef = React.useRef(null);
+        // --- Main Components ---
 
-            React.useEffect(() => {
-                const handler = (e) => { if (menuRef.current && !menuRef.current.contains(e.target)) setShowMenu(false); };
-                document.addEventListener('touchstart', handler);
-                document.addEventListener('mousedown', handler);
-                return () => { document.removeEventListener('touchstart', handler); document.removeEventListener('mousedown', handler); };
-            }, [setShowMenu]);
-
-            return html`
-                <header className="app-header">
-                    <div className="flex items-center gap-2" onClick=${() => setPage('dash')}>
-                        <img src=${BRITN_LOGO_URL} className="w-9 h-9 rounded-lg shadow" alt="Logo"/>
-                        <div class="flex flex-col leading-tight">
-                            <span className="text-lg font-bold text-primary">BRITN</span>
-                            <span className="text-[10px] text-text-muted -mt-0.5">Smart Radiology</span>
-                        </div>
-                    </div>
-                    
-                    <div className="desktop-only flex items-center gap-2">
-                        ${isAdmin && html`<button onClick=${() => setPage('admin')} className="p-2 text-sm font-medium text-text-secondary hover:text-primary">Admin</button>`}
-                        <button onClick=${() => supabase.auth.signOut()} className="btn-primary py-2 text-sm px-4">Sign Out</button>
-                    </div>
-
-                    <div className="mobile-only relative" ref=${menuRef}>
-                        <button onClick=${() => setShowMenu(!showMenu)} className="p-2 rounded-full hover:bg-gray-100 active:bg-gray-200">
-                            <${Icon} name="menu" size=${22}/>
-                        </button>
-                        ${showMenu && html`
-                            <div className="absolute right-0 top-12 w-48 bg-white rounded-xl shadow-xl border border-border py-2 z-50 fade-in">
-                                ${isAdmin && html`<button onClick=${() => { setPage('admin'); setShowMenu(false); }} className="w-full text-left px-4 py-3 text-sm hover:bg-gray-50 flex items-center gap-2"><${Icon} name="admin" size=${16}/> Admin Panel</button>`}
-                                <button onClick=${() => { setPage('add_job'); setShowMenu(false); }} className="w-full text-left px-4 py-3 text-sm hover:bg-gray-50 flex items-center gap-2"><${Icon} name="plus" size=${16}/> Post a Job</button>
-                                <button onClick=${() => { setPage('reports'); setShowMenu(false); }} className="w-full text-left px-4 py-3 text-sm hover:bg-gray-50 flex items-center gap-2"><${Icon} name="admin" size=${16}/> Reports</button>
-                                <hr class="my-1"/>
-                                <button onClick=${() => supabase.auth.signOut()} className="w-full text-left px-4 py-3 text-sm text-danger hover:bg-red-50 flex items-center gap-2"><${Icon} name="logout" size=${16}/> Sign Out</button>
-                            </div>
-                        `}
-                    </div>
-                </header>
-            `;
+        const Toast = ({ message }) => {
+            if (!message) return null;
+            return html`<div className="toast fade-up">${message}</div>`;
         };
 
-        const AuthScreen = ({ type, onSwitch, onSuccess }) => {
-            const [form, setForm] = React.useState({ email: '', pass: '', name: '', role: 'student' });
-            const [error, setError] = React.useState('');
+        const AuthScreen = ({ onAuth }) => {
+            const [isLogin, setIsLogin] = React.useState(true);
+            const [email, setEmail] = React.useState('');
+            const [pass, setPass] = React.useState('');
+            const [name, setName] = React.useState('');
             const [loading, setLoading] = React.useState(false);
-            
-            const handleAuth = async (ev) => {
-                ev.preventDefault(); setError(''); setLoading(true);
-                try {
-                    if (type === 'login') {
-                        const { error } = await supabase.auth.signInWithPassword({ email: form.email.trim().toLowerCase(), password: form.pass });
-                        if (error) throw error; onSuccess();
-                    } else {
-                        if (form.pass.length < 6) throw new Error("Min 6 chars");
-                        const { error } = await supabase.auth.signUp({ email: form.email.trim().toLowerCase(), password: form.pass, options: { data: { full_name: form.name.trim(), role: form.role } } });
-                        if (error) throw error; alert("Success! Login now."); onSwitch('login');
-                    }
-                } catch (err) { setError(err.message); } finally { setLoading(false); }
-            };
+            const [error, setError] = React.useState('');
 
-            return html`
-                <div className="min-h-screen flex items-center justify-center p-4 bg-surface">
-                    <div className="w-full max-w-sm fade-in">
-                        <div className="text-center mb-8">
-                            <img src=${BRITN_LOGO_URL} className="w-20 h-20 rounded-2xl shadow-lg mx-auto mb-3" alt="Logo"/>
-                            <h1 className="text-2xl font-bold text-text">BRITN</h1>
-                            <p className="text-sm text-primary font-medium">Smart Radiology Network</p>
-                        </div>
-                        <div className="card p-6">
-                            ${error && html`<div className="bg-red-50 text-danger text-center p-2 rounded-lg mb-3 text-sm">${error}</div>`}
-                            <form onSubmit=${handleAuth} className="space-y-4">
-                                ${type === 'register' && html`<input placeholder="Full Name" value=${form.name} onChange=${(e) => setForm({...form, name: e.target.value})} className="input-pro" required/>`}
-                                <input type="email" placeholder="Email" value=${form.email} onChange=${(e) => setForm({...form, email: e.target.value})} className="input-pro" required/>
-                                <input type="password" placeholder="Password" value=${form.pass} onChange=${(e) => setForm({...form, pass: e.target.value})} className="input-pro" required/>
-                                ${type === 'register' && html`<div className="grid grid-cols-3 gap-2">${['student', 'tech', 'hospital'].map(r => html`<button type="button" key=${r} onClick=${() => setForm({...form, role: r})} className="py-2 rounded-lg text-xs font-semibold border ${form.role === r ? 'bg-primary text-white' : 'bg-white'}">${r}</button>`)}</div>`}
-                                <button type="submit" disabled=${loading} className="btn-primary w-full">${loading ? html`<div className="loader loader-sm mx-auto border-white"></div>` : (type === 'login' ? 'Sign In' : 'Join')}</button>
-                            </form>
-                        </div>
-                        <p className="text-center text-sm text-text-secondary mt-4">${type === 'login' ? 'New? ' : 'Have account? '}<button onClick=${() => onSwitch(type === 'login' ? 'register' : 'login')} className="text-primary font-bold">${type === 'login' ? 'Join' : 'Login'}</button></p>
-                    </div>
-                </div>
-            `;
-        };
-
-        const PostCard = ({ post, user, isAdmin, onExpose, exposedPosts, showMenu, setShowMenu, handleDelete, handleTogglePin }) => {
-            const isAdminPost = post.poster_email === ADMIN_EMAIL;
-            // Updated Name Logic: Show "BRITN" for admin, otherwise name or email prefix
-            const displayName = isAdminPost ? 'BRITN' : (post.poster_name || post.poster_email.split('@')[0]);
-            const isExposed = exposedPosts.has(post.id);
-
-            return html`
-                <div className="card p-4 mb-3 fade-in ${post.is_pinned ? 'pinned-post' : ''}">
-                    <div className="flex items-start gap-3">
-                        <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold flex-shrink-0">
-                            ${isAdminPost ? html`<img src=${BRITN_LOGO_URL} class="w-full h-full rounded-full object-cover"/>` : displayName.charAt(0).toUpperCase()}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2">
-                                <span className="font-bold text-text text-sm">${displayName}</span>
-                                ${isAdminPost && html`<span className="verified-badge">Verified</span>`}
-                                ${post.is_pinned && html`<span className="pin-badge">Pinned</span>`}
-                            </div>
-                            <p className="text-xs text-text-muted">${new Date(post.created_at).toLocaleDateString()}</p>
-                        </div>
-                        ${isAdmin && html`
-                            <div className="relative">
-                                <button onClick=${() => setShowMenu(showMenu === post.id ? null : post.id)} className="p-1 rounded hover:bg-gray-100"><${Icon} name="menu" size=${16}/></button>
-                                ${showMenu === post.id && html`
-                                    <div className="absolute right-0 top-6 bg-white rounded-lg shadow-lg border py-1 w-28 z-20">
-                                        <button onClick=${() => handleTogglePin(post)} className="w-full text-left px-3 py-2 text-xs hover:bg-gray-50">Pin</button>
-                                        <button onClick=${() => handleDelete(post.id)} className="w-full text-left px-3 py-2 text-xs text-danger hover:bg-red-50">Delete</button>
-                                    </div>
-                                `}
-                            </div>
-                        `}
-                    </div>
-                    <p className="text-sm text-text mt-2 whitespace-pre-wrap">${post.content}</p>
-                    
-                    <div className="mt-3 pt-2 border-t border-border flex">
-                        <button onClick=${() => onExpose(post)} className="expose-btn ${isExposed ? 'exposed' : ''}">
-                            <${Icon} name="radiation" size=${16}/>
-                            <span>Expose ${post.likes_count || 0}</span>
-                        </button>
-                    </div>
-                </div>
-            `;
-        };
-
-        const FeedPage = ({ user }) => {
-            const [posts, setPosts] = React.useState([]);
-            const [loading, setLoading] = React.useState(true);
-            const [content, setContent] = React.useState('');
-            const [exposedPosts, setExposedPosts] = React.useState(new Set());
-            const [showMenu, setShowMenu] = React.useState(null);
-            const isAdmin = user?.email === ADMIN_EMAIL;
-            const toast = useToast();
-
-            const fetchPosts = React.useCallback(async () => {
-                setLoading(true);
-                const [{ data: pData }, { data: lData }] = await Promise.all([
-                    supabase.from('feed_posts').select('*').order('created_at', { ascending: false }).limit(20),
-                    supabase.from('post_likes').select('post_id').eq('user_email', user.email)
-                ]);
-                setPosts(pData || []);
-                setExposedPosts(new Set(lData?.map(l => l.post_id)));
-                setLoading(false);
-            }, [user.email]);
-
-            React.useEffect(() => { fetchPosts(); }, [fetchPosts]);
-
-            const handleSubmit = async (e) => {
+            const handleAuth = async (e) => {
                 e.preventDefault();
-                if(!content.trim()) return;
-                await supabase.from('feed_posts').insert([{ content, poster_email: user.email, poster_id: user.id, poster_name: user.user_metadata?.full_name }]);
-                setContent(''); fetchPosts(); toast('Posted!');
-            };
-
-            const handleExpose = async (post) => {
-                const isExposed = exposedPosts.has(post.id);
-                const newCount = isExposed ? Math.max(0, (post.likes_count || 0) - 1) : (post.likes_count || 0) + 1;
-                
-                setPosts(prev => prev.map(p => p.id === post.id ? {...p, likes_count: newCount} : p));
-                setExposedPosts(prev => isExposed ? new Set([...prev].filter(id => id !== post.id)) : new Set([...prev, post.id]));
-                
-                if(isExposed) {
-                    await supabase.from('post_likes').delete().match({ post_id: post.id, user_email: user.email });
-                    await supabase.from('feed_posts').update({ likes_count: newCount }).eq('id', post.id);
-                } else {
-                    await supabase.from('post_likes').insert([{ post_id: post.id, user_email: user.email }]);
-                    await supabase.from('feed_posts').update({ likes_count: newCount }).eq('id', post.id);
+                setError('');
+                setLoading(true);
+                try {
+                    if (isLogin) {
+                        const { error } = await supabase.auth.signInWithPassword({ email, password: pass });
+                        if (error) throw error;
+                    } else {
+                        const { error } = await supabase.auth.signUp({ 
+                            email, 
+                            password: pass, 
+                            options: { data: { full_name: name } } 
+                        });
+                        if (error) throw error;
+                        alert('Registration successful! Please login.');
+                        setIsLogin(true);
+                    }
+                } catch (err) {
+                    setError(err.message);
+                } finally {
+                    setLoading(false);
                 }
             };
-            
-            const handleTogglePin = async (p) => { await supabase.from('feed_posts').update({ is_pinned: !p.is_pinned }).eq('id', p.id); fetchPosts(); };
-            const handleDelete = async (id) => { if(confirm('Delete?')) { await supabase.from('feed_posts').delete().eq('id', id); fetchPosts(); } };
-
-            if (loading) return html`<div className="flex justify-center p-10"><div className="loader"></div></div>`;
 
             return html`
-                <div className="p-3">
-                    ${isAdmin && html`
-                        <form onSubmit=${handleSubmit} className="card p-3 mb-4">
-                            <textarea value=${content} onChange=${(e) => setContent(e.target.value)} placeholder="Write announcement..." className="input-pro resize-none min-h-[80px] text-sm" />
-                            <div className="flex justify-end mt-2"><button className="btn-primary py-1.5 text-sm" disabled=${!content}>Post</button></div>
-                        </form>
-                    `}
-                    ${posts.length === 0 ? html`<div className="text-center text-text-muted mt-10">No posts</div>` : 
-                        posts.map(p => html`<${PostCard} key=${p.id} post=${p} user=${user} isAdmin=${isAdmin} onExpose=${handleExpose} exposedPosts=${exposedPosts} showMenu=${showMenu} setShowMenu=${setShowMenu} handleDelete=${handleDelete} handleTogglePin=${handleTogglePin}/>`)
-                    }
+                <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-surface">
+                    <img src=${BRITN_LOGO} className="w-20 h-20 rounded-2xl shadow-lg mb-4" />
+                    <h1 className="text-2xl font-bold text-primary mb-1">BRITN</h1>
+                    <p className="text-xs text-text-secondary mb-8">Smart Radiology Network</p>
+                    
+                    <form onSubmit=${handleAuth} className="w-full max-w-sm space-y-4">
+                        ${!isLogin && html`<input type="text" placeholder="Full Name" value=${name} onChange=${(e) => setName(e.target.value)} className="input-pro" required />`}
+                        <input type="email" placeholder="Email Address" value=${email} onChange=${(e) => setEmail(e.target.value)} className="input-pro" required />
+                        <input type="password" placeholder="Password" value=${pass} onChange=${(e) => setPass(e.target.value)} className="input-pro" required />
+                        
+                        ${error && html`<div className="text-danger text-xs text-center">${error}</div>`}
+                        
+                        <button type="submit" disabled=${loading} className="btn-primary w-full">
+                            ${loading ? 'Please wait...' : (isLogin ? 'Sign In' : 'Create Account')}
+                        </button>
+                    </form>
+                    
+                    <button onClick=${() => setIsLogin(!isLogin)} className="mt-6 text-sm text-primary font-medium">
+                        ${isLogin ? 'New here? Create an account' : 'Have an account? Sign In'}
+                    </button>
                 </div>
             `;
         };
 
-        const JobsPage = ({ user }) => {
-            const [jobs, setJobs] = React.useState([]);
-            const [loading, setLoading] = React.useState(true);
-            const isAdmin = user?.email === ADMIN_EMAIL;
-            
-            React.useEffect(() => {
-                supabase.from('jobs').select('*').eq('is_approved', true).order('created_at', { ascending: false }).then(({ data }) => { setJobs(data || []); setLoading(false); });
-            }, []);
-
-            if (loading) return html`<div className="flex justify-center p-10"><div className="loader"></div></div>`;
+        const PostCard = ({ post, user, onLike, isLiked, onDelete, onPin, isAdmin }) => {
+            const isAdminPost = post.poster_email === ADMIN_EMAIL;
+            const displayName = isAdminPost ? 'BRITN' : (post.poster_name || post.poster_email.split('@')[0]);
+            const [imgError, setImgError] = React.useState(false);
 
             return html`
-                <div className="p-3">
-                    <h2 className="text-lg font-bold text-text p-2">Jobs</h2>
-                    ${jobs.map(job => html`
-                        <div key=${job.id} className="card p-4 mb-3 fade-in">
-                            <h3 className="font-bold text-text">${job.title}</h3>
-                            <p className="text-xs text-text-secondary mb-2">${job.location} | ${job.salary || 'N/A'}</p>
-                            <p className="text-sm text-text-secondary mb-3">${job.description}</p>
-                            <a href="mailto:${job.contact_email}?subject=Apply: ${job.title}" className="btn-primary block text-center text-sm py-2 w-full">Apply via Email</a>
+                <div className="card p-4 fade-up">
+                    <div className="flex items-center gap-3 mb-2">
+                        <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm overflow-hidden">
+                            ${isAdminPost ? html`<img src=${BRITN_LOGO} className="w-full h-full object-cover" />` : displayName.charAt(0).toUpperCase()}
                         </div>
-                    `)}
+                        <div className="flex-1">
+                            <div className="flex items-center gap-2">
+                                <span className="font-semibold text-text text-sm">${displayName}</span>
+                                ${isAdminPost && html`<span className="badge">Official</span>`}
+                                ${post.is_pinned && html`<span className="badge" style=${{background:'#fbbf24', color:'#78350f'}}>Pinned</span>`}
+                            </div>
+                            <span className="text-xs text-text-secondary">${new Date(post.created_at).toLocaleDateString()}</span>
+                        </div>
+                        ${isAdmin && html`
+                            <div className="dropdown dropdown-end">
+                                <label tabIndex="0" className="btn btn-ghost btn-xs rounded-full"><${Icon} name="menu" size=${16}/></label>
+                                <ul tabIndex="0" className="dropdown-content menu p-2 shadow-lg bg-base-100 rounded-box w-32">
+                                    <li><a onClick=${() => onPin(post)}>${post.is_pinned ? 'Unpin' : 'Pin'}</a></li>
+                                    <li><a onClick=${() => onDelete(post.id)} className="text-error">Delete</a></li>
+                                </ul>
+                            </div>
+                            <!-- Simple dropdown replacement for Tailwind devoid env -->
+                            <div className="relative">
+                                <button onClick=${(e) => e.currentTarget.nextElementSibling.classList.toggle('hidden')} className="p-1 rounded hover:bg-gray-100">
+                                    <${Icon} name="menu" size=${16}/>
+                                </button>
+                                <div className="hidden absolute right-0 top-6 bg-white shadow-lg rounded-md border z-10 w-28">
+                                    <button onClick=${() => { onPin(post); e.currentTarget.parentElement.classList.add('hidden'); }} className="block w-full text-left px-3 py-2 text-xs hover:bg-gray-50">Pin Post</button>
+                                    <button onClick=${() => { onDelete(post.id); e.currentTarget.parentElement.classList.add('hidden'); }} className="block w-full text-left px-3 py-2 text-xs text-danger hover:bg-red-50">Delete</button>
+                                </div>
+                            </div>
+                        `}
+                    </div>
+
+                    <p className="text-sm text-text mb-2 whitespace-pre-wrap">${post.content}</p>
+                    
+                    <!-- Image Fix: Proper rendering with error handling -->
+                    ${post.image_url && !imgError && html`
+                        <img 
+                            src=${post.image_url} 
+                            alt="Post image" 
+                            className="post-image"
+                            onError=${() => setImgError(true)}
+                        />
+                    `}
+
+                    <div className="action-row mt-3 pt-2 border-t border-border flex">
+                        <button onClick=${() => onLike(post)} className="action-btn ${isLiked ? 'active' : ''}">
+                            <${Icon} name="radiation" size=${18} />
+                            <span>Expose ${post.likes_count || 0}</span>
+                        </button>
+                        <button className="action-btn">
+                            <${Icon} name="network" size=${18} />
+                            <span>Share</span>
+                        </button>
+                    </div>
                 </div>
             `;
         };
 
-        const AddJob = ({ user }) => {
-            const [form, setForm] = React.useState({ title: '', location: '', salary: '', description: '', contact_email: '', whatsapp_number: '' });
-            const [loading, setLoading] = React.useState(false);
-            const toast = useToast();
-            const isAdmin = user?.email === ADMIN_EMAIL;
-
-            const handleSubmit = async (e) => {
-                e.preventDefault();
-                if (!form.title || !form.description) return;
-                setLoading(true);
-                await supabase.from('jobs').insert([{ ...form, poster_id: user.id, poster_email: user.email, is_approved: isAdmin }]);
-                setLoading(false);
-                setForm({ title: '', location: '', salary: '', description: '', contact_email: '', whatsapp_number: '' });
-                toast('Job Posted!');
-            };
-
-            return html`
-                <div className="p-3">
-                    <h2 className="text-lg font-bold text-text p-2">Post Job</h2>
-                    <form onSubmit=${handleSubmit} className="card p-4 space-y-3">
-                        <input placeholder="Title *" value=${form.title} onChange=${(e) => setForm({...form, title: e.target.value})} className="input-pro text-sm" required/>
-                        <input placeholder="Location *" value=${form.location} onChange=${(e) => setForm({...form, location: e.target.value})} className="input-pro text-sm"/>
-                        <input placeholder="Salary" value=${form.salary} onChange=${(e) => setForm({...form, salary: e.target.value})} className="input-pro text-sm"/>
-                        <textarea placeholder="Description *" value=${form.description} onChange=${(e) => setForm({...form, description: e.target.value})} className="input-pro text-sm min-h-[100px]"/>
-                        <input placeholder="Email *" value=${form.contact_email} onChange=${(e) => setForm({...form, contact_email: e.target.value})} className="input-pro text-sm" type="email"/>
-                        <input placeholder="WhatsApp" value=${form.whatsapp_number} onChange=${(e) => setForm({...form, whatsapp_number: e.target.value})} className="input-pro text-sm"/>
-                        <button type="submit" disabled=${loading} className="btn-primary w-full text-sm">${loading ? 'Posting...' : 'Post Job'}</button>
-                    </form>
-                </div>
-            `;
-        };
-
-        const ReportsPage = ({ user }) => {
-            const [form, setForm] = React.useState({ hospital_name: '', category: 'Bad Behavior', details: '' });
-            const toast = useToast();
-            const handleSubmit = async (e) => {
-                e.preventDefault();
-                await supabase.from('hospital_reports').insert([{ ...form, reporter_email: user.email }]);
-                setForm({ hospital_name: '', category: 'Bad Behavior', details: '' });
-                toast('Reported');
-            };
-            return html`
-                <div className="p-3">
-                    <h2 className="text-lg font-bold text-text p-2">Submit Report</h2>
-                    <form onSubmit=${handleSubmit} className="card p-4 space-y-3">
-                         <input placeholder="Hospital Name *" value=${form.hospital_name} onChange=${(e) => setForm({...form, hospital_name: e.target.value})} className="input-pro text-sm" required/>
-                         <select value=${form.category} onChange=${(e) => setForm({...form, category: e.target.value})} className="input-pro text-sm">
-                            <option>Bad Behavior</option><option>Salary Issue</option><option>Other</option>
-                         </select>
-                         <textarea placeholder="Details *" value=${form.details} onChange=${(e) => setForm({...form, details: e.target.value})} className="input-pro text-sm min-h-[100px]"/>
-                         <button className="btn-primary w-full text-sm">Submit</button>
-                    </form>
-                </div>
-            `;
-        };
-
-        const AdminPanel = ({ user }) => {
-            const [tab, setTab] = React.useState('pending');
-            const [jobs, setJobs] = React.useState([]);
+        const Feed = ({ user, showToast }) => {
             const [posts, setPosts] = React.useState([]);
-            const toast = useToast();
+            const [loading, setLoading] = React.useState(true);
+            const [text, setText] = React.useState('');
+            const [image, setImage] = React.useState(null);
+            const [likedPosts, setLikedPosts] = React.useState(new Set());
+            const isAdmin = user?.email === ADMIN_EMAIL;
 
             const fetchData = async () => {
-                const { data: j } = await supabase.from('jobs').select('*').eq('is_approved', false);
-                const { data: p } = await supabase.from('feed_posts').select('*').order('created_at', { ascending: false });
-                setJobs(j || []);
-                setPosts(p || []);
+                setLoading(true);
+                try {
+                    // Fetch Posts
+                    const { data: postsData } = await supabase
+                        .from('feed_posts')
+                        .select('*')
+                        .order('created_at', { ascending: false })
+                        .limit(20);
+                    
+                    // Fetch Likes
+                    const { data: likesData } = await supabase
+                        .from('post_likes')
+                        .select('post_id')
+                        .eq('user_email', user.email);
+                    
+                    setPosts(postsData || []);
+                    setLikedPosts(new Set(likesData?.map(l => l.post_id)));
+                } catch (e) {
+                    console.error("Error fetching data", e);
+                    showToast("Failed to load feed");
+                } finally {
+                    setLoading(false);
+                }
             };
 
             React.useEffect(() => { fetchData(); }, []);
 
-            const handleApprove = async (id) => { await supabase.from('jobs').update({ is_approved: true }).eq('id', id); fetchData(); toast('Approved'); };
-            const handleDeletePost = async (id) => { if(confirm('Delete?')) { await supabase.from('feed_posts').delete().eq('id', id); fetchData(); } };
-            const handlePin = async (p) => { await supabase.from('feed_posts').update({ is_pinned: !p.is_pinned }).eq('id', p.id); fetchData(); };
-
-            return html`
-                <div className="p-3">
-                    <div className="flex border-b mb-3">
-                        <button onClick=${() => setTab('pending')} className="py-2 px-4 text-sm font-medium border-b-2 ${tab === 'pending' ? 'border-primary text-primary' : 'border-transparent text-text-muted'}">Jobs (${jobs.length})</button>
-                        <button onClick=${() => setTab('posts')} className="py-2 px-4 text-sm font-medium border-b-2 ${tab === 'posts' ? 'border-primary text-primary' : 'border-transparent text-text-muted'}">Posts</button>
-                    </div>
-                    
-                    ${tab === 'pending' && html`<div>${jobs.length === 0 ? 'No pending jobs' : jobs.map(j => html`
-                        <div key=${j.id} className="card p-3 mb-2 flex justify-between items-center">
-                            <div><h3 className="font-bold text-sm">${j.title}</h3><p className="text-xs text-text-muted">${j.location}</p></div>
-                            <button onClick=${() => handleApprove(j.id)} className="btn-primary py-1 px-3 text-xs">Approve</button>
-                        </div>
-                    `)}</div>`}
-                    
-                    ${tab === 'posts' && html`<div>${posts.map(p => html`
-                        <div key=${p.id} className="card p-3 mb-2 flex justify-between items-center">
-                            <div class="flex-1 min-w-0 pr-2">
-                                <div className="flex items-center gap-1">
-                                    <span className="text-xs font-medium truncate">${p.poster_email}</span>
-                                    ${p.is_pinned && html`<span className="text-xs bg-primary text-white px-1 rounded">Pin</span>`}
-                                </div>
-                                <p className="text-xs text-text-muted truncate">${p.content}</p>
-                            </div>
-                            <div className="flex gap-1">
-                                <button onClick=${() => handlePin(p)} className="p-2 rounded hover:bg-gray-100"><${Icon} name="pin" size=${14}/></button>
-                                <button onClick=${() => handleDeletePost(p.id)} className="p-2 rounded hover:bg-red-50 text-danger"><${Icon} name="delete" size=${14}/></button>
-                            </div>
-                        </div>
-                    `)}</div>`}
-                </div>
-            `;
-        };
-
-        const ProfilePage = ({ user, setPage }) => {
-            const isAdmin = user?.email === ADMIN_EMAIL;
-            return html`
-                <div className="p-3">
-                    <div className="card p-6 text-center mt-4">
-                        <div className="w-16 h-16 rounded-full bg-primary text-white text-2xl font-bold mx-auto flex items-center justify-center">${user?.email?.charAt(0).toUpperCase()}</div>
-                        <h2 className="mt-2 font-bold">${user?.user_metadata?.full_name || 'User'}</h2>
-                        <p className="text-xs text-text-muted">${user?.email}</p>
-                    </div>
-                    <div className="mt-4 space-y-2">
-                        <button onClick=${() => setPage('add_job')} className="card w-full p-3 text-left text-sm font-medium flex items-center gap-2"><${Icon} name="plus" size={16}/> Post a Job</button>
-                        <button onClick=${() => setPage('reports')} className="card w-full p-3 text-left text-sm font-medium flex items-center gap-2"><${Icon} name="admin" size={16}/> Report Issue</button>
-                        ${isAdmin && html`<button onClick=${() => setPage('admin')} className="card w-full p-3 text-left text-sm font-medium text-primary flex items-center gap-2"><${Icon} name="admin" size={16}/> Admin Panel</button>`}
-                        <button onClick=${() => supabase.auth.signOut()} className="card w-full p-3 text-left text-sm font-medium text-danger mt-4">Sign Out</button>
-                    </div>
-                </div>
-            `;
-        };
-
-        // Main App
-        const App = () => {
-            const [user, setUser] = React.useState(null);
-            const [loading, setLoading] = React.useState(true);
-            const [page, setPage] = React.useState('dash');
-            const [showMenu, setShowMenu] = React.useState(false);
-
-            React.useEffect(() => {
-                supabase.auth.getSession().then(({ data: { session } }) => { setUser(session?.user); setLoading(false); });
-                const { data: { subscription } } = supabase.auth.onAuthStateChange((e, s) => { setUser(s?.user); setLoading(false); });
-                return () => subscription?.unsubscribe();
-            }, []);
-
-            if (loading) return html`<div class="min-h-screen flex items-center justify-center"><div class="loader"></div></div>`;
-            if (!user) return html`<${AuthScreen} type="login" onSuccess=${() => setLoading(true)} onSwitch=${() => {}}/>`;
-
-            const isAdmin = user?.email === ADMIN_EMAIL;
-
-            const renderPage = () => {
-                switch(page) {
-                    case 'feed': return html`<${FeedPage} user=${user}/>`;
-                    case 'jobs': return html`<${JobsPage} user=${user}/>`;
-                    case 'add_job': return html`<${AddJob} user=${user}/>`;
-                    case 'reports': return html`<${ReportsPage} user=${user}/>`;
-                    case 'admin': return isAdmin ? html`<${AdminPanel} user=${user}/>` : null;
-                    case 'profile': return html`<${ProfilePage} user=${user} setPage=${setPage}/>`;
-                    default: return html`
-                        <div className="p-3">
-                            <div className="card p-5 mb-4">
-                                <h2 className="font-bold text-lg text-text">Assalamu Alaikum!</h2>
-                                <p className="text-sm text-text-muted">${user?.user_metadata?.full_name || 'Welcome'}</p>
-                            </div>
-                            <div className="grid grid-cols-2 gap-3">
-                                <button onClick=${() => setPage('feed')} className="card p-4 text-left hover:shadow-md"><span className="text-xl">📰</span><p className="font-semibold text-sm mt-2">Feed</p></button>
-                                <button onClick=${() => setPage('jobs')} className="card p-4 text-left hover:shadow-md"><span className="text-xl">💼</span><p className="font-semibold text-sm mt-2">Jobs</p></button>
-                                <button onClick=${() => setPage('reports')} className="card p-4 text-left hover:shadow-md"><span className="text-xl">🚩</span><p className="font-semibold text-sm mt-2">Reports</p></button>
-                                <button onClick=${() => setPage('add_job')} className="card p-4 text-left hover:shadow-md"><span className="text-xl">➕</span><p className="font-semibold text-sm mt-2">Post Job</p></button>
-                            </div>
-                        </div>
-                    `;
+            const handlePost = async (e) => {
+                e.preventDefault();
+                if (!text && !image) return;
+                
+                try {
+                    await supabase.from('feed_posts').insert([{
+                        content: text,
+                        image_url: image,
+                        poster_email: user.email,
+                        poster_id: user.id,
+                        poster_name: user.user_metadata?.full_name || 'User',
+                        likes_count: 0,
+                        is_pinned: false
+                    }]);
+                    setText('');
+                    setImage(null);
+                    showToast("Post published!");
+                    fetchData(); // Refresh feed instantly
+                } catch (err) {
+                    showToast("Error posting");
                 }
             };
 
+            const handleLike = async (post) => {
+                const isLiked = likedPosts.has(post.id);
+                const newCount = isLiked ? Math.max(0, post.likes_count - 1) : post.likes_count + 1;
+                
+                // Optimistic UI update
+                setPosts(prev => prev.map(p => p.id === post.id ? {...p, likes_count: newCount} : p));
+                setLikedPosts(prev => {
+                    const newSet = new Set(prev);
+                    isLiked ? newSet.delete(post.id) : newSet.add(post.id);
+                    return newSet;
+                });
+
+                // DB update
+                try {
+                    if (isLiked) {
+                        await supabase.from('post_likes').delete().match({ post_id: post.id, user_email: user.email });
+                    } else {
+                        await supabase.from('post_likes').insert([{ post_id: post.id, user_email: user.email }]);
+                    }
+                    await supabase.from('feed_posts').update({ likes_count: newCount }).eq('id', post.id);
+                } catch (e) {
+                    showToast("Error updating");
+                }
+            };
+
+            const handleImageUpload = (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onloadend = () => setImage(reader.result);
+                reader.readAsDataURL(file);
+            };
+
             return html`
-                <${ToastProvider}>
-                    <div class="app-container">
-                        <${Header} user=${user} setPage=${setPage} showMenu=${showMenu} setShowMenu=${setShowMenu}/>
-                        <main class="pb-4">${renderPage()}</main>
-                        <nav class="bottom-nav">
-                            <button onClick=${() => setPage('dash')} class="bottom-nav-item ${page === 'dash' ? 'active' : ''}"><${Icon} name="home" size=${22}/><span>Home</span></button>
-                            <button onClick=${() => setPage('feed')} class="bottom-nav-item ${page === 'feed' ? 'active' : ''}"><${Icon} name="network" size=${22}/><span>Feed</span></button>
-                            <button onClick=${() => setPage('jobs')} class="bottom-nav-item ${page === 'jobs' ? 'active' : ''}"><${Icon} name="jobs" size=${22}/><span>Jobs</span></button>
-                            <button onClick=${() => setPage('profile')} class="bottom-nav-item ${page === 'profile' ? 'active' : ''}"><${Icon} name="profile" size=${22}/><span>Me</span></button>
-                        </nav>
+                <div className="p-4">
+                    ${isAdmin && html`
+                        <form onSubmit=${handlePost} className="card p-4 mb-4">
+                            <textarea 
+                                value=${text} 
+                                onChange=${(e) => setText(e.target.value)} 
+                                placeholder="Write an announcement..." 
+                                className="input-pro resize-none min-h-[80px] text-sm mb-2"
+                            />
+                            <div className="flex justify-between items-center">
+                                <label className="flex items-center gap-2 text-xs text-text-secondary cursor-pointer hover:text-primary">
+                                    <input type="file" accept="image/*" onChange=${handleImageUpload} className="hidden" />
+                                    <${Icon} name="image" size={18} /> 
+                                    ${image ? 'Image Added' : 'Add Photo'}
+                                </label>
+                                <button className="btn-primary text-sm py-2 px-4" disabled=${!text && !image}>Post</button>
+                            </div>
+                        </form>
+                    `}
+                    
+                    <!-- Post List -->
+                    ${posts.map(post => html`
+                        <${PostCard} 
+                            key=${post.id} 
+                            post=${post} 
+                            user=${user} 
+                            onLike=${handleLike}
+                            isLiked=${likedPosts.has(post.id)}
+                            onPin=${(p) => { supabase.from('feed_posts').update({ is_pinned: !p.is_pinned }).eq('id', p.id); fetchData(); }}
+                            onDelete=${(id) => { supabase.from('feed_posts').delete().eq('id', id); fetchData(); }}
+                            isAdmin=${isAdmin}
+                        />
+                    `)}
+                    
+                    ${loading && html`<div className="space-y-4 mt-4">
+                        <div className="card p-4 h-32 skeleton"></div>
+                        <div className="card p-4 h-32 skeleton"></div>
+                    </div>`}
+                </div>
+            `;
+        };
+
+        const App = () => {
+            const [user, setUser] = React.useState(null);
+            const [page, setPage] = React.useState('feed');
+            const [toast, setToast] = React.useState('');
+            const [checking, setChecking] = React.useState(true);
+
+            const showToast = (msg) => {
+                setToast(msg);
+                setTimeout(() => setToast(''), 3000);
+            };
+
+            React.useEffect(() => {
+                supabase.auth.getSession().then(({ data: { session } }) => {
+                    setUser(session?.user);
+                    setChecking(false);
+                });
+                const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+                    setUser(session?.user);
+                });
+                return () => subscription.unsubscribe();
+            }, []);
+
+            if (checking) return html`<div class="min-h-screen flex items-center justify-center"><div class="loader"></div></div>`;
+            if (!user) return html`<${AuthScreen} onAuth=${() => {}} />`;
+
+            const isAdmin = user.email === ADMIN_EMAIL;
+
+            const Header = () => html`
+                <header className="header-main flex items-center justify-between px-4 py-2">
+                    <div className="flex items-center gap-2">
+                        <img src=${BRITN_LOGO} className="w-8 h-8 rounded-lg" alt="Logo" />
+                        <span className="font-bold text-lg text-primary">BRITN</span>
                     </div>
-                <//>
+                    <div className="flex items-center gap-2">
+                        <button onClick=${() => window.location.reload()} className="p-2 rounded-full hover:bg-gray-100">
+                            <${Icon} name="refresh" size={18} />
+                        </button>
+                        <button onClick=${() => supabase.auth.signOut()} className="p-2 rounded-full hover:bg-gray-100 text-danger">
+                            <${Icon} name="logout" size={18} />
+                        </button>
+                    </div>
+                </header>
+            `;
+
+            const Nav = () => html`
+                <nav className="bottom-nav flex">
+                    <button onClick=${() => setPage('feed')} className="nav-item ${page === 'feed' ? 'active' : ''}">
+                        <${Icon} name="home" size={22} />
+                        <span>Home</span>
+                    </button>
+                    <button onClick=${() => setPage('jobs')} className="nav-item ${page === 'jobs' ? 'active' : ''}">
+                        <${Icon} name="jobs" size={22} />
+                        <span>Jobs</span>
+                    </button>
+                    ${isAdmin && html`
+                        <button onClick=${() => setPage('admin')} className="nav-item ${page === 'admin' ? 'active' : ''}">
+                            <${Icon} name="user" size=${22} />
+                            <span>Admin</span>
+                        </button>
+                    `}
+                </nav>
+            `;
+
+            return html`
+                <div className="min-h-screen bg-surface">
+                    <${Header} />
+                    <main className="pb-20">
+                        ${page === 'feed' && html`<${Feed} user=${user} showToast=${showToast} />`}
+                    </main>
+                    <${Nav} />
+                    <${Toast} message=${toast} />
+                </div>
             `;
         };
 
