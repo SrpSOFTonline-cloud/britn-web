@@ -36,7 +36,6 @@
             -webkit-font-smoothing: antialiased;
         }
         
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 0px; background: transparent; }
         
         .card {
@@ -46,7 +45,6 @@
             border: 1px solid #e2e8f0;
             transition: all 0.2s ease;
         }
-        .card:active { transform: scale(0.99); }
 
         .input-pro {
             width: 100%; 
@@ -78,7 +76,6 @@
         @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .fade-up { animation: fadeUp 0.3s ease-out forwards; }
         
-        /* Header Style */
         .header-main { 
             position: sticky; top: 0; z-index: 100; 
             background: rgba(255,255,255,0.9); 
@@ -86,7 +83,6 @@
             border-bottom: 1px solid #e2e8f0; 
         }
         
-        /* Action Buttons in Post */
         .action-btn {
             display: flex; align-items: center; justify-content: center; gap: 6px;
             padding: 10px; border-radius: 8px; 
@@ -100,10 +96,8 @@
         
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
-        /* Image Container */
         .post-image { width: 100%; max-height: 400px; object-fit: cover; border-radius: 12px; margin-top: 12px; background: #f1f5f9; }
 
-        /* Bottom Nav */
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e2e8f0; z-index: 100; padding-bottom: env(safe-area-inset-bottom); }
         .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px 0; color: #94a3b8; cursor: pointer; flex: 1; height: 56px; transition: color 0.2s; }
         .nav-item.active { color: #0891b2; }
@@ -111,9 +105,6 @@
 
         .toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: #1e293b; color: white; padding: 12px 20px; border-radius: 50px; font-size: 14px; font-weight: 500; z-index: 2000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         
-        .skeleton { background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
-        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-
         .badge { background: #0891b2; color: white; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; }
     </style>
 </head>
@@ -128,7 +119,7 @@
 
         const html = htm.bind(React.createElement);
 
-        // --- Configuration & Supabase Setup ---
+        // --- Configuration ---
         const BRITN_LOGO = 'https://z-cdn-media.chatglm.cn/files/947017d9-2ded-4447-ab50-1dfd8ce35fcd.jpg?auth_key=1871748799-320010bf4fcc40a98d5d6172607e7c73-0-134513578fae2800da62ba56df7d4c44';
         const SUPABASE_URL = 'https://hosiwwylofzjtweclycv.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhvc2l3d3lsb2Z6anR3ZWNseWN2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2NTc3ODgsImV4cCI6MjA4NzIzMzc4OH0.DkCioDXAQQYZm9NOhfsyuXvArR1TQjMMRf7OFv8FClA';
@@ -142,7 +133,7 @@
                 network: `<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M23 21v-2a4 4 0 00-3-3.87" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 3.13a4 4 0 010 7.75" fill="none" stroke="currentColor" stroke-width="2"/>`,
                 jobs: `<rect x="2" y="7" width="20" height="14" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16" fill="none" stroke="currentColor" stroke-width="2"/>`,
                 user: `<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="2"/>`,
-                radiation: `<circle cx="12" cy="12" r="2" fill="currentColor"/><path d="M12 2L4.5 20.5l15-1L12 2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`, // Generic icon replaced with simple shape
+                radiation: `<circle cx="12" cy="12" r="2" fill="currentColor"/><path d="M12 2L4.5 20.5l15-1L12 2z" fill="none" stroke="currentColor" stroke-width="2"/>`,
                 refresh: `<polyline points="23 4 23 10 17 10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10" fill="none" stroke="currentColor" stroke-width="2"/>`,
                 image: `<rect x="3" y="3" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/><polyline points="21 15 16 10 5 21" fill="none" stroke="currentColor" stroke-width="2"/>`,
                 send: `<line x1="22" y1="2" x2="11" y2="13" stroke="currentColor" stroke-width="2"/><polygon points="22 2 15 22 11 13 2 9 22 2" fill="none" stroke="currentColor" stroke-width="2"/>`,
@@ -150,18 +141,18 @@
                 plus: `<line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2"/><line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2"/>`,
                 check: `<polyline points="20 6 9 17 4 12" fill="none" stroke="currentColor" stroke-width="2"/>`,
                 x: `<line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2"/><line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2"/>`,
-                logout: `<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="16 17 21 12 16 7" fill="none" stroke="currentColor" stroke-width="2"/><line x1="21" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="2"/>`
+                logout: `<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="16 17 21 12 16 7" fill="none" stroke="currentColor" stroke-width="2"/><line x1="21" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="2"/>`,
+                admin: `<path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" fill="none" stroke="currentColor" stroke-width="2"/>`,
             };
             return React.createElement('svg', { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round", dangerouslySetInnerHTML: { __html: icons[name] || '' } });
         };
-
-        // --- Main Components ---
 
         const Toast = ({ message }) => {
             if (!message) return null;
             return html`<div className="toast fade-up">${message}</div>`;
         };
 
+        // --- Auth Screen ---
         const AuthScreen = ({ onAuth }) => {
             const [isLogin, setIsLogin] = React.useState(true);
             const [email, setEmail] = React.useState('');
@@ -220,13 +211,14 @@
             `;
         };
 
+        // --- Post Card ---
         const PostCard = ({ post, user, onLike, isLiked, onDelete, onPin, isAdmin }) => {
             const isAdminPost = post.poster_email === ADMIN_EMAIL;
             const displayName = isAdminPost ? 'BRITN' : (post.poster_name || post.poster_email.split('@')[0]);
             const [imgError, setImgError] = React.useState(false);
 
             return html`
-                <div className="card p-4 fade-up">
+                <div className="card p-4 mb-3 fade-up">
                     <div className="flex items-center gap-3 mb-2">
                         <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm overflow-hidden">
                             ${isAdminPost ? html`<img src=${BRITN_LOGO} className="w-full h-full object-cover" />` : displayName.charAt(0).toUpperCase()}
@@ -240,21 +232,13 @@
                             <span className="text-xs text-text-secondary">${new Date(post.created_at).toLocaleDateString()}</span>
                         </div>
                         ${isAdmin && html`
-                            <div className="dropdown dropdown-end">
-                                <label tabIndex="0" className="btn btn-ghost btn-xs rounded-full"><${Icon} name="menu" size=${16}/></label>
-                                <ul tabIndex="0" className="dropdown-content menu p-2 shadow-lg bg-base-100 rounded-box w-32">
-                                    <li><a onClick=${() => onPin(post)}>${post.is_pinned ? 'Unpin' : 'Pin'}</a></li>
-                                    <li><a onClick=${() => onDelete(post.id)} className="text-error">Delete</a></li>
-                                </ul>
-                            </div>
-                            <!-- Simple dropdown replacement for Tailwind devoid env -->
                             <div className="relative">
                                 <button onClick=${(e) => e.currentTarget.nextElementSibling.classList.toggle('hidden')} className="p-1 rounded hover:bg-gray-100">
                                     <${Icon} name="menu" size=${16}/>
                                 </button>
                                 <div className="hidden absolute right-0 top-6 bg-white shadow-lg rounded-md border z-10 w-28">
-                                    <button onClick=${() => { onPin(post); e.currentTarget.parentElement.classList.add('hidden'); }} className="block w-full text-left px-3 py-2 text-xs hover:bg-gray-50">Pin Post</button>
-                                    <button onClick=${() => { onDelete(post.id); e.currentTarget.parentElement.classList.add('hidden'); }} className="block w-full text-left px-3 py-2 text-xs text-danger hover:bg-red-50">Delete</button>
+                                    <button onClick=${() => { onPin(post); document.activeElement.blur(); }} className="block w-full text-left px-3 py-2 text-xs hover:bg-gray-50">${post.is_pinned ? 'Unpin' : 'Pin'}</button>
+                                    <button onClick=${() => { onDelete(post.id); document.activeElement.blur(); }} className="block w-full text-left px-3 py-2 text-xs text-danger hover:bg-red-50">Delete</button>
                                 </div>
                             </div>
                         `}
@@ -262,7 +246,6 @@
 
                     <p className="text-sm text-text mb-2 whitespace-pre-wrap">${post.content}</p>
                     
-                    <!-- Image Fix: Proper rendering with error handling -->
                     ${post.image_url && !imgError && html`
                         <img 
                             src=${post.image_url} 
@@ -286,78 +269,45 @@
             `;
         };
 
+        // --- Feed Page ---
         const Feed = ({ user, showToast }) => {
             const [posts, setPosts] = React.useState([]);
-            const [loading, setLoading] = React.useState(true);
             const [text, setText] = React.useState('');
             const [image, setImage] = React.useState(null);
             const [likedPosts, setLikedPosts] = React.useState(new Set());
             const isAdmin = user?.email === ADMIN_EMAIL;
 
-            const fetchData = async () => {
-                setLoading(true);
+            const fetchData = React.useCallback(async () => {
                 try {
-                    // Fetch Posts
-                    const { data: postsData } = await supabase
-                        .from('feed_posts')
-                        .select('*')
-                        .order('created_at', { ascending: false })
-                        .limit(20);
-                    
-                    // Fetch Likes
-                    const { data: likesData } = await supabase
-                        .from('post_likes')
-                        .select('post_id')
-                        .eq('user_email', user.email);
-                    
+                    const { data: postsData } = await supabase.from('feed_posts').select('*').order('created_at', { ascending: false }).limit(20);
+                    const { data: likesData } = await supabase.from('post_likes').select('post_id').eq('user_email', user.email);
                     setPosts(postsData || []);
                     setLikedPosts(new Set(likesData?.map(l => l.post_id)));
                 } catch (e) {
-                    console.error("Error fetching data", e);
                     showToast("Failed to load feed");
-                } finally {
-                    setLoading(false);
                 }
-            };
+            }, [user.email, showToast]);
 
-            React.useEffect(() => { fetchData(); }, []);
+            React.useEffect(() => { fetchData(); }, [fetchData]);
 
             const handlePost = async (e) => {
                 e.preventDefault();
                 if (!text && !image) return;
-                
                 try {
-                    await supabase.from('feed_posts').insert([{
-                        content: text,
-                        image_url: image,
-                        poster_email: user.email,
-                        poster_id: user.id,
-                        poster_name: user.user_metadata?.full_name || 'User',
-                        likes_count: 0,
-                        is_pinned: false
-                    }]);
-                    setText('');
-                    setImage(null);
+                    await supabase.from('feed_posts').insert([{ content: text, image_url: image, poster_email: user.email, poster_id: user.id, poster_name: user.user_metadata?.full_name || 'User', likes_count: 0 }]);
+                    setText(''); setImage(null);
                     showToast("Post published!");
-                    fetchData(); // Refresh feed instantly
-                } catch (err) {
-                    showToast("Error posting");
-                }
+                    fetchData();
+                } catch (err) { showToast("Error posting"); }
             };
 
             const handleLike = async (post) => {
                 const isLiked = likedPosts.has(post.id);
                 const newCount = isLiked ? Math.max(0, post.likes_count - 1) : post.likes_count + 1;
                 
-                // Optimistic UI update
                 setPosts(prev => prev.map(p => p.id === post.id ? {...p, likes_count: newCount} : p));
-                setLikedPosts(prev => {
-                    const newSet = new Set(prev);
-                    isLiked ? newSet.delete(post.id) : newSet.add(post.id);
-                    return newSet;
-                });
+                setLikedPosts(prev => { const newSet = new Set(prev); isLiked ? newSet.delete(post.id) : newSet.add(post.id); return newSet; });
 
-                // DB update
                 try {
                     if (isLiked) {
                         await supabase.from('post_likes').delete().match({ post_id: post.id, user_email: user.email });
@@ -365,9 +315,7 @@
                         await supabase.from('post_likes').insert([{ post_id: post.id, user_email: user.email }]);
                     }
                     await supabase.from('feed_posts').update({ likes_count: newCount }).eq('id', post.id);
-                } catch (e) {
-                    showToast("Error updating");
-                }
+                } catch (e) { showToast("Error updating"); }
             };
 
             const handleImageUpload = (e) => {
@@ -382,69 +330,191 @@
                 <div className="p-4">
                     ${isAdmin && html`
                         <form onSubmit=${handlePost} className="card p-4 mb-4">
-                            <textarea 
-                                value=${text} 
-                                onChange=${(e) => setText(e.target.value)} 
-                                placeholder="Write an announcement..." 
-                                className="input-pro resize-none min-h-[80px] text-sm mb-2"
-                            />
+                            <textarea value=${text} onChange=${(e) => setText(e.target.value)} placeholder="Write an announcement..." className="input-pro resize-none min-h-[80px] text-sm mb-2" />
                             <div className="flex justify-between items-center">
                                 <label className="flex items-center gap-2 text-xs text-text-secondary cursor-pointer hover:text-primary">
                                     <input type="file" accept="image/*" onChange=${handleImageUpload} className="hidden" />
-                                    <${Icon} name="image" size={18} /> 
-                                    ${image ? 'Image Added' : 'Add Photo'}
+                                    <${Icon} name="image" size=${18} /> ${image ? 'Image Added' : 'Add Photo'}
                                 </label>
                                 <button className="btn-primary text-sm py-2 px-4" disabled=${!text && !image}>Post</button>
                             </div>
                         </form>
                     `}
                     
-                    <!-- Post List -->
-                    ${posts.map(post => html`
-                        <${PostCard} 
-                            key=${post.id} 
-                            post=${post} 
-                            user=${user} 
-                            onLike=${handleLike}
-                            isLiked=${likedPosts.has(post.id)}
-                            onPin=${(p) => { supabase.from('feed_posts').update({ is_pinned: !p.is_pinned }).eq('id', p.id); fetchData(); }}
-                            onDelete=${(id) => { supabase.from('feed_posts').delete().eq('id', id); fetchData(); }}
-                            isAdmin=${isAdmin}
-                        />
-                    `)}
-                    
-                    ${loading && html`<div className="space-y-4 mt-4">
-                        <div className="card p-4 h-32 skeleton"></div>
-                        <div className="card p-4 h-32 skeleton"></div>
-                    </div>`}
+                    ${posts.map(post => html`<${PostCard} key=${post.id} post=${post} user=${user} onLike=${handleLike} isLiked=${likedPosts.has(post.id)} onPin=${(p) => { supabase.from('feed_posts').update({ is_pinned: !p.is_pinned }).eq('id', p.id); fetchData(); }} onDelete=${(id) => { supabase.from('feed_posts').delete().eq('id', id); fetchData(); }} isAdmin=${isAdmin} />`)}
                 </div>
             `;
         };
 
+        // --- Jobs Page ---
+        const JobsPage = ({ user, showToast }) => {
+            const [jobs, setJobs] = React.useState([]);
+            const isAdmin = user?.email === ADMIN_EMAIL;
+            
+            React.useEffect(() => {
+                supabase.from('jobs').select('*').eq('is_approved', true).order('created_at', { ascending: false }).then(({ data }) => setJobs(data || []));
+            }, []);
+
+            return html`
+                <div className="p-4">
+                    <h2 className="text-lg font-bold text-text mb-4">Job Openings</h2>
+                    ${jobs.map(job => html`
+                        <div key=${job.id} className="card p-4 mb-3 fade-up">
+                            <h3 className="font-bold text-text">${job.title}</h3>
+                            <p className="text-xs text-text-secondary mb-2">${job.location} | ${job.salary || 'Negotiable'}</p>
+                            <p className="text-sm text-text-secondary mb-3">${job.description}</p>
+                            <a href="mailto:${job.contact_email}?subject=Apply: ${job.title}" className="btn-primary block text-center text-sm py-2 w-full">Apply via Email</a>
+                        </div>
+                    `)}
+                </div>
+            `;
+        };
+
+        // --- Post Job Page ---
+        const AddJob = ({ user, showToast }) => {
+            const [form, setForm] = React.useState({ title: '', location: '', salary: '', description: '', contact_email: '', whatsapp_number: '' });
+            const [loading, setLoading] = React.useState(false);
+            const isAdmin = user?.email === ADMIN_EMAIL;
+
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                if (!form.title || !form.description) return;
+                setLoading(true);
+                await supabase.from('jobs').insert([{ ...form, poster_id: user.id, poster_email: user.email, is_approved: isAdmin }]);
+                setLoading(false);
+                setForm({ title: '', location: '', salary: '', description: '', contact_email: '', whatsapp_number: '' });
+                showToast('Job Posted!');
+            };
+
+            return html`
+                <div className="p-4">
+                    <h2 className="text-lg font-bold text-text mb-4">Post a New Job</h2>
+                    <form onSubmit=${handleSubmit} className="card p-4 space-y-3">
+                        <input placeholder="Title *" value=${form.title} onChange=${(e) => setForm({...form, title: e.target.value})} className="input-pro text-sm" required/>
+                        <input placeholder="Location *" value=${form.location} onChange=${(e) => setForm({...form, location: e.target.value})} className="input-pro text-sm"/>
+                        <input placeholder="Salary" value=${form.salary} onChange=${(e) => setForm({...form, salary: e.target.value})} className="input-pro text-sm"/>
+                        <textarea placeholder="Description *" value=${form.description} onChange=${(e) => setForm({...form, description: e.target.value})} className="input-pro text-sm min-h-[100px]"/>
+                        <input placeholder="Email *" value=${form.contact_email} onChange=${(e) => setForm({...form, contact_email: e.target.value})} className="input-pro text-sm" type="email"/>
+                        <input placeholder="WhatsApp" value=${form.whatsapp_number} onChange=${(e) => setForm({...form, whatsapp_number: e.target.value})} className="input-pro text-sm"/>
+                        <button type="submit" disabled=${loading} className="btn-primary w-full text-sm">${loading ? 'Posting...' : 'Post Job'}</button>
+                    </form>
+                </div>
+            `;
+        };
+
+        // --- Reports Page ---
+        const ReportsPage = ({ user, showToast }) => {
+            const [form, setForm] = React.useState({ hospital_name: '', category: 'Bad Behavior', details: '' });
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                await supabase.from('hospital_reports').insert([{ ...form, reporter_email: user.email }]);
+                setForm({ hospital_name: '', category: 'Bad Behavior', details: '' });
+                showToast('Report Submitted');
+            };
+            return html`
+                <div className="p-4">
+                    <h2 className="text-lg font-bold text-text mb-4">Submit Report</h2>
+                    <form onSubmit=${handleSubmit} className="card p-4 space-y-3">
+                         <input placeholder="Hospital Name *" value=${form.hospital_name} onChange=${(e) => setForm({...form, hospital_name: e.target.value})} className="input-pro text-sm" required/>
+                         <select value=${form.category} onChange=${(e) => setForm({...form, category: e.target.value})} className="input-pro text-sm">
+                            <option>Bad Behavior</option><option>Salary Issue</option><option>Other</option>
+                         </select>
+                         <textarea placeholder="Details *" value=${form.details} onChange=${(e) => setForm({...form, details: e.target.value})} className="input-pro text-sm min-h-[100px]"/>
+                         <button className="btn-primary w-full text-sm">Submit</button>
+                    </form>
+                </div>
+            `;
+        };
+
+        // --- Admin Panel ---
+        const AdminPanel = ({ user, showToast }) => {
+            const [tab, setTab] = React.useState('pending');
+            const [jobs, setJobs] = React.useState([]);
+            const [posts, setPosts] = React.useState([]);
+
+            const fetchData = async () => {
+                const { data: j } = await supabase.from('jobs').select('*').eq('is_approved', false);
+                const { data: p } = await supabase.from('feed_posts').select('*').order('created_at', { ascending: false });
+                setJobs(j || []);
+                setPosts(p || []);
+            };
+
+            React.useEffect(() => { fetchData(); }, []);
+
+            const handleApprove = async (id) => { await supabase.from('jobs').update({ is_approved: true }).eq('id', id); fetchData(); showToast('Approved'); };
+            const handleDeletePost = async (id) => { if(confirm('Delete?')) { await supabase.from('feed_posts').delete().eq('id', id); fetchData(); } };
+            const handlePin = async (p) => { await supabase.from('feed_posts').update({ is_pinned: !p.is_pinned }).eq('id', p.id); fetchData(); };
+
+            return html`
+                <div className="p-4">
+                    <div className="flex border-b mb-3">
+                        <button onClick=${() => setTab('pending')} className="py-2 px-4 text-sm font-medium border-b-2 ${tab === 'pending' ? 'border-primary text-primary' : 'border-transparent text-text-muted'}">Jobs (${jobs.length})</button>
+                        <button onClick=${() => setTab('posts')} className="py-2 px-4 text-sm font-medium border-b-2 ${tab === 'posts' ? 'border-primary text-primary' : 'border-transparent text-text-muted'}">Posts</button>
+                    </div>
+                    
+                    ${tab === 'pending' && html`<div>${jobs.length === 0 ? 'No pending jobs' : jobs.map(j => html`
+                        <div key=${j.id} className="card p-3 mb-2 flex justify-between items-center">
+                            <div><h3 className="font-bold text-sm">${j.title}</h3><p className="text-xs text-text-muted">${j.location}</p></div>
+                            <button onClick=${() => handleApprove(j.id)} className="btn-primary py-1 px-3 text-xs">Approve</button>
+                        </div>
+                    `)}</div>`}
+                    
+                    ${tab === 'posts' && html`<div>${posts.map(p => html`
+                        <div key=${p.id} className="card p-3 mb-2 flex justify-between items-center">
+                            <div class="flex-1 min-w-0 pr-2">
+                                <div className="flex items-center gap-1">
+                                    <span className="text-xs font-medium truncate">${p.poster_email}</span>
+                                    ${p.is_pinned && html`<span className="text-xs bg-primary text-white px-1 rounded">Pin</span>`}
+                                </div>
+                                <p className="text-xs text-text-muted truncate">${p.content}</p>
+                            </div>
+                            <div className="flex gap-1">
+                                <button onClick=${() => handlePin(p)} className="p-2 rounded hover:bg-gray-100"><${Icon} name="admin" size=${14}/></button>
+                                <button onClick=${() => handleDeletePost(p.id)} className="p-2 rounded hover:bg-red-50 text-danger"><${Icon} name="x" size=${14}/></button>
+                            </div>
+                        </div>
+                    `)}</div>`}
+                </div>
+            `;
+        };
+
+        // --- Profile Page ---
+        const ProfilePage = ({ user, setPage }) => {
+            const isAdmin = user?.email === ADMIN_EMAIL;
+            return html`
+                <div className="p-4">
+                    <div className="card p-6 text-center mt-4">
+                        <div className="w-16 h-16 rounded-full bg-primary text-white text-2xl font-bold mx-auto flex items-center justify-center">${user?.email?.charAt(0).toUpperCase()}</div>
+                        <h2 className="mt-2 font-bold">${user?.user_metadata?.full_name || 'User'}</h2>
+                        <p className="text-xs text-text-muted">${user?.email}</p>
+                    </div>
+                    <div className="mt-4 space-y-2">
+                        <button onClick=${() => setPage('add_job')} className="card w-full p-3 text-left text-sm font-medium flex items-center gap-2"><${Icon} name="plus" size={16}/> Post a Job</button>
+                        <button onClick=${() => setPage('reports')} className="card w-full p-3 text-left text-sm font-medium flex items-center gap-2"><${Icon} name="admin" size={16}/> Report Issue</button>
+                        ${isAdmin && html`<button onClick=${() => setPage('admin')} className="card w-full p-3 text-left text-sm font-medium text-primary flex items-center gap-2"><${Icon} name="admin" size={16}/> Admin Panel</button>`}
+                        <button onClick=${() => supabase.auth.signOut()} className="card w-full p-3 text-left text-sm font-medium text-danger mt-4">Sign Out</button>
+                    </div>
+                </div>
+            `;
+        };
+
+        // --- Main App ---
         const App = () => {
             const [user, setUser] = React.useState(null);
             const [page, setPage] = React.useState('feed');
             const [toast, setToast] = React.useState('');
             const [checking, setChecking] = React.useState(true);
 
-            const showToast = (msg) => {
-                setToast(msg);
-                setTimeout(() => setToast(''), 3000);
-            };
+            const showToast = (msg) => { setToast(msg); setTimeout(() => setToast(''), 3000); };
 
             React.useEffect(() => {
-                supabase.auth.getSession().then(({ data: { session } }) => {
-                    setUser(session?.user);
-                    setChecking(false);
-                });
-                const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-                    setUser(session?.user);
-                });
+                supabase.auth.getSession().then(({ data: { session } }) => { setUser(session?.user); setChecking(false); });
+                const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => { setUser(session?.user); });
                 return () => subscription.unsubscribe();
             }, []);
 
             if (checking) return html`<div class="min-h-screen flex items-center justify-center"><div class="loader"></div></div>`;
-            if (!user) return html`<${AuthScreen} onAuth=${() => {}} />`;
+            if (!user) return html`<${AuthScreen} />`;
 
             const isAdmin = user.email === ADMIN_EMAIL;
 
@@ -468,27 +538,43 @@
             const Nav = () => html`
                 <nav className="bottom-nav flex">
                     <button onClick=${() => setPage('feed')} className="nav-item ${page === 'feed' ? 'active' : ''}">
-                        <${Icon} name="home" size={22} />
+                        <${Icon} name="home" size=${22} />
                         <span>Home</span>
                     </button>
                     <button onClick=${() => setPage('jobs')} className="nav-item ${page === 'jobs' ? 'active' : ''}">
-                        <${Icon} name="jobs" size={22} />
+                        <${Icon} name="jobs" size=${22} />
                         <span>Jobs</span>
                     </button>
                     ${isAdmin && html`
                         <button onClick=${() => setPage('admin')} className="nav-item ${page === 'admin' ? 'active' : ''}">
-                            <${Icon} name="user" size=${22} />
+                            <${Icon} name="admin" size=${22} />
                             <span>Admin</span>
                         </button>
                     `}
+                    <button onClick=${() => setPage('profile')} className="nav-item ${page === 'profile' ? 'active' : ''}">
+                        <${Icon} name="user" size=${22} />
+                        <span>Me</span>
+                    </button>
                 </nav>
             `;
+
+            const renderPage = () => {
+                switch(page) {
+                    case 'feed': return html`<${Feed} user=${user} showToast=${showToast} />`;
+                    case 'jobs': return html`<${JobsPage} user=${user} showToast=${showToast} />`;
+                    case 'add_job': return html`<${AddJob} user=${user} showToast=${showToast} />`;
+                    case 'reports': return html`<${ReportsPage} user=${user} showToast=${showToast} />`;
+                    case 'admin': return isAdmin ? html`<${AdminPanel} user=${user} showToast=${showToast} />` : null;
+                    case 'profile': return html`<${ProfilePage} user=${user} setPage=${setPage}/>`;
+                    default: return html`<${Feed} user=${user} showToast=${showToast} />`;
+                }
+            };
 
             return html`
                 <div className="min-h-screen bg-surface">
                     <${Header} />
                     <main className="pb-20">
-                        ${page === 'feed' && html`<${Feed} user=${user} showToast=${showToast} />`}
+                        ${renderPage()}
                     </main>
                     <${Nav} />
                     <${Toast} message=${toast} />
